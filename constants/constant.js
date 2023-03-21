@@ -2,7 +2,7 @@ export const ICON_NAMES = {
     SYSTEM_ICONS: {
         ABOUT: "about-icon",
         ADD: "add-icon",
-        ADD_PHOTO_V1: "add-photo-icon",
+        ADD_PHOTO: "add-photo-icon",
         BACK: "back-icon",
         CATEGORIES: "categories-icon",
         COLLECTION: "collection-icon",
@@ -16,8 +16,8 @@ export const ICON_NAMES = {
         GAMING: "gaming-icon",
         LIGHTSABER: "lightsaber-icon",
         ROBOT: "robot-icon",
+        STATUE: "statue-icon",
         TOY_BRICK: "brick-icon",
-        WISHLIST: "wishlist-icon",
     },
 
 };
