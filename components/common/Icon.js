@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ICON_NAMES } from "constants/constant";
+import { ICON_NAMES } from "../../constants/constant";
 
 import AboutIcon from '../../assets/icons/AboutIcon';
 import AddIcon from '../../assets/icons/AddIcon';

@@ -3,13 +3,23 @@ import React from 'react'
 
 import { MainMenuContainer, HolderContainer } from './styles'
 
+import { ICON_NAMES } from '../../../constants/constant'
+import colors from '../../../assets/themes/colors'
+import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
+import Button from '../../shared/Button/Button'
+import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
+
 const MainMenuScreen = () => {
     return (
         <MainMenuContainer>
+            <ScreenHeader
+                    title={'Main Menu'}
+                    iconName={ICON_NAMES.SYSTEM_ICONS.BACK}
+                    iconSize={32}
+                    />
             <HolderContainer>
-                <View>
-                    <Text>MainMenuScreen</Text>
-                </View>
+                <Button title={'Hello There'} rounded/>
+                <ButtonIcon iconName={ICON_NAMES.CATEGORIES_ICONS.ROBOT}/>
             </HolderContainer>
         </MainMenuContainer>
         

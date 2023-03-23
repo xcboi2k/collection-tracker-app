@@ -3,6 +3,9 @@ import React from 'react'
 
 import { ButtonContainer, ButtonLabel } from './styles'
 
+import colors from '../../../assets/themes/colors'
+import Icon from '../../common/Icon'
+
 TouchableOpacity.defaultProps = {
     activeOpacity: 0.6,
 };
@@ -32,6 +35,13 @@ const Button = ({
             style={styles}
             {...buttonProps}
         >
+            {iconName && (
+                <Icon
+                    name={iconName}
+                    color={type === "filled" ? colors.primary.colorTwo : iconColor}
+                    size={iconSize}
+                />
+            )}
             <ButtonLabel
                 type={type}
                 textSize={textSize}
