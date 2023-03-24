@@ -8,7 +8,7 @@ import { ButtonContainer, ButtonLabel, ButtonIconContainer, CustomImage } from "
 import Icon from '../../common/Icon';
 import colors from '../../../assets/themes/colors';
 
-const ButtonIcon = ({ onPress, label, name, type, iconColor = colors.primary.colorOne, iconSize = 30, styles, imageUri, filename }) => {
+const ButtonIcon = ({ onPress, label, name, type, iconColor, iconSize = 30, styles, imageUri, filename }) => {
     return (
         <ButtonContainer style={styles}>
             <ButtonIconContainer onPress={onPress} type={type} color={iconColor}>

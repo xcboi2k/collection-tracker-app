@@ -6,7 +6,7 @@ export const ButtonContainer = styled.TouchableOpacity`
     width: ${({ width }) => width};
     padding: 10px;
     background-color: ${colors.primary.colorOne};
-    border-radius: ${({ rounded }) => rounded};
+    border-radius: 5px;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;

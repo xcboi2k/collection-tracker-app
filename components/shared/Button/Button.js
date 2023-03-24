@@ -15,7 +15,6 @@ const Button = ({
     title,
     type,
     width = "100%",
-    rounded = "5px",
     textSize = 20,
     iconColor,
     iconSize,
@@ -30,7 +29,6 @@ const Button = ({
             onPress={onPress}
             type={type}
             width={width}
-            rounded={rounded}
             noBorder={noBorder}
             style={styles}
             {...buttonProps}
