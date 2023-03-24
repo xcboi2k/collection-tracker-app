@@ -21,7 +21,7 @@ const MainMenuScreen = () => {
                 <Button title={'Hello There'} />
             </HolderContainer>
             <HolderContainer>
-                <Button iconName={ICON_NAMES.CATEGORIES_ICONS.ROBOT} type={"filled"} iconSize={32}/>
+                <Button iconName={ICON_NAMES.CATEGORIES_ICONS.GAMING} type={"filled"} iconSize={32}/>
             </HolderContainer>
         </MainMenuContainer>
         
