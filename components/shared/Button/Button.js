@@ -15,7 +15,7 @@ const Button = ({
     title,
     type,
     width = "100%",
-    rounded = "1px",
+    rounded = "5px",
     textSize = 20,
     iconColor,
     iconSize,

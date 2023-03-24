@@ -19,7 +19,8 @@ const MainMenuScreen = () => {
                     />
             <HolderContainer>
                 <Button title={'Hello There'} rounded/>
-                <ButtonIcon iconName={ICON_NAMES.CATEGORIES_ICONS.ROBOT}/>
+                <Button iconName={ICON_NAMES.CATEGORIES_ICONS.ROBOT} iconColor={colors.primary.colorOne} rounded/>
+                <ButtonIcon iconName={ICON_NAMES.CATEGORIES_ICONS.ROBOT} iconColor={colors.primary.colorOne}/>
             </HolderContainer>
         </MainMenuContainer>
         

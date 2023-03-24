@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { Container } from "../../common/Styles";
 
-export const CategoriesContainer = styled(Container)`
+export const WishlistEditContainer = styled(Container)`
     position: relative;
     flex: 1;
     justify-content: flex-start;
