@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import TabNavigator from "../navigators/TabNavigator/TabNavigator";
 import MainMenuScreen from '../screens/MainMenuScreen/MainMenuScreen'
 const Stack = createNativeStackNavigator();
 
@@ -13,8 +14,8 @@ const MainApp = () => {
                 }}
             >
                 <Stack.Screen
-                    name="WelcomePage"
-                    component={MainMenuScreen}
+                    name="MainMenuTab"
+                    component={TabNavigator}
                 />
             </Stack.Navigator>
         </NavigationContainer>
