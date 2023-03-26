@@ -13,10 +13,10 @@ const MainMenuScreen = () => {
     return (
         <MainMenuContainer>
             <ScreenHeader
-                    title={'Main Menu'}
-                    iconName={ICON_NAMES.SYSTEM_ICONS.BACK}
-                    iconSize={32}
-                    />
+                title={'Main Menu'}
+                iconName={ICON_NAMES.SYSTEM_ICONS.BACK}
+                iconSize={32}
+            />
             <HolderContainer>
                 <Button title={'Hello There'} />
             </HolderContainer>

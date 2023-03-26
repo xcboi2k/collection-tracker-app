@@ -6,16 +6,16 @@ import colors from '../../../assets/themes/colors'
 
 import { ScreenHeaderContainer, ScreenTitle, RightIcon } from './styles'
 
-const ScreenHeader = ({ title, onPressIcon, iconName, iconSize }) => {
+const ScreenHeader = ({ title, onPressRightIcon, rightIconName, rightIconSize }) => {
     return (
         <ScreenHeaderContainer>
             <ScreenTitle>{title}</ScreenTitle>
-            {iconName && (
-            <RightIcon onPress={onPressIcon}>
+            {rightIconName && (
+            <RightIcon onPress={onPressRightIcon}>
                 <Icon
-                name={iconName}
+                name={rightIconName}
                 color={colors.primary.colorTwo}
-                size={iconSize}
+                size={rightIconSize}
                 />
             </RightIcon>
             )}
