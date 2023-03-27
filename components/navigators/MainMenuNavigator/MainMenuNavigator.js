@@ -13,10 +13,10 @@ const MainMenuNavigator = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="MainMenu"
+            initialRouteName="Home"
         >
             <MainMenuStack.Screen
-                name="MainMenuMain"
+                name="HomeMain"
                 component={MainMenuScreen}
             />
             <MainMenuStack.Screen

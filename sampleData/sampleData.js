@@ -1,23 +1,37 @@
+import { ICON_NAMES } from "../constants/constant";
+
 export const chartData = [
     {
         id: '1',
         categoryName: 'Star Wars 3.75 Action Figures',
-        categoryAmount: 10000
+        categoryAmount: 10000,
+        color: '#B295C7',
+        iconName: ICON_NAMES.CATEGORIES_ICONS.LIGHTSABER,
+        iconColor: '#B295C7',
     },
     {
         id: '2',
         categoryName: 'Diecast Cars 1:64',
-        categoryAmount: 5000
+        categoryAmount: 5000,
+        color: '#E6B8B8',
+        iconName: ICON_NAMES.CATEGORIES_ICONS.CAR,
+        iconColor: '#E6B8B8',
     },
     {
         id: '3',
         categoryName: 'Transformers Action Figures',
-        categoryAmount: 5000
+        categoryAmount: 5000,
+        color: '#5ABFC6',
+        iconName: ICON_NAMES.CATEGORIES_ICONS.ROBOT,
+        iconColor: '#5ABFC6',
     },
     {
         id: '4',
         categoryName: 'Lego',
-        categoryAmount: 2500
+        categoryAmount: 2500,
+        color: '#F9C9A8',
+        iconName: ICON_NAMES.CATEGORIES_ICONS.TOY_BRICK,
+        iconColor: '#F9C9A8',
     },
 ];
 

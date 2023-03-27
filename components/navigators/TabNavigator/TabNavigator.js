@@ -23,7 +23,7 @@ const TabBarProps = (route) => ({
         const iconColor = color,
             iconSize = 40;
 
-        if (route.name === "MainMenu") {
+        if (route.name === "Home") {
             return <HomeIcon color={iconColor} size={iconSize} />;
         } else if (route.name === "Collection") {
             return <CollectionIcon color={iconColor} size={iconSize} />;
@@ -63,7 +63,7 @@ const TabNavigator = () => {
             ...TabBarProps(route),
         })}
     >
-        <Tab.Screen name="MainMenu" component={MainMenuNavigator} />
+        <Tab.Screen name="Home" component={MainMenuNavigator} />
         <Tab.Screen name="Collection" component={CollectionNavigator} />
         <Tab.Screen name="Categories" component={CategoriesNavigator} />
         <Tab.Screen name="Wishlist" component={WishlistNavigator} />

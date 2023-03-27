@@ -5,23 +5,23 @@ import { MainMenuContainer, HolderContainer } from './styles'
 
 import { ICON_NAMES } from '../../../constants/constant'
 import colors from '../../../assets/themes/colors'
-import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
+
+import { chartData } from '../../../sampleData/sampleData'
+
 import Button from '../../shared/Button/Button'
 import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
+
+import DashboardHeader from '../../shared/DashboardHeader'
+import DashboardChart from '../../shared/DashboardChart/DashboardChart'
 
 const MainMenuScreen = () => {
     return (
         <MainMenuContainer>
-            <ScreenHeader
-                title={'Main Menu'}
-                iconName={ICON_NAMES.SYSTEM_ICONS.BACK}
-                iconSize={32}
+            <DashboardHeader
+                title={'Home'}
             />
             <HolderContainer>
-                <Button title={'Hello There'} />
-            </HolderContainer>
-            <HolderContainer>
-                <Button iconName={ICON_NAMES.CATEGORIES_ICONS.GAMING} type={"filled"} iconSize={32}/>
+                <DashboardChart title={"Collection Status"} chartData={chartData}/>
             </HolderContainer>
         </MainMenuContainer>
         
