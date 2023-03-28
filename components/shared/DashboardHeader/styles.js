@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 import colors from "../../../assets/themes/colors";
 import { FONTS } from '../../../constants/constant'

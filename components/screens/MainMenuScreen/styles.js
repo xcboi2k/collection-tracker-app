@@ -14,3 +14,8 @@ export const HolderContainer = styled.View`
     align-items: center;
     width: 90%;
 `;
+
+export const RecentPanelContainer = styled.ScrollView`
+    width: 90%;
+    flex-grow: 0;
+`;
