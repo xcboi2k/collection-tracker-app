@@ -1,19 +1,24 @@
 import { View, Text } from 'react-native'
 import React, { memo } from "react";
 
-import { RecentPanel, DetailsHolder, ItemContainer, ItemName, ItemPrice, Comment, CommentImg } from './styles'
+import { RecentPanel, DetailsContainer, ItemContainer, ItemName, ItemPrice, CommentImg } from './styles'
 
 import imgPlaceholder from '../../../assets/test.jpg'
 
 const DashboardRecentPanel = ({ data }) => {
     return (
         <RecentPanel>
-            <DetailsHolder>
-                <ItemName>{data.itemName}</ItemName>
-            </DetailsHolder>
-            <DetailsHolder>
+            <DetailsContainer>
+                <ItemContainer>
+                    <DetailsContainer>
+                        <ItemName>{data.itemName}</ItemName>
+                    </DetailsContainer>
+                    <DetailsContainer>
+                        <ItemPrice>₱ {data.itemAmount}</ItemPrice>
+                    </DetailsContainer>
+                </ItemContainer>
                 <CommentImg source={data.itemPhoto ? { uri: data.itemPhoto } : imgPlaceholder} />
-            </DetailsHolder>
+            </DetailsContainer>
         </RecentPanel>
     )
 }

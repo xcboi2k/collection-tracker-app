@@ -11,14 +11,15 @@ export const Category = styled.TouchableOpacity`
 
 export const CategoryName = styled.Text`
     font-size: 12px;
-    font-family: ${FONTS.BOLD}; 
+    font-family: ${FONTS.BOLD};
+    color: ${colors.primary.black};
     text-align: left;
 `;
 
 export const CategoryTotal = styled.Text`
     font-size: 10px;
     font-family: ${FONTS.REGULAR};
-    color: '1a1717';
+    color: ${colors.primary.black};
     text-align: left;
 `;
 

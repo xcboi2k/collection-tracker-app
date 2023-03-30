@@ -50,12 +50,12 @@ const DashboardChart = ({ title, chartData }) => {
                 <Chart>
                     <PieChart
                         data={chartData}
-                        width={1000}
-                        height={100}
+                        width={300}
+                        height={175}
                         chartConfig={chartConfig}
                         accessor={"categoryAmount"}
                         backgroundColor={"transparent"}
-                        center={[500, 0]}
+                        center={[0, 0]}
                         hasLegend={false}
                         absolute
                         style={{ width: "100%" }}

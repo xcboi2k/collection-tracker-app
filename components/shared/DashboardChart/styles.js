@@ -5,8 +5,7 @@ import { FONTS } from "../../../constants/constant";
 
 export const Title = styled.Text`
     font-family: ${FONTS.BOLD};
-    font-size: 24px;
-    text-align: center;
+    font-size: 20px;
 `;
 
 export const Chart = styled.View`
@@ -30,8 +29,8 @@ export const TitleContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-left: 20px;
     padding-right: 20px;
+    padding-left: 5px;
     margin-bottom: 10px;
 `;
 
