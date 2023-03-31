@@ -15,6 +15,7 @@ export const ICON_NAMES = {
         BACK: "back-icon",
         CATEGORIES: "categories-icon",
         COLLECTION: "collection-icon",
+        CROSS: 'cross-icon',
         DROPDOWN: "dropdown-icon",
         HOME: "home-icon",
         WISHLIST: "wishlist-icon",

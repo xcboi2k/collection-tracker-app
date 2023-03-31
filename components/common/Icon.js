@@ -10,6 +10,7 @@ import BrickIcon from '../../assets/icons/BrickIcon';
 import CarIcon from '../../assets/icons/CarIcon';
 import CategoriesIcon from '../../assets/icons/CategoriesIcon';
 import CollectionIcon from '../../assets/icons/CollectionIcon';
+import CrossIcon from "../../assets/icons/CrossIcon";
 import DropdownIcon from '../../assets/icons/DropdownIcon';
 import FigureIcon from '../../assets/icons/FigureIcon';
 import GamingIcon from '../../assets/icons/GamingIcon';
@@ -25,6 +26,7 @@ const Icon = ({ name, size = 40, color }) => {
     if (name === ICON_NAMES.SYSTEM_ICONS.ADD_PHOTO) return <AddPhotoIcon color={color} size={size} />;
     if (name === ICON_NAMES.SYSTEM_ICONS.BACK) return <BackIcon color={color} size={size} />;
     if (name === ICON_NAMES.SYSTEM_ICONS.CATEGORIES) return <CategoriesIcon color={color} size={size} />;
+    if (name === ICON_NAMES.SYSTEM_ICONS.CROSS) return <CrossIcon color={color} size={size} />;
     if (name === ICON_NAMES.SYSTEM_ICONS.COLLECTION) return <CollectionIcon color={color} size={size} />;
     if (name === ICON_NAMES.SYSTEM_ICONS.DROPDOWN) return <DropdownIcon color={color} size={size} />;
     if (name === ICON_NAMES.SYSTEM_ICONS.HOME) return <HomeIcon color={color} size={size} />;
