@@ -6,44 +6,41 @@ import { deleteObject, ref, uploadBytes, getDownloadURL } from 'firebase/storage
 
 import { db, storage } from '../firebase'
 
-const CollectionStore = (set, get) => ({
-    collectionItems: [],
-    resetCollectionItems: () => set({collectionItems: []}),
-    setCollectionItems: (data) => set({collectionItems: data}),
-    addCollectionItem: async(newItem) => {
+const WishlistStore = (set, get) => ({
+    wishlistItems: [],
+    resetWishlistItems: () => set({wishlistItems: []}),
+    setWishlistItems: (data) => set({wishlistItems: data}),
+    addWishlistItem: async(newItem) => {
         try{
             console.log(newItem);
 
-            await addDoc(collection(db, 'collection'), {
+            await addDoc(collection(db, 'wishlist'), {
                 ...newItem, timestamp: serverTimestamp()
             });
         }
         catch(err){
-            console.log('addCollectionItem:', err);
+            console.log('addWishlistItem:', err);
         }
     },
-    updateCollectionItem: async(documentId, updatedItem) => {
+    updateWishlistItem: async(documentId, updatedItem) => {
         try{
             console.log(updatedItem);
 
-            const docRef = doc(db, 'collection', documentId);
+            const docRef = doc(db, 'wishlist', documentId);
 
             await updateDoc(docRef, {
-                ...updatedItem,
-                // photoRef: fileRefName || '',
-                // photoUrl: fileUrl || '',
-                timestamp: serverTimestamp()
+                ...updatedItem, timestamp: serverTimestamp()
             });
         }
         catch(err){
-            console.log('updateCollectionItem:', err);
+            console.log('updateWishlistItem:', err);
         }
     },
-    deleteCollectionItem: async(documentId, fileReference) => {
+    deleteWishlistItem: async(documentId, fileReference) => {
         try{
             console.log('Delete', documentId);
 
-            const docRef = doc(db, 'collection', documentId);
+            const docRef = doc(db, 'wishlist', documentId);
             const fileRef = ref(storage, fileReference);
 
             await deleteDoc(docRef);
@@ -52,9 +49,9 @@ const CollectionStore = (set, get) => ({
             }
         }
         catch(err){
-            console.log('deleteCollectionItem:', err);
+            console.log('deleteWishlistItem:', err);
         }
     },
 });
 
-export const useCollectionStore = create(CollectionStore);
+export const useWishlistStore = create(WishlistStore);
