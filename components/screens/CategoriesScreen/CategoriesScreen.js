@@ -8,8 +8,19 @@ import { CategoriesContainer } from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 
+import useGetCategories from '../../../hooks/useGetCategories';
+
 const CategoriesScreen = () => {
+    const [categoryData] = useGetCategories();
     const navigation = useNavigation();
+
+    const handleNavigation = (id) =>
+        navigation.navigate("Categories", {
+            screen: "CategoriesEdit",
+            params: {
+                categoryID: id
+            }
+        });
 
     return (
         <CategoriesContainer>

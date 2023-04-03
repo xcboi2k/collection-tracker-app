@@ -6,20 +6,22 @@ import uuid from 'react-native-uuid';
 import { CollectionAddContainer, CollectionFormHolder, CollectionCategoryHolder, ButtonContainer } from './styles';
 
 import colors from '../../../assets/themes/colors';
+import { ICON_NAMES } from '../../../constants/constant';
 
 import CommentInput from '../../shared/CommentInput';
 import IconSelector from '../../shared/IconSelector';
 import Button from '../../shared/Button';
 import TextInput from '../../shared/TextInput';
+import Header from '../../shared/Header/Header';
 import ScreenHeader from '../../shared/ScreenHeader';
 
 import useCollectionStore from '../../../hooks/useCollectionStore';
-import useCategoryStore from '../../../hooks/useCategoryStore';
+import useGetCategories from '../../../hooks/useGetCategories';
 import useUploadImage from '../../../hooks/useUploadImage';
 
 const CollectionAddScreen = ({navigation}) => {
     let photoId = uuid.v4();
-    const [categories] = useCategoryStore();
+    const [categories] = useGetCategories();
     const addCollectionItem = useCollectionStore(state => state.addCollectionItem);
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "collection/");
     const [selectedIcon, setSelectedIcon] = useState({
@@ -79,8 +81,13 @@ const CollectionAddScreen = ({navigation}) => {
 
     return (
         <CollectionAddContainer>
-            <ScreenHeader 
-                title={'Add Item'}
+            <Header 
+                title={"Add Item"}
+                onPressLeftIcon={() => 
+                    navigation.navigate("Home", {
+                        screen: "HomeMain"
+                    })
+                }
             />
             <CollectionFormHolder>
                 <TextInput
