@@ -16,7 +16,7 @@ const useGetCategories = () => {
         //render all categories including those in the database
         const unsubscribe = onSnapshot(categoryQuery, (snapshotData) => {
             // console.log("FETCH CATEGORIES");
-            const prepCategories = preMadeCategoriess.map(category => ({
+            const prepCategories = preMadeCategories.map(category => ({
                 ...category,
                 // user_id: userID
             }));

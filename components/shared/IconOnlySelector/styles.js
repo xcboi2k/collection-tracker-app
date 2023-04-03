@@ -3,7 +3,7 @@ import { FONTS } from '../../../constants/constant'
 import styled from "styled-components/native";
 
 export const IconSelectorContainer = styled.View`
-    width: 90%;
+    width: 100%;
     margin-bottom: 10px;
 `;
 

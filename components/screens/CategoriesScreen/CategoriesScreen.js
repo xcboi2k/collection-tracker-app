@@ -8,10 +8,11 @@ import { CategoriesContainer } from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 
+import useCategoryStore from '../../../hooks/useCategoryStore';
 import useGetCategories from '../../../hooks/useGetCategories';
 
 const CategoriesScreen = () => {
-    const [categoryData] = useGetCategories();
+    const [categories] = useCategoryStore((state) => state.categories);
     const navigation = useNavigation();
 
     const handleNavigation = (id) =>
