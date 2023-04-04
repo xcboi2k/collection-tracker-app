@@ -8,9 +8,10 @@ export const CategoriesContainer = styled(Container)`
     padding-bottom: 20px;
 `;
 
-export const HolderContainer = styled.View`
-    margin-top: 20px;
-    margin-bottom: 5px;
-    align-items: center;
+export const CategoryList = styled.FlatList`
     width: 90%;
+    margin-top: 30px;
+    padding: 10px;
+    height: 60%;
+    flex-grow: 0;
 `;

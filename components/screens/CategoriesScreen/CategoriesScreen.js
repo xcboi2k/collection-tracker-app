@@ -35,6 +35,33 @@ const CategoriesScreen = () => {
                 })
             }
             />
+            <CategoryList
+                data={categories}
+                renderItem={({ item }) => (
+                    <ButtonIcon
+                        name={item.category_icon}
+                        iconColor={item.category_color}
+                        iconSize={25}
+                        label={item.category_name}
+                        key={item.id}
+                        type=""
+                        onPress={() => { handleNavigation(item.id); }}
+                        styles={{ marginHorizontal: 10 }}
+                    />
+                )}
+                horizontal={false}
+                numColumns={4}
+                ItemSeparatorComponent={() => (
+                    <View style={{ width: "100%", marginVertical: 10 }} />
+                )}
+                columnWrapperStyle={{
+                    justifyContent: "flex-start",
+                }}
+                extraData={{
+                    isExpense,
+                    categories: categories.length
+                }}
+            />
         </CategoriesContainer>
     )
 }
