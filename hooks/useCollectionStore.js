@@ -57,4 +57,6 @@ const CollectionStore = (set, get) => ({
     },
 });
 
-export const useCollectionStore = create(CollectionStore);
+const useCollectionStore = create(CollectionStore);
+
+export default useCollectionStore;

@@ -13,9 +13,10 @@ import useCategoryStore from '../../../hooks/useCategoryStore';
 import { useGetCategories } from '../../../hooks/useGetCategories';
 
 const CategoriesScreen = () => {
-    // useGetCategories();
-    // const [categories] = useCategoryStore((state) => state.categories);
+    const [categories] = useCategoryStore((state) => state.categories);
     const navigation = useNavigation();
+
+    console.log(categories)
 
     const data = [
         {
@@ -59,7 +60,7 @@ const CategoriesScreen = () => {
             }
             />
             <CategoryList
-                data={data}
+                data={categories}
                 renderItem={({ item }) => (
                     <ButtonIcon
                         name={item.category_icon}
@@ -81,7 +82,7 @@ const CategoriesScreen = () => {
                     justifyContent: "flex-start",
                 }}
                 extraData={{
-                    data: data.length
+                    categories: categories.length
                 }}
             />
         </CategoriesContainer>

@@ -36,17 +36,13 @@ const WishlistStore = (set, get) => ({
             console.log('updateWishlistItem:', err);
         }
     },
-    deleteWishlistItem: async(documentId, fileReference) => {
+    deleteWishlistItem: async(documentId) => {
         try{
             console.log('Delete', documentId);
 
             const docRef = doc(db, 'wishlist', documentId);
-            const fileRef = ref(storage, fileReference);
 
             await deleteDoc(docRef);
-            if (fileReference) {
-                await deleteObject(fileRef);
-            }
         }
         catch(err){
             console.log('deleteWishlistItem:', err);
@@ -54,4 +50,6 @@ const WishlistStore = (set, get) => ({
     },
 });
 
-export const useWishlistStore = create(WishlistStore);
+const useWishlistStore = create(WishlistStore);
+
+export default useWishlistStore;

@@ -5,7 +5,10 @@ import TabNavigator from "../navigators/TabNavigator/TabNavigator";
 import MainMenuScreen from '../screens/MainMenuScreen/MainMenuScreen'
 const Stack = createNativeStackNavigator();
 
+import useGetCategories from "../../hooks/useGetCategories";
+
 const MainApp = () => {
+    useGetCategories();
     return (
         <NavigationContainer>
             <Stack.Navigator

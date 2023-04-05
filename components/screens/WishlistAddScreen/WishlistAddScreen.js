@@ -12,7 +12,7 @@ import useWishlistStore from '../../../hooks/useWishlistStore';
 
 const WishlistAddScreen = ({ navigation }) => {
     const addWishlistItem = useWishlistStore((state) => state.addWishlistItem);
-    
+
     const initialValues = {
         wishlistName: "",
         wishlistAmount: "",

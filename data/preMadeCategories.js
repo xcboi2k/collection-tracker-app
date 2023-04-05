@@ -30,3 +30,5 @@ const preMadeCategories = [
         id: "3",
     },
 ]
+
+export default preMadeCategories;

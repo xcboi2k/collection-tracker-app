@@ -16,13 +16,12 @@ import Header from '../../shared/Header/Header';
 
 import useCollectionStore from '../../../hooks/useCollectionStore';
 import useCategoryStore from '../../../hooks/useCategoryStore';
-import useGetCategories from '../../../hooks/useGetCategories';
 import useUploadImage from '../../../hooks/useUploadImage';
 
 const CollectionAddScreen = ({navigation}) => {
     let photoId = uuid.v4();
     const [categories] = useCategoryStore((state) => state.categories);
-    const addCollectionItem = useCollectionStore(state => state.addCollectionItem);
+    const addCollectionItem = useCollectionStore((state) => state.addCollectionItem);
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "collection/");
     const [selectedIcon, setSelectedIcon] = useState({
         label: "",
@@ -31,6 +30,7 @@ const CollectionAddScreen = ({navigation}) => {
         id: ""
     });
 
+    console.log(categories)
     const handleIconPress = (icon) => {
         setSelectedIcon(icon);
         formik.setFieldValue("categoryName", icon.label);

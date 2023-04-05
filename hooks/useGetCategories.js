@@ -7,7 +7,7 @@ import preMadeCategories from '../data/preMadeCategories';
 
 import useCategoryStore from "./useCategoryStore";
 
-export default function useGetCategories() {
+const useGetCategories = () => {
     const resetCategories = useCategoryStore((state) => (state.reset));
     const setCategories = useCategoryStore((state) => (state.setCategories));
 
@@ -21,7 +21,6 @@ export default function useGetCategories() {
                 ...category,
                 // user_id: userID
             }));
-            console.log(prepCategories);
             const userList = [];
 
             snapshotData.forEach((doc) => {
@@ -42,3 +41,5 @@ export default function useGetCategories() {
         return unsubscribe;
     }, []);
 };
+
+export default useGetCategories;
