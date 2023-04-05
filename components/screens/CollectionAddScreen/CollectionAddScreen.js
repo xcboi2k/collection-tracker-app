@@ -47,7 +47,7 @@ const CollectionAddScreen = ({navigation}) => {
             imgFile = await uploadImage();
         }
         addCollectionItem({
-            amount: Number(values.amount),
+            collectionItem_amount: Number(values.amount),
             category_name: values.categoryName,
             comment_img_ref: imgFile ? imgFile.imgRef : "",
             comment_img: imgFile ? imgFile.imgUri : "",

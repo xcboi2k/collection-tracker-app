@@ -14,3 +14,9 @@ export const HolderContainer = styled.View`
     align-items: center;
     width: 90%;
 `;
+
+export const DefaultText = styled.Text`
+    text-align: center;
+    font-size:20px;
+    width:100%;
+`;

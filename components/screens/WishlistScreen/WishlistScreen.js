@@ -10,9 +10,10 @@ import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import WishlistButton from '../../shared/WishlistButton/WishlistButton';
 
 import useWishlistStore from '../../../hooks/useWishlistStore';
+import useGetWishlistItems from '../../../hooks/useGetWishlistItems';
 
 const WishlistScreen = () => {
-    // const [wishlistItems] = useWishlistStore((state) => state.wishlistItems);
+    const [wishlistItems] = useGetWishlistItems();
     const navigation = useNavigation();
 
     const data = [
@@ -64,10 +65,10 @@ const WishlistScreen = () => {
             }
             />
             {
-                data.length ? 
+                wishlistItems.length ? 
                 <HolderContainer>
                     <FlatList 
-                        data={data}
+                        data={wishlistItems}
                         renderItem={renderWishlistItem}
                         keyExtractor={(item) => item.id}
                     />
