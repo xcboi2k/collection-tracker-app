@@ -17,6 +17,7 @@ export const DashboardHeaderTitle = styled.Text`
     font-family: ${FONTS.BOLD};
     font-size: 20px;
     color: ${colors.primary.colorTwo};
+    margin-left: 10px;
 `;
 
 export const DashboardUserImg = styled.Image`
