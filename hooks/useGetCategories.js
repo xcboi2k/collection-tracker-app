@@ -8,6 +8,7 @@ import preMadeCategories from '../data/preMadeCategories';
 import useCategoryStore from "./useCategoryStore";
 
 const useGetCategories = () => {
+    const [categoryData, setCategoryData] = useState([]);
     const resetCategories = useCategoryStore((state) => (state.reset));
     const setCategories = useCategoryStore((state) => (state.setCategories));
 
@@ -36,10 +37,13 @@ const useGetCategories = () => {
                 // console.log("CATEGORY PUSHED", doc.id);
             });
             setCategories([...prepCategories, ...userList]);
+            setCategoryData([...prepCategories, ...userList]);
         });
 
         return unsubscribe;
     }, []);
+
+    return [categoryData];
 };
 
 export default useGetCategories;

@@ -17,10 +17,11 @@ import Header from '../../shared/Header/Header';
 import useCollectionStore from '../../../hooks/useCollectionStore';
 import useCategoryStore from '../../../hooks/useCategoryStore';
 import useUploadImage from '../../../hooks/useUploadImage';
+import useGetCategories from '../../../hooks/useGetCategories';
 
 const CollectionAddScreen = ({navigation}) => {
     let photoId = uuid.v4();
-    const [categories] = useCategoryStore((state) => state.categories);
+    const [categories] = useGetCategories();
     const addCollectionItem = useCollectionStore((state) => state.addCollectionItem);
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "collection/");
     const [selectedIcon, setSelectedIcon] = useState({

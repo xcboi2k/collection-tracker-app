@@ -10,10 +10,10 @@ import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
 
 import useCategoryStore from '../../../hooks/useCategoryStore';
-import { useGetCategories } from '../../../hooks/useGetCategories';
+import useGetCategories from '../../../hooks/useGetCategories';
 
 const CategoriesScreen = () => {
-    const [categories] = useCategoryStore((state) => state.categories);
+    const [categories] = useGetCategories();
     const navigation = useNavigation();
 
     console.log(categories)
