@@ -4,16 +4,39 @@ import { useNavigation } from "@react-navigation/native";
 
 import { ICON_NAMES } from '../../../constants/constant'
 
-import { CategoriesContainer } from './styles'
+import { CategoriesContainer, CategoryList } from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
+import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
 
 import useCategoryStore from '../../../hooks/useCategoryStore';
-import useGetCategories from '../../../hooks/useGetCategories';
+import { useGetCategories } from '../../../hooks/useGetCategories';
 
 const CategoriesScreen = () => {
-    const [categories] = useCategoryStore((state) => state.categories);
+    // useGetCategories();
+    // const [categories] = useCategoryStore((state) => state.categories);
     const navigation = useNavigation();
+
+    const data = [
+        {
+            id: 1,
+            category_icon: ICON_NAMES.CATEGORIES_ICONS.CAR,
+            category_color: '#E6B8B8',
+            category_name: 'Cars'
+        },
+        {
+            id: 2,
+            category_icon: ICON_NAMES.CATEGORIES_ICONS.ROBOT,
+            category_color: '#5ABFC6',
+            category_name: 'Transformers'
+        },
+        {
+            id: 3,
+            category_icon: ICON_NAMES.CATEGORIES_ICONS.LIGHTSABER,
+            category_color: '#B295C7',
+            category_name: 'Star Wars'
+        },
+    ]
 
     const handleNavigation = (id) =>
         navigation.navigate("Categories", {
@@ -21,7 +44,7 @@ const CategoriesScreen = () => {
             params: {
                 categoryID: id
             }
-        });
+    });
 
     return (
         <CategoriesContainer>
@@ -36,7 +59,7 @@ const CategoriesScreen = () => {
             }
             />
             <CategoryList
-                data={categories}
+                data={data}
                 renderItem={({ item }) => (
                     <ButtonIcon
                         name={item.category_icon}
@@ -58,8 +81,7 @@ const CategoriesScreen = () => {
                     justifyContent: "flex-start",
                 }}
                 extraData={{
-                    isExpense,
-                    categories: categories.length
+                    data: data.length
                 }}
             />
         </CategoriesContainer>

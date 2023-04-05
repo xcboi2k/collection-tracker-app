@@ -1,15 +1,55 @@
-import { View, Text } from 'react-native'
+import { FlatList } from 'react-native'
 import React from 'react'
 import { useNavigation } from "@react-navigation/native";
 
 import { ICON_NAMES } from '../../../constants/constant'
 
-import { WishlistContainer } from './styles'
+import { WishlistContainer, HolderContainer, DefaultText } from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
+import WishlistButton from '../../shared/WishlistButton/WishlistButton';
+
+import useWishlistStore from '../../../hooks/useWishlistStore';
 
 const WishlistScreen = () => {
+    // const [wishlistItems] = useWishlistStore((state) => state.wishlistItems);
     const navigation = useNavigation();
+
+    const data = [
+        {
+            id: 1,
+            wishlist_name: 'Jetfire',
+            wishlist_amount: 2500
+        },
+        {
+            id: 2,
+            wishlist_name: 'Commander Doom',
+            wishlist_amount: 500
+        },
+        {
+            id: 3,
+            wishlist_name: 'Bootleg Lego 212th army',
+            wishlist_amount: 1000
+        },
+    ]
+
+    const handleNavigation = (id) =>
+        navigation.navigate("Wishlist", {
+            screen: "WishlistEdit",
+            params: {
+                wishlistID: id
+            }
+    });
+
+    const renderWishlistItem = ({ item }) => {
+        return(
+            <WishlistButton 
+                onPress={() => { handleNavigation(item.id); }}
+                name={item.wishlist_name}
+                amount={item.wishlist_amount}
+            />
+        );
+    };
 
     return (
         <WishlistContainer>
@@ -23,6 +63,18 @@ const WishlistScreen = () => {
                 })
             }
             />
+            {
+                data.length ? 
+                <HolderContainer>
+                    <FlatList 
+                        data={data}
+                        renderItem={renderWishlistItem}
+                        keyExtractor={(item) => item.id}
+                    />
+                </HolderContainer>
+                : <DefaultText>Add an item to your Wishlist.</DefaultText>
+            }
+            
         </WishlistContainer>
     )
 }
