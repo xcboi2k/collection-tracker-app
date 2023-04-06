@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import uuid from 'react-native-uuid';
 
-import { CollectionAddContainer, CollectionFormHolder, CollectionCategoryHolder, ButtonContainer } from './styles';
+import { CollectionAddContainer, CollectionFormHolder, CollectionCategoryHolder, ButtonContainer, ScrollContainer } from './styles';
 
 import colors from '../../../assets/themes/colors';
 import { ICON_NAMES } from '../../../constants/constant';
@@ -21,6 +21,7 @@ import useGetCategories from '../../../hooks/useGetCategories';
 
 const CollectionAddScreen = ({navigation}) => {
     let photoId = uuid.v4();
+    const [date, setDate] = useState(new Date());
     const [categories] = useGetCategories();
     const addCollectionItem = useCollectionStore((state) => state.addCollectionItem);
     const [image, chooseImage, uploadImage, filename] = useUploadImage(photoId, "collection/");
@@ -105,6 +106,8 @@ const CollectionAddScreen = ({navigation}) => {
                     }}
                     customLabel="Collection Item Amount:"
                 />
+            </CollectionFormHolder>
+            <ScrollContainer>
                 <CollectionCategoryHolder>
                     <IconSelector
                         iconData={categories}
@@ -123,8 +126,7 @@ const CollectionAddScreen = ({navigation}) => {
                     onPress={chooseImage}
                     filename={filename}
                 />
-            </CollectionFormHolder>
-            <ButtonContainer>
+                <ButtonContainer>
                 <Button
                     width="100%"
                     title={"Add"}
@@ -135,7 +137,8 @@ const CollectionAddScreen = ({navigation}) => {
                         disabled: isSubmitDisabled,
                     }}
                 />
-            </ButtonContainer>
+                </ButtonContainer>
+            </ScrollContainer>
         </CollectionAddContainer>
     )
 }

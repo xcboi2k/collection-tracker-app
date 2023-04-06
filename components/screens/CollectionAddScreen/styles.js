@@ -16,6 +16,12 @@ export const CollectionFormHolder = styled.View`
     justify-content: flex-start;
 `;
 
+export const ScrollContainer = styled.ScrollView`
+    width: 90%;
+    flex-grow: 0;
+    height: 65%;
+`
+
 export const CollectionCategoryHolder = styled.View`
     margin-bottom: 30px;
     width: 100%;
