@@ -15,7 +15,6 @@ import TextInput from '../../shared/TextInput';
 import Header from '../../shared/Header/Header';
 
 import useCollectionStore from '../../../hooks/useCollectionStore';
-import useCategoryStore from '../../../hooks/useCategoryStore';
 import useUploadImage from '../../../hooks/useUploadImage';
 import useGetCategories from '../../../hooks/useGetCategories';
 
@@ -32,7 +31,6 @@ const CollectionAddScreen = ({navigation}) => {
         id: ""
     });
 
-    console.log(categories)
     const handleIconPress = (icon) => {
         setSelectedIcon(icon);
         formik.setFieldValue("categoryName", icon.label);
@@ -129,7 +127,7 @@ const CollectionAddScreen = ({navigation}) => {
                 <ButtonContainer>
                 <Button
                     width="100%"
-                    title={"Add"}
+                    title={"ADD"}
                     type={"filled"}
                     rounded={"10px"}
                     onPress={formik.handleSubmit}

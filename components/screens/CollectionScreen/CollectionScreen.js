@@ -19,7 +19,7 @@ const CollectionScreen = () => {
         navigation.navigate("Collection", {
             screen: "CollectionEdit",
             params: {
-                collectionID: id
+                collectionItemID: id
             }
     });
 
@@ -40,17 +40,17 @@ const CollectionScreen = () => {
             rightIconName={ICON_NAMES.CATEGORIES_ICONS.GAMING}
             rightIconSize={32}
             />
-            {
-                collectionItems.length ? 
                 <HolderContainer>
-                    <FlatList 
-                        data={collectionItems}
-                        renderItem={renderCollectionItem}
-                        keyExtractor={(item) => item.id}
-                    />
+                    {
+                        collectionItems.length ? 
+                        <FlatList 
+                            data={collectionItems}
+                            renderItem={renderCollectionItem}
+                            keyExtractor={(item) => item.id}
+                        />
+                        : <DefaultText>Add an item to your Collection.</DefaultText>
+                    }
                 </HolderContainer>
-                : <DefaultText>Add an item to your Collection.</DefaultText>
-            }
         </CollectionContainer>
     )
 }

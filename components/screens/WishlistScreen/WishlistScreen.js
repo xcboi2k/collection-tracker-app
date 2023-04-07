@@ -16,29 +16,11 @@ const WishlistScreen = () => {
     const [wishlistItems] = useGetWishlistItems();
     const navigation = useNavigation();
 
-    const data = [
-        {
-            id: 1,
-            wishlist_name: 'Jetfire',
-            wishlist_amount: 2500
-        },
-        {
-            id: 2,
-            wishlist_name: 'Commander Doom',
-            wishlist_amount: 500
-        },
-        {
-            id: 3,
-            wishlist_name: 'Bootleg Lego 212th army',
-            wishlist_amount: 1000
-        },
-    ]
-
     const handleNavigation = (id) =>
         navigation.navigate("Wishlist", {
             screen: "WishlistEdit",
             params: {
-                wishlistID: id
+                wishlistItemID: id
             }
     });
 
@@ -64,18 +46,18 @@ const WishlistScreen = () => {
                 })
             }
             />
-            {
-                wishlistItems.length ? 
                 <HolderContainer>
-                    <FlatList 
-                        data={wishlistItems}
-                        renderItem={renderWishlistItem}
-                        keyExtractor={(item) => item.id}
-                    />
+                    {
+                        wishlistItems.length ?
+                        <FlatList 
+                            data={wishlistItems}
+                            renderItem={renderWishlistItem}
+                            keyExtractor={(item) => item.id}
+                        />
+                        : <DefaultText>Add an item to your Wishlist.</DefaultText>
+                    }
+                    
                 </HolderContainer>
-                : <DefaultText>Add an item to your Wishlist.</DefaultText>
-            }
-            
         </WishlistContainer>
     )
 }

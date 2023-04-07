@@ -26,7 +26,6 @@ const WishlistAddScreen = ({ navigation }) => {
             wishlist_name: values.wishlistName,
             wishlist_amount: values.wishlistAmount,
             created_at: new Date(),
-            update_at: "",
             // user_id: user.user_id
         });
         resetForm();

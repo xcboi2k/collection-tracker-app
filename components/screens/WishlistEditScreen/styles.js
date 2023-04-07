@@ -8,9 +8,17 @@ export const WishlistEditContainer = styled(Container)`
     padding-bottom: 20px;
 `;
 
-export const HolderContainer = styled.View`
-    margin-top: 20px;
-    margin-bottom: 5px;
-    align-items: center;
+export const WishlistFormHolder = styled.View`
+    padding-top: 40px;
     width: 90%;
+    align-items: center;
+    justify-content: flex-start;
+`;
+
+export const ButtonContainer = styled.View`
+    flex-direction: row;
+    justify-content: ${({ mode }) =>
+        mode === "edit" ? "space-between" : "flex-end"};
+    width: 90%;
+    margin-top: 20px;
 `;
