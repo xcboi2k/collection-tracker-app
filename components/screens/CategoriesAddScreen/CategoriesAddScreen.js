@@ -12,6 +12,7 @@ import TextInput from '../../shared/TextInput';
 import IconOnlySelector from '../../shared/IconOnlySelector';
 import ColorPickerPanel from '../../shared/ColorPickerPanel';
 import Header from '../../shared/Header/Header';
+import ColorPicker from '../../common/ColorPicker';
 
 import useCategoryStore from "../../../hooks/useCategoryStore";
 
@@ -47,7 +48,6 @@ const CategoriesAddScreen = ({navigation}) => {
             category_color: values.categoryColor,
             category_icon: values.categoryIcon,
             created_at: new Date(),
-            update_at: "",
             // user_id: user.user_id
         });
         resetForm();
