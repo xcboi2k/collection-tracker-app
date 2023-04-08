@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "collection-tracker-app",
-    "slug": "collection-tracker-app",
+    "name": "CollectorPlus",
+    "slug": "CollectorPlus",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
