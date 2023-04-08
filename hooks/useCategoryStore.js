@@ -35,10 +35,9 @@ const categoryStore = (set, get) => ({
         }
     },
     updateCategory: async (documentId, updatedCategory) => {
+        const docRef = doc(db, "categories", documentId);
         try {
-            let docRef;
             // CREATE A REFERENCE TO THE DOCUMENT AND THE FILE
-            docRef = doc(db, "categories", documentId);
             await updateDoc(docRef, updatedCategory);
         } catch (err) {
             console.log("updateCategoryError:", err);

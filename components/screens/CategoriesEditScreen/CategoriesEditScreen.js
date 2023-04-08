@@ -24,8 +24,8 @@ const CategoriesEditScreen = ({route, navigation}) => {
     const deleteCategory = useCategoryStore((state) => state.deleteCategory);
 
     const [currentCategory, setCurrentCategory] = useState(() => allCategories.find(category => category.id === categoryID));
-    const [selectedIcon, setSelectedIcon] = useState("");
-    const [selectedColor, setSelectedColor] = useState("");
+    const [selectedIcon, setSelectedIcon] = useState(currentCategory.category_icon);
+    const [selectedColor, setSelectedColor] = useState(currentCategory.category_color);
     const [showColorWheel, setShowColorWheel] = useState(false);
 
     const initialValues = {
@@ -43,12 +43,12 @@ const CategoriesEditScreen = ({route, navigation}) => {
 
     const handleIconPress = (icon) => {
         setSelectedIcon(icon);
-        formik.setFieldValue("category_icon", icon);
+        formik.setFieldValue("categoryIcon", icon);
     };
 
     const handleColorPress = (color) => {
         setSelectedColor(color);
-        formik.setFieldValue("category_color", color);
+        formik.setFieldValue("categoryColor", color);
         setShowColorWheel(false);
     };
 

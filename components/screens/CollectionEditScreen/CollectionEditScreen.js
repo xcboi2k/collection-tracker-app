@@ -80,7 +80,7 @@ const CollectionEditScreen = ({route, navigation}) => {
 
         let updatedImgRef = imgFile ? imgFile.imgRef : currentCollectionItem.comment_img_ref;
         let updatedImg = imgFile ? imgFile.imgUri : currentCollectionItem.comment_img;
-        const collectionItemIcon = values.icon === currentCollectionItem.collectionItem_icon ? currentCollectionItem.collectionItem_icon : selectedIcon.currentIcon;
+        const collectionItemIcon = values.collectionItemIcon === currentCollectionItem.collectionItem_icon ? currentCollectionItem.collectionItem_icon : selectedIcon.currentIcon;
         const categoryName = values.categoryName === currentCollectionItem.category_name ? currentCollectionItem.category_name : selectedIcon.label;
 
         const newCollectionItem = {

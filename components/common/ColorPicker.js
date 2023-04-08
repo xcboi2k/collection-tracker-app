@@ -15,7 +15,7 @@ const ColorPicker = ({ handleColorPress, setShowColorWheel }) => {
             <CloseButton onPress={() => setShowColorWheel(false)}>
                 <Icon
                     name={ICON_NAMES.SYSTEM_ICONS.CROSS}
-                    color={colors.white}
+                    color={colors.primary.colorTwo}
                     size={50}
                 />
             </CloseButton>

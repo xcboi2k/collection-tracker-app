@@ -40,3 +40,15 @@ export const Title = styled.Text`
 export const RightIcon = styled.TouchableOpacity`
     margin-left: auto;
 `;
+
+export const DefaultText = styled.Text`
+    text-align: center;
+    font-size:20px;
+    width:100%;
+`;
+
+export const HomeImg = styled.Image`
+    margin-top: 50px;
+    width: 200px;
+    height: 200px;
+`;

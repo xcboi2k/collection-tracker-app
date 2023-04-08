@@ -3,7 +3,7 @@ import React from 'react'
 
 import { DashboardHeaderContainer, DashboardHeaderTitle, DashboardUserImg } from './styles'
 
-import imagePlaceHolder from '../../../assets/test.jpg'
+import imagePlaceHolder from '../../../assets/icon.png'
 
 const DashboardHeader = ({title}) => {
     return (

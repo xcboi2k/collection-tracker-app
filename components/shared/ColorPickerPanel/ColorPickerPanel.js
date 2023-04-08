@@ -34,8 +34,8 @@ const ColorPickerPanel = ({ colorList = [], selectedColor, onColorPress, onAddPr
                     renderItem={({ item }) => (
                         <ColorButton color={item.color} onPress={() => onColorPress(item.color)}>
                             {selectedColor === item.color && <Selected><Icon
-                                name={ICON_NAMES.SYSTEM_ICONS.CROSS}
-                                color={colors.primary.colorOne}
+                                name={ICON_NAMES.SYSTEM_ICONS.SELECT}
+                                color={colors.primary.colorTwo}
                             /></Selected>}
                         </ColorButton>
                     )}

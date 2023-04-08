@@ -37,8 +37,6 @@ const CollectionScreen = () => {
         <CollectionContainer>
             <ScreenHeader 
             title={'Collections'}
-            rightIconName={ICON_NAMES.CATEGORIES_ICONS.GAMING}
-            rightIconSize={32}
             />
                 <HolderContainer>
                     {

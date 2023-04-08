@@ -20,7 +20,7 @@ export default function useUploadImage(id, filepath, metadata = {}) {
 
         let source = { uri: result.uri };
         // console.log(result);
-        if (!result.cancelled) {
+        if (!result.canceled) {
             const filename = source.uri.substring(source.uri.lastIndexOf('/') + 1);
             setImage(source);
             setFilename(filename);

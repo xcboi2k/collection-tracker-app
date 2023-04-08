@@ -19,6 +19,7 @@ export const ICON_NAMES = {
         DROPDOWN: "dropdown-icon",
         HOME: "home-icon",
         WISHLIST: "wishlist-icon",
+        SELECT: "select-icon",
     },
     CATEGORIES_ICONS: {
         CAR: "car-icon",
