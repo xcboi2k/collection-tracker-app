@@ -35,6 +35,7 @@ export const Title = styled.Text`
     font-family: ${FONTS.BOLD};
     font-size: 20px;
     color: ${colors.primary.black};
+    width: 80%;
 `;
 
 export const RightIcon = styled.TouchableOpacity`

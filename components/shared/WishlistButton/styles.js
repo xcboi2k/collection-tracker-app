@@ -17,7 +17,7 @@ export const Title = styled.Text`
     font-size: 20px;
     color: ${colors.primary.colorTwo};
     padding: 2px;
-    width: 100%;
+    width: 80%;
 `;
 
 export const Amount = styled.Text`
