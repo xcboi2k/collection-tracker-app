@@ -9,15 +9,8 @@ const DashboardRecentPanel = ({ data }) => {
     return (
         <RecentPanel>
             <DetailsContainer>
-                <ItemContainer>
-                    <DetailsContainer>
-                        <ItemName>{data.itemName}</ItemName>
-                    </DetailsContainer>
-                    <DetailsContainer>
-                        <ItemPrice>₱ {data.itemAmount}</ItemPrice>
-                    </DetailsContainer>
-                </ItemContainer>
-                <CommentImg source={data.itemPhoto ? { uri: data.itemPhoto } : imgPlaceholder} />
+                <ItemName>{data.collectionItem_name}</ItemName>
+                <CommentImg source={data.comment_img ? { uri: data.comment_img } : imgPlaceholder} />
             </DetailsContainer>
         </RecentPanel>
     )

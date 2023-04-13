@@ -19,24 +19,14 @@ export const RecentPanel = styled.ScrollView`
 export const DetailsContainer = styled.View`
     flex-direction: row;
     align-items: center;
-`;
-
-export const ItemContainer = styled.Text`
-    width: 20%;
-    flex-wrap: wrap;
-    align-items: center;
+    justify-content: space-around;
 `;
 
 export const ItemName = styled.Text`
     font-family: ${FONTS.BOLD};
     font-size: 16px;
     color: ${colors.primary.colorOne};
-`;
-
-export const ItemPrice = styled.Text`
-    font-family: ${FONTS.REGULAR};
-    font-size: 14px;
-    color: ${colors.primary.colorOne};
+    width: 75%;
 `;
 
 export const CommentImg = styled.Image`
