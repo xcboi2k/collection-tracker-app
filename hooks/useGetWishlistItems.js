@@ -11,7 +11,7 @@ const useGetWishlistItems = () => {
 
     useEffect(() => {
         const wishlistColRef = collection(db, "wishlist");
-        const wishlistQuery = query(wishlistColRef);
+        const wishlistQuery = query(wishlistColRef, orderBy("wishlist_amount"));
 
         const unsubscribe = onSnapshot(wishlistQuery, (snapshotData) => {
             const userList = [];

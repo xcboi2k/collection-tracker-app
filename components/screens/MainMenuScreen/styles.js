@@ -18,9 +18,9 @@ export const HolderContainer = styled.View`
     width: 90%;
 `;
 
-export const RecentPanelContainer = styled.ScrollView`
-    width: 90%;
-    flex-grow: 0;
+export const RecentPanelContainer = styled.View`
+    width: 100%;
+    align-items: center;
 `;
 
 export const TitleButtonContainer = styled.View`
@@ -28,7 +28,6 @@ export const TitleButtonContainer = styled.View`
     flex-direction: row;
     align-items: center;
     margin-top: 7px;
-    margin-bottom: 7px;
 `;
 
 export const Title = styled.Text`
@@ -52,4 +51,12 @@ export const HomeImg = styled.Image`
     margin-top: 50px;
     width: 200px;
     height: 200px;
+`;
+
+export const RecentList = styled.FlatList`
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    height: 60%;
+    flex-grow: 0;
 `;

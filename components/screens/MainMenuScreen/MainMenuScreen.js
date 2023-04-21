@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { 
     MainMenuContainer, 
     HolderContainer, 
+    RecentList,
     RecentPanelContainer, 
     TitleButtonContainer, 
     Title, 
@@ -49,32 +50,42 @@ const MainMenuScreen = () => {
                 <DefaultText>Graphs under maintenance.</DefaultText>
                 {/* <HomeImg source={imagePlaceHolder}/> */}
             </HolderContainer>
-            {
-                collectionItems.length ?
-                <HolderContainer>
-                    <TitleButtonContainer>
-                        <Title>Recent Additions</Title>
-                        <RightIcon onPress={() => 
-                            navigation.navigate("Home", {
-                                screen: "CollectionAdd"
-                            })}>
-                            <Icon 
-                                name={ICON_NAMES.SYSTEM_ICONS.ADD}
-                                color={colors.primary.colorOne}
-                                size={32}
-                            />
-                        </RightIcon>
-                    </TitleButtonContainer>
-                    <HolderContainer>
-                        <FlatList
-                            data={collectionData}
-                            renderItem={renderRecentPanelItem}
-                            keyExtractor={(item) => item.id}
+            <HolderContainer>
+                <TitleButtonContainer>
+                    <Title>Recent Additions</Title>
+                    <RightIcon onPress={() => 
+                        navigation.navigate("Home", {
+                            screen: "CollectionAdd"
+                        })}>
+                        <Icon 
+                            name={ICON_NAMES.SYSTEM_ICONS.ADD}
+                            color={colors.primary.colorOne}
+                            size={32}
                         />
-                    </HolderContainer>
-                </HolderContainer>
+                    </RightIcon>
+                </TitleButtonContainer>
+                {collectionItems.length ?
+                <RecentPanelContainer>
+                    <RecentList 
+                        data={collectionData}
+                        renderItem={renderRecentPanelItem}
+                        horizontal={false}
+                        numColumns={4}
+                        ItemSeparatorComponent={() => (
+                            <View style={{ width: "100%", marginVertical: 10 }} />
+                        )}
+                        columnWrapperStyle={{
+                            justifyContent: "flex-start",
+                        }}
+                        extraData={{
+                            collectionData: collectionData.length
+                        }}
+                    />
+                </RecentPanelContainer>
                 : null
-            }
+                }
+            </HolderContainer>
+
             {/* {
                 collectionItems.length ?
                 <HolderContainer>

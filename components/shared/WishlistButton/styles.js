@@ -17,13 +17,15 @@ export const Title = styled.Text`
     font-size: 20px;
     color: ${colors.primary.colorTwo};
     padding: 2px;
-    width: 80%;
+    width: 70%;
 `;
 
 export const Amount = styled.Text`
     font-family: ${FONTS.REGULAR};
     font-size: 20px;
+    text-align: right;
     color: ${colors.primary.colorTwo};
     padding: 2px;
     margin-left: auto;
+    width: 30%;
 `;

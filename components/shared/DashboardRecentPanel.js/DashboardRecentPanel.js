@@ -7,12 +7,7 @@ import imgPlaceholder from '../../../assets/test.jpg'
 
 const DashboardRecentPanel = ({ data }) => {
     return (
-        <RecentPanel>
-            <DetailsContainer>
-                <ItemName>{data.collectionItem_name}</ItemName>
-                <CommentImg source={data.comment_img ? { uri: data.comment_img } : imgPlaceholder} />
-            </DetailsContainer>
-        </RecentPanel>
+        <CommentImg source={data.comment_img ? { uri: data.comment_img } : imgPlaceholder} />
     )
 }
 

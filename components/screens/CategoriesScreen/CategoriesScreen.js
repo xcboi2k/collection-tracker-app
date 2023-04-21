@@ -18,27 +18,6 @@ const CategoriesScreen = () => {
 
     console.log(categories)
 
-    const data = [
-        {
-            id: 1,
-            category_icon: ICON_NAMES.CATEGORIES_ICONS.CAR,
-            category_color: '#E6B8B8',
-            category_name: 'Cars'
-        },
-        {
-            id: 2,
-            category_icon: ICON_NAMES.CATEGORIES_ICONS.ROBOT,
-            category_color: '#5ABFC6',
-            category_name: 'Transformers'
-        },
-        {
-            id: 3,
-            category_icon: ICON_NAMES.CATEGORIES_ICONS.LIGHTSABER,
-            category_color: '#B295C7',
-            category_name: 'Star Wars'
-        },
-    ]
-
     const handleNavigation = (id) =>
         navigation.navigate("Categories", {
             screen: "CategoriesEdit",
