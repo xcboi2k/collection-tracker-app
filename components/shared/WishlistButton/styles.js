@@ -13,19 +13,19 @@ export const Container = styled.TouchableOpacity`
 `;
 
 export const Title = styled.Text`
-    font-family: ${FONTS.REGULAR};
-    font-size: 20px;
+    font-family: ${FONTS.MEDIUM};
+    font-size: 15px;
     color: ${colors.primary.colorTwo};
     padding: 2px;
-    width: 70%;
+    width: 65%;
 `;
 
 export const Amount = styled.Text`
-    font-family: ${FONTS.REGULAR};
-    font-size: 20px;
+    font-family: ${FONTS.MEDIUM};
+    font-size: 15px;
     text-align: right;
     color: ${colors.primary.colorTwo};
     padding: 2px;
     margin-left: auto;
-    width: 30%;
+    width: 35%;
 `;

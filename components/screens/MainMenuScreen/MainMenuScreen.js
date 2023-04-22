@@ -38,7 +38,7 @@ const MainMenuScreen = () => {
 
     const renderRecentPanelItem =({item}) => {
         return(
-            <DashboardRecentPanel data={item}/>
+            <DashboardRecentPanel data={item} styles={{ marginHorizontal: 10 }}/>
         );
     }
     return (
@@ -70,7 +70,7 @@ const MainMenuScreen = () => {
                         data={collectionData}
                         renderItem={renderRecentPanelItem}
                         horizontal={false}
-                        numColumns={4}
+                        numColumns={3}
                         ItemSeparatorComponent={() => (
                             <View style={{ width: "100%", marginVertical: 10 }} />
                         )}

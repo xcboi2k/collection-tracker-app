@@ -55,7 +55,7 @@ export const HomeImg = styled.Image`
 
 export const RecentList = styled.FlatList`
     width: 100%;
-    margin-top: 5px;
+    margin: 5px;
     padding: 10px;
     height: 60%;
     flex-grow: 0;

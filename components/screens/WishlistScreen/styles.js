@@ -13,6 +13,7 @@ export const HolderContainer = styled.View`
     margin-bottom: 5px;
     align-items: center;
     width: 90%;
+    height: 85%;
 `;
 
 export const DefaultText = styled.Text`

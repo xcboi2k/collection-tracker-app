@@ -16,11 +16,10 @@ import { FONTS } from '../../../constants/constant'
     
 // `;
 
-// export const DetailsContainer = styled.View`
-//     flex-direction: row;
-//     align-items: center;
-//     justify-content: space-around;
-// `;
+export const DetailsContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+`;
 
 // export const ItemName = styled.Text`
 //     font-family: ${FONTS.BOLD};

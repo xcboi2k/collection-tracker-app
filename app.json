@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "CollectorPlus",
-    "slug": "collectplus",
+    "slug": "collectorplus",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.xcboi2k.collectplus"
+      "package": "com.xcboi2k.collectorplus"
     },
     "web": {
       "favicon": "./assets/favicon.png"

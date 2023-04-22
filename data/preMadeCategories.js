@@ -22,7 +22,7 @@ const preMadeCategories = [
     },
     {
         user_id: "3",
-        category_name: "Robots",
+        category_name: "Cars",
         category_icon: ICON_NAMES.CATEGORIES_ICONS.CAR,
         category_color: colors.secondary.colorThree,
         created_at: "",
