@@ -29,14 +29,13 @@ const chartConfig = {
 };
 
 const DashboardChart = ({ title, chartData }) => {
-    
     const CategoryRenderItem = ({ item }) => (
         <DashboardCategoryItem
-            iconName={item.iconName}
-            categoryName={item.categoryName}
-            total={item.categoryAmount}
+            iconName={item.collectionItem_icon}
+            categoryName={item.category_name}
+            total={item.collectionItem_amount}
             key={item.id}
-            iconColor={item.iconColor}
+            iconColor={item.collectionItem_color}
             // onPress={() => handleNavigate(item.category_name)}
         />
     );

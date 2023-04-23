@@ -6,7 +6,7 @@ import { db } from '../firebase';
 import useCollectionStore from './useCollectionStore'
 
 export default function useGetCollectionChartData() {
-    const [chartData, setCharData] = useState([]);
+    const [chartData, setChartData] = useState([]);
     const setCollectionItems = useCollectionStore((state) => state.setCollectionItems);
     const collectionColRef = collection(db, 'collection');
     const collectionQuery = query(collectionColRef);
@@ -29,7 +29,7 @@ export default function useGetCollectionChartData() {
             const collectionDataList = collectionCategoryList.map(category => {
                 const targetCategory = collectionList.find(item => item.category_name === category);
                 return {
-                    amount: 0,
+                    collectionItem_amount: 0,
                     category_name: category,
                     collectionItem_icon: targetCategory.collectionItem_icon,
                     color: targetCategory.collectionItem_color,
@@ -45,14 +45,14 @@ export default function useGetCollectionChartData() {
                     targetCategory.amount += item.amount;
                 }
             });
-
+            
             const graphChartData = [
             {
                 name: "Collection",
                 data: collectionDataList
             }];
 
-            setCharData(graphChartData);
+            setChartData(graphChartData);
             setCollectionItems(collectionList);
             // console.log("data", data);
             console.log("FIREBASE WORKING");

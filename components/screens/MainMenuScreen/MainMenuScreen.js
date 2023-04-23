@@ -41,14 +41,22 @@ const MainMenuScreen = () => {
             <DashboardRecentPanel data={item} styles={{ marginHorizontal: 10 }}/>
         );
     }
+    console.log(chartData)
     return (
         <MainMenuContainer>
             <DashboardHeader
                 title={'Home'}
             />
             <HolderContainer>
-                <DefaultText>Graphs under maintenance.</DefaultText>
-                {/* <HomeImg source={imagePlaceHolder}/> */}
+                {/* {
+                    collectionItems.length ?
+                    <HolderContainer>
+                        <DashboardChart title={"Collection Status"} chartData={chartData}/>
+                    </HolderContainer> 
+                    : <DefaultText>Start adding items to see graph</DefaultText>
+                } */}
+                {/* <DefaultText>Graphs under maintenance.</DefaultText>
+                <HomeImg source={imagePlaceHolder}/> */}
             </HolderContainer>
             <HolderContainer>
                 <TitleButtonContainer>
@@ -67,7 +75,7 @@ const MainMenuScreen = () => {
                 {collectionItems.length ?
                 <RecentPanelContainer>
                     <RecentList 
-                        data={collectionData}
+                        data={collectionData.slice(0,11)}
                         renderItem={renderRecentPanelItem}
                         horizontal={false}
                         numColumns={3}
@@ -85,16 +93,7 @@ const MainMenuScreen = () => {
                 : null
                 }
             </HolderContainer>
-
-            {/* {
-                collectionItems.length ?
-                <HolderContainer>
-                    <DashboardChart title={"Collection Status"} chartData={chartData}/>
-                </HolderContainer> 
-                : <DefaultText>Start adding items to see graph</DefaultText>
-            } */}
         </MainMenuContainer>
-        
     )
     }
 

@@ -19,7 +19,7 @@ export const HolderContainer = styled.View`
 `;
 
 export const RecentPanelContainer = styled.View`
-    width: 100%;
+    width: 95%;
     align-items: center;
 `;
 
@@ -57,6 +57,7 @@ export const RecentList = styled.FlatList`
     width: 100%;
     margin: 5px;
     padding: 10px;
-    height: 60%;
+    height: 85%;
     flex-grow: 0;
+    /* background-color: ${colors.primary.black}; */
 `;
