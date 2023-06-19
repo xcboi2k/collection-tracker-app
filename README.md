@@ -14,6 +14,4 @@ CollectorPlus: Your essential mobile app for collectors. Track, organize, and ex
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [![React Native][https://reactnative.dev/]][Next-url]
+* [![React Native][reactnative.dev]][Next-url]
