@@ -14,6 +14,7 @@ CollectorPlus: Your essential mobile app for collectors. Track, organize, and ex
 
 ### Built With
 
-* [![React Native][reactnative.dev]][Next-url]
+* [![React Native][ReactNative]][ReactNative-url]
 
-[React Native]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[ReactNative]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[ReactNative-url]: https://reactnative.dev/
