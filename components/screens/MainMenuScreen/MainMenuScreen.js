@@ -41,7 +41,7 @@ const MainMenuScreen = () => {
             <DashboardRecentPanel data={item} styles={{ marginHorizontal: 10 }}/>
         );
     }
-    console.log(chartData)
+    // console.log(collectionData)
     return (
         <MainMenuContainer>
             <DashboardHeader
@@ -55,8 +55,6 @@ const MainMenuScreen = () => {
                     </HolderContainer> 
                     : <DefaultText>Start adding items to see graph</DefaultText>
                 } */}
-                {/* <DefaultText>Graphs under maintenance.</DefaultText>
-                <HomeImg source={imagePlaceHolder}/> */}
             </HolderContainer>
             <HolderContainer>
                 <TitleButtonContainer>
@@ -72,25 +70,27 @@ const MainMenuScreen = () => {
                         />
                     </RightIcon>
                 </TitleButtonContainer>
-                {collectionItems.length ?
-                <RecentPanelContainer>
-                    <RecentList 
-                        data={collectionData.slice(0,11)}
-                        renderItem={renderRecentPanelItem}
-                        horizontal={false}
-                        numColumns={3}
-                        ItemSeparatorComponent={() => (
-                            <View style={{ width: "100%", marginVertical: 10 }} />
-                        )}
-                        columnWrapperStyle={{
-                            justifyContent: "flex-start",
-                        }}
-                        extraData={{
-                            collectionData: collectionData.length
-                        }}
-                    />
-                </RecentPanelContainer>
-                : null
+                {collectionItems.length ? (
+                    <RecentPanelContainer>
+                        <RecentList 
+                            data={collectionData.slice(0,12)}
+                            renderItem={renderRecentPanelItem}
+                            horizontal={false}
+                            numColumns={3}
+                            ItemSeparatorComponent={() => (
+                                <View style={{ width: "100%", marginVertical: 10 }} />
+                            )}
+                            columnWrapperStyle={{
+                                justifyContent: "flex-start",
+                            }}
+                            extraData={{
+                                collectionData: collectionData.length
+                            }}
+                        />
+                    </RecentPanelContainer>
+                ) : (
+                    <DefaultText>You have no recent additions</DefaultText>
+                )
                 }
             </HolderContainer>
         </MainMenuContainer>

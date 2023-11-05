@@ -31,12 +31,11 @@ const chartConfig = {
 const DashboardChart = ({ title, chartData }) => {
     const CategoryRenderItem = ({ item }) => (
         <DashboardCategoryItem
-            iconName={item.collectionItem_icon}
-            categoryName={item.category_name}
-            total={item.collectionItem_amount}
+            iconName={item.icon}
+            categoryName={item.category}
+            total={item.amount}
             key={item.id}
-            iconColor={item.collectionItem_color}
-            // onPress={() => handleNavigate(item.category_name)}
+            iconColor={item.color}
         />
     );
 
@@ -52,7 +51,7 @@ const DashboardChart = ({ title, chartData }) => {
                         width={300}
                         height={175}
                         chartConfig={chartConfig}
-                        accessor={"categoryAmount"}
+                        accessor={"amount"}
                         backgroundColor={"transparent"}
                         center={[0, 0]}
                         hasLegend={false}

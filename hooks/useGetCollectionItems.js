@@ -11,7 +11,7 @@ const useGetCollectionItems = () => {
 
     useEffect(() => {
         const collectionColRef = collection(db, "collection");
-        const collectionQuery = query(collectionColRef, orderBy("created_at"));
+        const collectionQuery = query(collectionColRef, orderBy("created_at", "desc"));
 
         const unsubscribe = onSnapshot(collectionQuery, (snapshotData) => {
             const userList = [];

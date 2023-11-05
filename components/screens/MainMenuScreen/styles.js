@@ -19,8 +19,11 @@ export const HolderContainer = styled.View`
 `;
 
 export const RecentPanelContainer = styled.View`
-    width: 95%;
+    width: 100%;
+    height: 400px;
     align-items: center;
+    justigfy-content: center;
+    flex-grow: 0;
 `;
 
 export const TitleButtonContainer = styled.View`
@@ -54,10 +57,7 @@ export const HomeImg = styled.Image`
 `;
 
 export const RecentList = styled.FlatList`
-    width: 100%;
     margin: 5px;
     padding: 10px;
-    height: 85%;
-    flex-grow: 0;
     /* background-color: ${colors.primary.black}; */
 `;
