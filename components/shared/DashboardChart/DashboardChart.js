@@ -37,8 +37,7 @@ const DashboardChart = ({ title, chartData }) => {
         legendFontColor:  item.color,
         legendFontSize: 15
     }));
-    console.log('chart:',  chartData)
-    console.log(mapData)
+
     return (
         <Panel>
             <TitleContainer>

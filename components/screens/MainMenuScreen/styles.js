@@ -12,8 +12,7 @@ export const MainMenuContainer = styled(Container)`
 `;
 
 export const HolderContainer = styled.View`
-    margin-top: 20px;
-    margin-bottom: 5px;
+    margin-top: 10px;
     align-items: center;
     width: 92%;
 `;

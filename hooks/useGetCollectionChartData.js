@@ -37,7 +37,6 @@ export default function useGetCollectionChartData() {
             }
             });
 
-            console.log('data:',categoryData);
             setChartData(categoryData);
             setCollectionItems(collectionList);
         });

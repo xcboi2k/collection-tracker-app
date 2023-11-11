@@ -41,12 +41,7 @@ const MainMenuScreen = () => {
             <DashboardRecentPanel data={item} styles={{ marginHorizontal: 10 }}/>
         );
     }
-
-    useEffect(() => {
-        // You can safely use chartData here
-        console.log('Inside useEffect:', chartData);
-      }, [chartData]);
-
+    
     return (
         <MainMenuContainer>
             <DashboardHeader
@@ -78,7 +73,7 @@ const MainMenuScreen = () => {
                 {collectionItems.length ? (
                     <RecentPanelContainer>
                         <RecentList 
-                            data={collectionData.slice(0,12)}
+                            data={collectionData.slice(0,3)}
                             renderItem={renderRecentPanelItem}
                             horizontal={false}
                             numColumns={3}
