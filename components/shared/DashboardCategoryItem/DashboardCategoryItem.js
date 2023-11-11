@@ -13,7 +13,7 @@ const DashboardCategoryItem = ({
 }) => {
     return (
         <Category>
-            <Icon name={iconName} color={iconColor} />
+            <Icon name={iconName} color={iconColor} size={38}/>
             <TextHolder>
                 <CategoryName>{categoryName}</CategoryName>
                 <CategoryTotal>₱ {total}</CategoryTotal>

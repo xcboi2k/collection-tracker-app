@@ -15,7 +15,7 @@ export const HolderContainer = styled.View`
     margin-top: 20px;
     margin-bottom: 5px;
     align-items: center;
-    width: 90%;
+    width: 92%;
 `;
 
 export const RecentPanelContainer = styled.View`

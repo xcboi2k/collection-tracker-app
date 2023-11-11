@@ -6,7 +6,7 @@ import { db } from '../firebase';
 import useCollectionStore from './useCollectionStore'
 
 export default function useGetCollectionChartData() {
-    const [chartData, setChartData] = useState([]);
+    const [chartData, setChartData] = useState('');
     const setCollectionItems = useCollectionStore((state) => state.setCollectionItems);
     const collectionColRef = collection(db, 'collection');
     const collectionQuery = query(collectionColRef);
@@ -36,24 +36,15 @@ export default function useGetCollectionChartData() {
                 categoryData.push({ category, amount, icon, color });
             }
             });
-            
-            const graphChartData = [
-            {
-                name: "Collection",
-                data: categoryData
-            }];
 
-            setChartData(graphChartData);
-            setCollectionItems(collectionList);
             console.log('data:',categoryData);
-            // console.log("FIREBASE WORKING");
+            setChartData(categoryData);
+            setCollectionItems(collectionList);
         });
 
         return unsubscribe;
-
-        // GET ALL THE RECENT TRANSACTIONS
     }, []);
 
 
-    return [chartData];
+    return chartData;
 }

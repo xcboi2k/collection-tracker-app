@@ -8,10 +8,6 @@ export const Title = styled.Text`
     font-size: 20px;
 `;
 
-export const Chart = styled.View`
-    flex: 1;
-`;
-
 export const FigureContainer = styled.View`
     width: 100%;
     flex: 1;
@@ -19,11 +15,16 @@ export const FigureContainer = styled.View`
     align-items: center;
 `;
 
-export const CategoryListContainer = styled.ScrollView`
+export const Chart = styled.View`
     flex: 1;
+    width: 70%;
 `;
 
-export const CategoryList = styled.FlatList``;
+export const CategoryListContainer = styled.ScrollView`
+    flex: 1;
+    margin-left: 50px;
+    width: 30%;
+`;
 
 export const TitleContainer = styled.View`
     flex-direction: row;
@@ -31,7 +32,7 @@ export const TitleContainer = styled.View`
     align-items: center;
     padding-right: 20px;
     padding-left: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 `;
 
 export const DefaultText = styled.Text`

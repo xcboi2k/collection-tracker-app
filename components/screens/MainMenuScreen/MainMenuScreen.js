@@ -1,5 +1,5 @@
 import { View, Text, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation } from "@react-navigation/native";
 
 import { 
@@ -34,27 +34,32 @@ const MainMenuScreen = () => {
 
     const collectionItems = useCollectionStore((state) => state.collectionItems);
     const [collectionData] = useGetCollectionItems();
-    const [chartData] = useGetCollectionChartData();
+    const chartData = useGetCollectionChartData();
 
     const renderRecentPanelItem =({item}) => {
         return(
             <DashboardRecentPanel data={item} styles={{ marginHorizontal: 10 }}/>
         );
     }
-    // console.log(collectionData)
+
+    useEffect(() => {
+        // You can safely use chartData here
+        console.log('Inside useEffect:', chartData);
+      }, [chartData]);
+
     return (
         <MainMenuContainer>
             <DashboardHeader
                 title={'Home'}
             />
             <HolderContainer>
-                {/* {
-                    collectionItems.length ?
+                {
+                    chartData.length ?
                     <HolderContainer>
                         <DashboardChart title={"Collection Status"} chartData={chartData}/>
                     </HolderContainer> 
                     : <DefaultText>Start adding items to see graph</DefaultText>
-                } */}
+                }
             </HolderContainer>
             <HolderContainer>
                 <TitleButtonContainer>

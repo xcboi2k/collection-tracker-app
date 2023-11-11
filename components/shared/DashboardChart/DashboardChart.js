@@ -29,16 +29,16 @@ const chartConfig = {
 };
 
 const DashboardChart = ({ title, chartData }) => {
-    const CategoryRenderItem = ({ item }) => (
-        <DashboardCategoryItem
-            iconName={item.icon}
-            categoryName={item.category}
-            total={item.amount}
-            key={item.id}
-            iconColor={item.color}
-        />
-    );
-
+    const mapData = chartData.map((item) => ({
+        name: item.category,
+        amount: item.amount,
+        color: item.color,
+        icon: item.icon,
+        legendFontColor:  item.color,
+        legendFontSize: 15
+    }));
+    console.log('chart:',  chartData)
+    console.log(mapData)
     return (
         <Panel>
             <TitleContainer>
@@ -47,23 +47,28 @@ const DashboardChart = ({ title, chartData }) => {
             <FigureContainer>
                 <Chart>
                     <PieChart
-                        data={chartData}
+                        data={mapData}
                         width={300}
-                        height={175}
+                        height={200}
                         chartConfig={chartConfig}
                         accessor={"amount"}
                         backgroundColor={"transparent"}
-                        center={[0, 0]}
-                        hasLegend={false}
+                        paddingLeft={"15"}
+                        center={[0, 5]}
                         absolute
-                        style={{ width: "100%" }}
+                        hasLegend={false}
                     />
                 </Chart>
                 <CategoryListContainer>
-                    <CategoryList
-                        data={chartData}
-                        renderItem={CategoryRenderItem}
-                    />
+                    {mapData.map((item) => (
+                        <DashboardCategoryItem
+                            iconName={item.icon}
+                            categoryName={item.name}
+                            total={item.amount}
+                            key={item.name}
+                            iconColor={item.color}
+                        />
+                    ))}
                 </CategoryListContainer>
             </FigureContainer>
         </Panel>

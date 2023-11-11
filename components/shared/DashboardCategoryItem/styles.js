@@ -10,14 +10,14 @@ export const Category = styled.TouchableOpacity`
 `;
 
 export const CategoryName = styled.Text`
-    font-size: 12px;
+    font-size: 15px;
     font-family: ${FONTS.BOLD};
     color: ${colors.primary.black};
     text-align: left;
 `;
 
 export const CategoryTotal = styled.Text`
-    font-size: 10px;
+    font-size: 13px;
     font-family: ${FONTS.REGULAR};
     color: ${colors.primary.black};
     text-align: left;
@@ -25,5 +25,5 @@ export const CategoryTotal = styled.Text`
 
 export const TextHolder = styled.View`
     margin-left: 10px;
-    width: 100%;
+    width: 75%;
 `;
