@@ -11,7 +11,8 @@ import {
     Title, 
     RightIcon, 
     DefaultText,
-    HomeImg 
+    HomeImg, 
+    ScrollContainer
 } from './styles'
 
 import Icon from '../../common/Icon'
@@ -47,16 +48,14 @@ const MainMenuScreen = () => {
             <DashboardHeader
                 title={'Home'}
             />
-            <HolderContainer>
-                {
+            <ScrollContainer>
+            {
                     chartData.length ?
                     <HolderContainer>
                         <DashboardChart title={"Collection Status"} chartData={chartData}/>
                     </HolderContainer> 
                     : <DefaultText>Start adding items to see graph</DefaultText>
                 }
-            </HolderContainer>
-            <HolderContainer>
                 <TitleButtonContainer>
                     <Title>Recent Additions</Title>
                     <RightIcon onPress={() => 
@@ -72,26 +71,18 @@ const MainMenuScreen = () => {
                 </TitleButtonContainer>
                 {collectionItems.length ? (
                     <RecentPanelContainer>
-                        <RecentList 
-                            data={collectionData.slice(0,3)}
-                            renderItem={renderRecentPanelItem}
-                            horizontal={false}
-                            numColumns={3}
-                            ItemSeparatorComponent={() => (
-                                <View style={{ width: "100%", marginVertical: 10 }} />
-                            )}
-                            columnWrapperStyle={{
-                                justifyContent: "flex-start",
-                            }}
-                            extraData={{
-                                collectionData: collectionData.length
-                            }}
-                        />
+                        {collectionData.slice(0,12).map((item) => (
+                             <DashboardRecentPanel data={item} />
+                        ))}
                     </RecentPanelContainer>
                 ) : (
                     <DefaultText>You have no recent additions</DefaultText>
                 )
                 }
+            </ScrollContainer>
+            
+            <HolderContainer>
+                
             </HolderContainer>
         </MainMenuContainer>
     )

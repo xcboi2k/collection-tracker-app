@@ -11,25 +11,32 @@ export const MainMenuContainer = styled(Container)`
     padding-bottom: 20px;
 `;
 
+export const ScrollContainer = styled.ScrollView`
+    flex: 1;
+    width: 90%;
+`;
+
 export const HolderContainer = styled.View`
     margin-top: 10px;
+    justify-content:center;
     align-items: center;
-    width: 92%;
+    width: 100%;
 `;
 
 export const RecentPanelContainer = styled.View`
     width: 100%;
-    height: 400px;
-    align-items: center;
-    justigfy-content: center;
-    flex-grow: 0;
+    height: 500px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 16px;
 `;
 
 export const TitleButtonContainer = styled.View`
-    width: 90%;
+    width: 100%;
     flex-direction: row;
     align-items: center;
-    margin-top: 7px;
+    margin-top: 10px;
 `;
 
 export const Title = styled.Text`
