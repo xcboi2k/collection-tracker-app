@@ -22,7 +22,7 @@ export const Chart = styled.View`
 
 export const CategoryListContainer = styled.ScrollView`
     flex: 1;
-    margin-left: 50px;
+    margin-left: 20px;
     width: 30%;
 `;
 

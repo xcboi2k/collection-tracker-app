@@ -36,7 +36,7 @@ export const TitleButtonContainer = styled.View`
     width: 100%;
     flex-direction: row;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
 `;
 
 export const Title = styled.Text`

@@ -50,11 +50,15 @@ const MainMenuScreen = () => {
             />
             <ScrollContainer>
             {
-                    chartData.length ?
+                    chartData.length ? (
                     <HolderContainer>
                         <DashboardChart title={"Collection Status"} chartData={chartData}/>
-                    </HolderContainer> 
-                    : <DefaultText>Start adding items to see graph</DefaultText>
+                    </HolderContainer>
+                    ) : (
+                        <HolderContainer>
+                            <DefaultText>Start adding items to see graph</DefaultText>
+                        </HolderContainer>
+                    )
                 }
                 <TitleButtonContainer>
                     <Title>Recent Additions</Title>
