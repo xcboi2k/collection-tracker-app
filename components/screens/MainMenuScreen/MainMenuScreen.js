@@ -30,17 +30,43 @@ import useGetCollectionChartData from '../../../hooks/useGetCollectionChartData'
 import useGetCollectionItems from '../../../hooks/useGetCollectionItems';
 import useCollectionStore from '../../../hooks/useCollectionStore';
 
+import LoaderStore from '../../../stores/LoaderStore.js';
+import AlertStore from '../../../stores/AlertStore.js';
+import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
+import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
+
 const MainMenuScreen = () => {
     const navigation = useNavigation();
 
+    // Retrieve collection items, collection data, and chart data using custom hooks
     const collectionItems = useCollectionStore((state) => state.collectionItems);
     const [collectionData] = useGetCollectionItems();
     const chartData = useGetCollectionChartData();
 
+    // Render function for individual items in the recent panel
     const renderRecentPanelItem =({item}) => {
         return(
+            // Render DashboardRecentPanel component for each item with specified styles
             <DashboardRecentPanel data={item} styles={{ marginHorizontal: 10 }}/>
         );
+    }
+
+    // State management for loading indicators
+    const isLoading = LoaderStore(state => state.isLoading);
+    const startLoading = LoaderStore((state) => state.startLoading);
+    const stopLoading = LoaderStore((state) => state.stopLoading);
+
+    // State management for alert components
+    const isAlertVisible = AlertStore(state => state.isAlertVisible);
+    const alertTitle = AlertStore(state => state.alertTitle);
+    const alertMessage = AlertStore(state => state.alertMessage);
+    const showAlert = AlertStore((state) => state.showAlert);
+    const hideAlert = AlertStore((state) => state.hideAlert);
+
+    // Handle close alert function
+    const handleAlertClose = () => {
+        stopLoading()
+        hideAlert()
     }
     
     return (
@@ -84,10 +110,13 @@ const MainMenuScreen = () => {
                 )
                 }
             </ScrollContainer>
-            
-            <HolderContainer>
-                
-            </HolderContainer>
+            <CustomAlert 
+                visible={isAlertVisible}
+                title={alertTitle}
+                message={alertMessage}
+                onClose={handleAlertClose}
+            />
+            <CustomLoader visible={isLoading}/>
         </MainMenuContainer>
     )
     }

@@ -6,6 +6,9 @@ import { deleteObject, ref, uploadBytes, getDownloadURL } from 'firebase/storage
 
 import { db, storage } from '../firebase'
 
+import LoaderStore from '../stores/LoaderStore';
+import AlertStore from '../stores/AlertStore';
+
 const CollectionStore = (set, get) => ({
     collectionItems: [],
     resetCollectionItems: () => set({collectionItems: []}),
@@ -17,9 +20,13 @@ const CollectionStore = (set, get) => ({
             await addDoc(collection(db, 'collection'), {
                 ...newItem, timestamp: serverTimestamp()
             });
+
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Collection item added.`)
         }
-        catch(err){
-            console.log('addCollectionItem:', err);
+        catch(error){
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to add collection item. ${error}`)
         }
     },
     updateCollectionItem: async(documentId, updatedItem) => {
@@ -27,16 +34,19 @@ const CollectionStore = (set, get) => ({
             console.log(updatedItem);
 
             const docRef = doc(db, 'collection', documentId);
-
             await updateDoc(docRef, {
                 ...updatedItem,
                 // photoRef: fileRefName || '',
                 // photoUrl: fileUrl || '',
                 timestamp: serverTimestamp()
             });
+
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Collection item updated.`)
         }
-        catch(err){
-            console.log('updateCollectionItem:', err);
+        catch(error){
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to update collection item. ${error}`)
         }
     },
     deleteCollectionItem: async(documentId, fileReference) => {
@@ -45,14 +55,18 @@ const CollectionStore = (set, get) => ({
 
             const docRef = doc(db, 'collection', documentId);
             const fileRef = ref(storage, fileReference);
-
             await deleteDoc(docRef);
+
             if (fileReference) {
                 await deleteObject(fileRef);
             }
+
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Collection item deleted.`)
         }
-        catch(err){
-            console.log('deleteCollectionItem:', err);
+        catch(error){
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to delete collection item. ${error}`)
         }
     },
 });
