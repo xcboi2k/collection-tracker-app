@@ -18,6 +18,7 @@ const MainMenuNavigator = () => {
             <MainMenuStack.Screen
                 name="HomeMain"
                 component={MainMenuScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <MainMenuStack.Screen
                 name="CollectionAdd"

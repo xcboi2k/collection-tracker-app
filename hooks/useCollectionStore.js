@@ -13,6 +13,14 @@ const CollectionStore = (set, get) => ({
     collectionItems: [],
     resetCollectionItems: () => set({collectionItems: []}),
     setCollectionItems: (data) => set({collectionItems: data}),
+
+    isCollectionItemCreated: false,
+    setCollectionItemCreated: (value) => set({ isCollectionItemCreated: value }),
+    isCollectionItemUpdated: false,
+    setCollectionItemUpdated: (value) => set({ isCollectionItemUpdated: value }),
+    isCollectionItemDeleted: false,
+    setCollectionItemDeleted: (value) => set({ isCollectionItemDeleted: value }),
+
     addCollectionItem: async(newItem) => {
         try{
             console.log(newItem);
@@ -21,6 +29,7 @@ const CollectionStore = (set, get) => ({
                 ...newItem, timestamp: serverTimestamp()
             });
 
+            set({ isCollectionItemCreated: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Collection item added.`)
         }
@@ -41,6 +50,7 @@ const CollectionStore = (set, get) => ({
                 timestamp: serverTimestamp()
             });
 
+            set({ isCollectionItemUpdated: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Collection item updated.`)
         }
@@ -61,6 +71,7 @@ const CollectionStore = (set, get) => ({
                 await deleteObject(fileRef);
             }
 
+            set({ isCollectionItemDeleted: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Collection item deleted.`)
         }
@@ -69,6 +80,7 @@ const CollectionStore = (set, get) => ({
             AlertStore.getState().showAlert('Error', `Failed to delete collection item. ${error}`)
         }
     },
+
 });
 
 const useCollectionStore = create(CollectionStore);

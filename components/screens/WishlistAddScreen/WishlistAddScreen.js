@@ -7,12 +7,37 @@ import { WishlistAddContainer, WishlistFormHolder, ButtonContainer } from './sty
 import Header from '../../shared/Header/Header'
 import Button from '../../shared/Button';
 import TextInput from '../../shared/TextInput';
+import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
+import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
 
 import useWishlistStore from '../../../hooks/useWishlistStore';
 
+import LoaderStore from '../../../stores/LoaderStore';
+import AlertStore from '../../../stores/AlertStore';
+
 const WishlistAddScreen = ({ navigation }) => {
+    // State management for loading indicators
+    const isLoading = LoaderStore(state => state.isLoading);
+    const startLoading = LoaderStore((state) => state.startLoading);
+    const stopLoading = LoaderStore((state) => state.stopLoading);
+
+    // State management for alert components
+    const isAlertVisible = AlertStore(state => state.isAlertVisible);
+    const alertTitle = AlertStore(state => state.alertTitle);
+    const alertMessage = AlertStore(state => state.alertMessage);
+    const showAlert = AlertStore((state) => state.showAlert);
+    const hideAlert = AlertStore((state) => state.hideAlert);
+
+    // Handle close alert function
+    const handleAlertClose = () => {
+        stopLoading()
+        hideAlert()
+    }
+
+    // State variables
     const addWishlistItem = useWishlistStore((state) => state.addWishlistItem);
 
+    // Initial form values
     const initialValues = {
         wishlistName: "",
         wishlistAmount: "",
@@ -21,26 +46,33 @@ const WishlistAddScreen = ({ navigation }) => {
         updatedAt: ""
     };
 
+    // Handle formik form submission
     const handleFormikSubmit = async (values, { resetForm }) => {
-        addWishlistItem({
-            wishlist_name: values.wishlistName,
-            wishlist_amount: values.wishlistAmount,
-            created_at: new Date(),
-            // user_id: user.user_id
-        });
-        resetForm();
-        Alert.alert("Success", "Added a New Wishlist Item");
-        navigation.navigate("Wishlist", { screen: "WishlistMain" });
+        try{
+            addWishlistItem({
+                wishlist_name: values.wishlistName,
+                wishlist_amount: values.wishlistAmount,
+                created_at: new Date(),
+                // user_id: user.user_id
+            });
+            resetForm();
+            navigation.navigate("Wishlist", { screen: "WishlistMain" });
+        }catch(error){
+            stopLoading()
+            showAlert("Error", `Failed to submit information. ${error}`)
+        }  
     };
 
-    const handleClear = () => {
-        formik.resetForm();
-    };
-
+    // Formik configuration
     const formik = useFormik({
         initialValues,
         onSubmit: handleFormikSubmit,
     });
+
+    // Handle clear button press
+    const handleClear = () => {
+        formik.resetForm();
+    };
 
     return (
         <WishlistAddContainer>
@@ -64,6 +96,7 @@ const WishlistAddScreen = ({ navigation }) => {
                 <TextInput 
                     inputProps={{
                         placeholder: "Enter Wishlist Item Amount",
+                        keyboardType: 'number-pad',
                         onChangeText: formik.handleChange("wishlistAmount"),
                         value: formik.values.wishlistAmount,
                     }}
@@ -90,6 +123,13 @@ const WishlistAddScreen = ({ navigation }) => {
                     onPress={handleClear}
                 />
             </ButtonContainer>
+            <CustomAlert 
+                visible={isAlertVisible}
+                title={alertTitle}
+                message={alertMessage}
+                onClose={handleAlertClose}
+            />
+            <CustomLoader visible={isLoading}/>
         </WishlistAddContainer>
     )
 }

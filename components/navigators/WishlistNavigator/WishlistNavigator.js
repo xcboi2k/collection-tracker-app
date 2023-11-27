@@ -20,6 +20,7 @@ const WishlistNavigator = () => {
             <WishlistStack.Screen
                 name="WishlistMain"
                 component={WishlistScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <WishlistStack.Screen
                 name="WishlistAdd"

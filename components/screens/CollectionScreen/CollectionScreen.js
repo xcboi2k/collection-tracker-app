@@ -10,10 +10,25 @@ import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import WishlistButton from '../../shared/WishlistButton/WishlistButton';
 
 import useGetCollectionItems from '../../../hooks/useGetCollectionItems';
+import useCollectionStore from '../../../hooks/useCollectionStore';
 
-const CollectionScreen = () => {
-    const [collectionItems] = useGetCollectionItems();
+const CollectionScreen = ({route}) => {
     const navigation = useNavigation();
+
+    const [collectionItems] = useGetCollectionItems();
+    const setCollectionItemUpdated = useCollectionStore((state) => state.setCollectionItemUpdated)
+    const setCollectionItemDeleted = useCollectionStore((state) => state.setCollectionItemDeleted)
+
+    //for reloading after making changes
+    const key = route.params?.key || 'defaultKey';
+    useEffect(() => {
+        if(setCollectionItemUpdated){
+            setCollectionItemUpdated(false)
+        }else{
+            setCollectionItemDeleted(false)
+        }
+    }, [key]);
+
 
     const handleNavigation = (id) =>
         navigation.navigate("Collection", {

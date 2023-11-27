@@ -13,6 +13,8 @@ import IconSelector from '../../shared/IconSelector';
 import Button from '../../shared/Button';
 import TextInput from '../../shared/TextInput';
 import Header from '../../shared/Header/Header';
+import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
+import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
 
 import useCollectionStore from '../../../hooks/useCollectionStore';
 import useUploadImage from '../../../hooks/useUploadImage';
@@ -39,6 +41,8 @@ const CollectionAddScreen = ({navigation}) => {
         stopLoading()
         hideAlert()
     }
+
+    const isCollectionItemCreated = useCollectionStore(state => state.isCollectionItemCreated);
 
     // Generate a unique photo ID using uuid.v4()
     let photoId = uuid.v4();
@@ -103,7 +107,7 @@ const CollectionAddScreen = ({navigation}) => {
             navigation.navigate("Home", { screen: "HomeMain" });
         }catch(error){
             stopLoading()
-            showAlert("Error", error)
+            showAlert("Error", `Failed to submit information. ${error}`)
         }
         
     };
@@ -119,6 +123,17 @@ const CollectionAddScreen = ({navigation}) => {
         // Check if all fields have non-empty values
         return Object.values(formik.values).every((value) => value !== '');
     };
+
+    // For navigating to next screen
+    useEffect(() => {
+        if (isCollectionItemCreated) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Home", {
+                screen: "HomeMain",
+                key: newKey
+            })
+        }
+    }, [isCollectionItemCreated]);
 
     return (
         <CollectionAddContainer>

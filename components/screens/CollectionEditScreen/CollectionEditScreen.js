@@ -18,6 +18,8 @@ import IconSelector from '../../shared/IconSelector';
 import Button from '../../shared/Button';
 import TextInput from '../../shared/TextInput';
 import Header from '../../shared/Header/Header';
+import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
+import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
 
 import useCollectionStore from '../../../hooks/useCollectionStore';
 import useUploadImage from '../../../hooks/useUploadImage';
@@ -41,9 +43,12 @@ const CollectionEditScreen = ({route, navigation}) => {
         stopLoading()
         hideAlert()
     }
+
+    const isCollectionItemUpdated = useCollectionStore(state => state.isCollectionItemUpdated);
+    const isCollectionItemDeleted = useCollectionStore(state => state.isCollectionItemDeleted);
     
     // Get the collectionItemID from the route params
-    const { collectionItemID } = useRoute().params;
+    const { collectionItemID } = route.params;
 
     // State variables
     const collectionItems = useCollectionStore((state) => state.collectionItems);
@@ -140,7 +145,7 @@ const CollectionEditScreen = ({route, navigation}) => {
             navigation.navigate("Home", { screen: "HomeMain" });
         }catch(error){
             stopLoading()
-            showAlert("Error", error)
+            showAlert("Error", `Failed to submit information. ${error}`)
         }
         
     };
@@ -166,10 +171,26 @@ const CollectionEditScreen = ({route, navigation}) => {
 
     // Handle delete action
     const handleDelete = () => {
+        startLoading()
         deleteCollectionItem(collectionItemID, currentCollectionItem.comment_img_ref);
-        Alert.alert("Success", "Item Deleted.");
-        navigation.navigate("Home", { screen: "HomeMain" });
     };
+
+    // For navigating to next screen
+    useEffect(() => {
+        if (isCollectionItemUpdated) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Collection", {
+                screen: "CollectionMain",
+                key: newKey
+            })
+        } else if (isCollectionItemDeleted) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Collection", {
+                screen: "CollectionMain",
+                key: newKey
+            })
+        }
+    }, [isCollectionItemUpdated, isCollectionItemDeleted]);
 
     const screenTitle = `${mode === "edit" ? "Edit" : "Item"} Details`;
     const EditButtonGroup = () => (

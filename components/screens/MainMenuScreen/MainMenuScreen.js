@@ -25,6 +25,8 @@ import imagePlaceHolder from '../../../assets/icon.png'
 import DashboardHeader from '../../shared/DashboardHeader'
 import DashboardChart from '../../shared/DashboardChart/DashboardChart'
 import DashboardRecentPanel from '../../shared/DashboardRecentPanel.js'
+import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
+import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
 
 import useGetCollectionChartData from '../../../hooks/useGetCollectionChartData';
 import useGetCollectionItems from '../../../hooks/useGetCollectionItems';
@@ -32,8 +34,6 @@ import useCollectionStore from '../../../hooks/useCollectionStore';
 
 import LoaderStore from '../../../stores/LoaderStore.js';
 import AlertStore from '../../../stores/AlertStore.js';
-import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
-import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
 
 const MainMenuScreen = () => {
     const navigation = useNavigation();

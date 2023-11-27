@@ -20,6 +20,7 @@ const CategoriesNavigator = () => {
             <CategoriesStack.Screen
                 name="CategoriesMain"
                 component={CategoriesScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <CategoriesStack.Screen
                 name="CategoriesAdd"

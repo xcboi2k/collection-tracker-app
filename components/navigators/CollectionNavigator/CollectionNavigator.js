@@ -19,6 +19,7 @@ const CollectionNavigator = () => {
             <CollectionStack.Screen
                 name="CollectionMain"
                 component={CollectionScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <CollectionStack.Screen
                 name="CollectionEdit"

@@ -13,58 +13,93 @@ import IconOnlySelector from '../../shared/IconOnlySelector';
 import ColorPickerPanel from '../../shared/ColorPickerPanel';
 import Header from '../../shared/Header/Header';
 import ColorPicker from '../../common/ColorPicker';
+import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
+import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
 
 import useCategoryStore from "../../../hooks/useCategoryStore";
 
+import LoaderStore from '../../../stores/LoaderStore';
+import AlertStore from '../../../stores/AlertStore';
+
 const CategoriesAddScreen = ({navigation}) => {
+    // State management for loading indicators
+    const isLoading = LoaderStore(state => state.isLoading);
+    const startLoading = LoaderStore((state) => state.startLoading);
+    const stopLoading = LoaderStore((state) => state.stopLoading);
+
+    // State management for alert components
+    const isAlertVisible = AlertStore(state => state.isAlertVisible);
+    const alertTitle = AlertStore(state => state.alertTitle);
+    const alertMessage = AlertStore(state => state.alertMessage);
+    const showAlert = AlertStore((state) => state.showAlert);
+    const hideAlert = AlertStore((state) => state.hideAlert);
+
+    // Handle close alert function
+    const handleAlertClose = () => {
+        stopLoading()
+        hideAlert()
+    }
+
+    // State variables
     const addCategory = useCategoryStore((state) => state.addCategory);
     const [selectedIcon, setSelectedIcon] = useState("");
     const [selectedColor, setSelectedColor] = useState("");
     const [showColorWheel, setShowColorWheel] = useState(false);
 
+    // Initial form values
     const initialValues = {
         categoryName: "",
         categoryIcon: "",
         categoryColor: "",
-        // userID: "",
         createdAt: "",
         updatedAt: ""
     };
 
+    // Handle icon press
     const handleIconPress = (icon) => {
         setSelectedIcon(icon);
         formik.setFieldValue("categoryIcon", icon);
     };
 
+    // Handle color press
     const handleColorPress = (color) => {
         setSelectedColor(color);
         formik.setFieldValue("categoryColor", color);
         setShowColorWheel(false);
     };
 
+    // Handle formik form submission
     const handleFormikSubmit = async (values, { resetForm }) => {
-        addCategory({
-            category_name: values.categoryName,
-            category_color: values.categoryColor,
-            category_icon: values.categoryIcon,
-            created_at: new Date(),
-            // user_id: user.user_id
-        });
-        resetForm();
-        Alert.alert("Success", "Added a New Category");
-        navigation.navigate("Categories", { screen: "CategoriesMain" });
+        try{
+            startLoading()
+            addCategory({
+                category_name: values.categoryName,
+                category_color: values.categoryColor,
+                category_icon: values.categoryIcon,
+                created_at: new Date(),
+                // user_id: user.user_id
+            });
+            resetForm();
+            navigation.navigate("Categories", { screen: "CategoriesMain" });
+        }catch(error){
+            stopLoading()
+            showAlert("Error", `Failed to submit information. ${error}`)
+        }
     };
 
+    // Formik configuration
+    const formik = useFormik({
+        initialValues,
+        onSubmit: handleFormikSubmit,
+    });
+
+    // Handle clear button press
     const handleClear = () => {
         setSelectedColor("");
         setSelectedIcon("");
         formik.resetForm();
     };
 
-    const formik = useFormik({
-        initialValues,
-        onSubmit: handleFormikSubmit,
-    });
 
     return (
         <CategoriesAddContainer>
@@ -120,6 +155,13 @@ const CategoriesAddScreen = ({navigation}) => {
                     onPress={handleClear}
                 />
             </ButtonContainer>
+            <CustomAlert 
+                visible={isAlertVisible}
+                title={alertTitle}
+                message={alertMessage}
+                onClose={handleAlertClose}
+            />
+            <CustomLoader visible={isLoading}/>
         </CategoriesAddContainer>
     )
 }

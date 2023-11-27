@@ -6,6 +6,9 @@ import { deleteObject, ref, uploadBytes, getDownloadURL } from 'firebase/storage
 
 import { db, storage } from '../firebase'
 
+import LoaderStore from '../stores/LoaderStore';
+import AlertStore from '../stores/AlertStore';
+
 const WishlistStore = (set, get) => ({
     wishlistItems: [],
     resetWishlistItems: () => set({wishlistItems: []}),
@@ -17,9 +20,13 @@ const WishlistStore = (set, get) => ({
             await addDoc(collection(db, 'wishlist'), {
                 ...newItem, timestamp: serverTimestamp()
             });
+
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Wishlist item added.`)
         }
-        catch(err){
-            console.log('addWishlistItem:', err);
+        catch(error){
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to add wishlist item. ${error}`);
         }
     },
     updateWishlistItem: async(documentId, updatedItem) => {
@@ -31,9 +38,13 @@ const WishlistStore = (set, get) => ({
             await updateDoc(docRef, {
                 ...updatedItem, timestamp: serverTimestamp()
             });
+
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Wishlist item updated.`)
         }
-        catch(err){
-            console.log('updateWishlistItem:', err);
+        catch(error){
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to update wishlist item. ${error}`)
         }
     },
     deleteWishlistItem: async(documentId) => {
@@ -43,9 +54,13 @@ const WishlistStore = (set, get) => ({
             const docRef = doc(db, 'wishlist', documentId);
 
             await deleteDoc(docRef);
+
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Wishlist item deleted.`)
         }
-        catch(err){
-            console.log('deleteWishlistItem:', err);
+        catch(error){
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to delete wishlist item. ${error}`)
         }
     },
 });
