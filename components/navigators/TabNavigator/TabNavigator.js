@@ -54,6 +54,17 @@ const TabBarProps = (route) => ({
         paddingTop: 10,
     },
     headerShown: false,
+    tabBarOnPress: ({ navigation, defaultHandler }) => {
+        const { name } = route;
+        const shouldReplaceStack = name === 'Home' || name === 'Collection' || name === 'Categories' || name === 'Wishlist'; // Adjust conditions as needed
+    
+        if (shouldReplaceStack) {
+          // Replace the stack with the desired screen
+            navigation.replace(name);
+        } else {
+          defaultHandler(); // Let the default handling occur for other tabs
+        }
+    },
 });
 
 const TabNavigator = () => {

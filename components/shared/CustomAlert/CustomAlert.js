@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal } from 'react-native'
-import { AlertContainer, AlertMessage, ButtonText, CloseButton, Overlay } from './styles'
+import { AlertContainer, AlertMessage, AlertTitle, ButtonText, CloseButton, Overlay } from './styles'
 
 const CustomAlert = ({ visible, title, message, onClose }) => {
   return (

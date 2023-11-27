@@ -1,5 +1,5 @@
 import { Alert } from 'react-native'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import uuid from 'react-native-uuid';
 
@@ -191,7 +191,7 @@ const CollectionAddScreen = ({navigation}) => {
                     rounded={"10px"}
                     onPress={formik.handleSubmit}
                     buttonProps={{
-                        disabled: isFormFilled,
+                        disabled: isFormFilled(),
                     }}
                 />
                 </ButtonContainer>

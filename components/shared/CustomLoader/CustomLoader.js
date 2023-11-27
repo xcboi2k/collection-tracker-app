@@ -7,8 +7,8 @@ import colors from '../../../assets/themes/colors'
 
 const CustomLoader = ({visible}) => {
   return (
-    <Modal>
-        <ModalContainer transparent={true} visible={visible} animationType="fade">
+    <Modal transparent={true} visible={visible} animationType="fade">
+        <ModalContainer>
             <Overlay>
                 <LoaderContainer>
                     <ActivityIndicator size="large" color={colors.primary.colorOne}/>

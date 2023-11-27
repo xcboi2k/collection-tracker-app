@@ -25,6 +25,9 @@ import useCollectionStore from '../../../hooks/useCollectionStore';
 import useUploadImage from '../../../hooks/useUploadImage';
 import useGetCategories from '../../../hooks/useGetCategories';
 
+import LoaderStore from '../../../stores/LoaderStore';
+import AlertStore from '../../../stores/AlertStore';
+
 const CollectionEditScreen = ({route, navigation}) => {
     // State management for loading indicators
     const isLoading = LoaderStore(state => state.isLoading);
@@ -197,7 +200,7 @@ const CollectionEditScreen = ({route, navigation}) => {
         <>
             <Button
                 type="filled"
-                width="45%"
+                width="48%"
                 title="Save"
                 rounded="8px"
                 textSize={16}
@@ -206,7 +209,7 @@ const CollectionEditScreen = ({route, navigation}) => {
             />
             <Button
                 type="outlined"
-                width="45%"
+                width="48%"
                 title="Delete"
                 rounded="8px"
                 textSize={16}

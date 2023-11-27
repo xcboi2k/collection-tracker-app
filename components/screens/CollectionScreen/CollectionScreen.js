@@ -1,5 +1,5 @@
 import { FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation } from "@react-navigation/native";
 
 import { ICON_NAMES } from '../../../constants/constant'
@@ -16,15 +16,19 @@ const CollectionScreen = ({route}) => {
     const navigation = useNavigation();
 
     const [collectionItems] = useGetCollectionItems();
+
+    // State variables for state changes
+    const isCollectionItemUpdated = useCollectionStore(state => state.isCollectionItemUpdated);
+    const isCollectionItemDeleted = useCollectionStore(state => state.isCollectionItemDeleted);
     const setCollectionItemUpdated = useCollectionStore((state) => state.setCollectionItemUpdated)
     const setCollectionItemDeleted = useCollectionStore((state) => state.setCollectionItemDeleted)
 
-    //for reloading after making changes
+    // For reloading after making changes
     const key = route.params?.key || 'defaultKey';
     useEffect(() => {
-        if(setCollectionItemUpdated){
+        if(isCollectionItemUpdated){
             setCollectionItemUpdated(false)
-        }else{
+        }else if(isCollectionItemDeleted){
             setCollectionItemDeleted(false)
         }
     }, [key]);

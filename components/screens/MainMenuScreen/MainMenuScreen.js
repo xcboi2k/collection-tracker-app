@@ -19,12 +19,9 @@ import Icon from '../../common/Icon'
 import { ICON_NAMES } from '../../../constants/constant'
 import colors from '../../../assets/themes/colors'
 
-// import { chartData, itemData } from '../../../sampleData/sampleData'
-import imagePlaceHolder from '../../../assets/icon.png'
-
 import DashboardHeader from '../../shared/DashboardHeader'
 import DashboardChart from '../../shared/DashboardChart/DashboardChart'
-import DashboardRecentPanel from '../../shared/DashboardRecentPanel.js'
+import DashboardRecentPanel from '../../shared/DashboardRecentPanel/DashboardRecentPanel.js';
 import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
 import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
 
@@ -35,21 +32,8 @@ import useCollectionStore from '../../../hooks/useCollectionStore';
 import LoaderStore from '../../../stores/LoaderStore.js';
 import AlertStore from '../../../stores/AlertStore.js';
 
-const MainMenuScreen = () => {
+const MainMenuScreen = ({route}) => {
     const navigation = useNavigation();
-
-    // Retrieve collection items, collection data, and chart data using custom hooks
-    const collectionItems = useCollectionStore((state) => state.collectionItems);
-    const [collectionData] = useGetCollectionItems();
-    const chartData = useGetCollectionChartData();
-
-    // Render function for individual items in the recent panel
-    const renderRecentPanelItem =({item}) => {
-        return(
-            // Render DashboardRecentPanel component for each item with specified styles
-            <DashboardRecentPanel data={item} styles={{ marginHorizontal: 10 }}/>
-        );
-    }
 
     // State management for loading indicators
     const isLoading = LoaderStore(state => state.isLoading);
@@ -68,6 +52,23 @@ const MainMenuScreen = () => {
         stopLoading()
         hideAlert()
     }
+
+    // Retrieve collection items, collection data, and chart data using custom hooks
+    const collectionItems = useCollectionStore((state) => state.collectionItems);
+    const [collectionData] = useGetCollectionItems();
+    const chartData = useGetCollectionChartData();
+
+    // State variables for state changes
+    const isCollectionItemCreated = useCollectionStore(state => state.isCollectionItemCreated);
+    const setCollectionItemCreated = useCollectionStore((state) => state.setCollectionItemCreated);
+
+    // For reloading after making changes
+    const key = route.params?.key || 'defaultKey';
+    useEffect(() => {
+        if(isCollectionItemCreated){
+            setCollectionItemCreated(false)
+        }
+    }, [key]);
     
     return (
         <MainMenuContainer>
@@ -75,7 +76,7 @@ const MainMenuScreen = () => {
                 title={'Home'}
             />
             <ScrollContainer>
-            {
+                {
                     chartData.length ? (
                     <HolderContainer>
                         <DashboardChart title={"Collection Status"} chartData={chartData}/>
@@ -101,8 +102,8 @@ const MainMenuScreen = () => {
                 </TitleButtonContainer>
                 {collectionItems.length ? (
                     <RecentPanelContainer>
-                        {collectionData.slice(0,12).map((item) => (
-                             <DashboardRecentPanel data={item} />
+                        {collectionData.slice(0,12).map((item, index) => (
+                             <DashboardRecentPanel data={item} key={index}/>
                         ))}
                     </RecentPanelContainer>
                 ) : (

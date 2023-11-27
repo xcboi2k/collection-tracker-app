@@ -32,6 +32,6 @@ export const ButtonContainer = styled.View`
     flex-direction: row;
     justify-content: ${({ mode }) =>
         mode === "edit" ? "space-between" : "flex-end"};
-    width: 90%;
+    width: 100%;
     margin-top: 20px;
 `;
