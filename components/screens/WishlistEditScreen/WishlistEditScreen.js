@@ -34,6 +34,9 @@ const WishlistEditScreen = ({route, navigation}) => {
         hideAlert()
     }
 
+    const isWishlistItemUpdated = useWishlistStore(state => state.isWishlistItemUpdated);
+    const isWishlistItemDeleted = useWishlistStore(state => state.isWishlistItemDeleted);
+
     // Get the wishlistItemID from the route params
     const { wishlistItemID } = route.params
 
@@ -72,7 +75,6 @@ const WishlistEditScreen = ({route, navigation}) => {
             };
             updateWishlistItem(wishlistItemID, newWishlistItem);
             resetForm();
-            navigation.navigate("Wishlist", { screen: "WishlistMain" });
         }catch(error){
             stopLoading()
             showAlert("Error", `Failed to submit information. ${error}`)
@@ -104,13 +106,26 @@ const WishlistEditScreen = ({route, navigation}) => {
     const handleDelete = () => {
         startLoading()
         deleteWishlistItem(wishlistItemID);
-        navigation.navigate("Home", { screen: "HomeMain" });
     };
 
-    
+    // For navigating to next screen
+    useEffect(() => {
+        if (isWishlistItemUpdated) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Categories", {
+                screen: "CategoriesMain",
+                key: newKey
+            })
+        } else if (isWishlistItemDeleted) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Wishlist", {
+                screen: "WishlistMain",
+                key: newKey
+            })
+        }
+    }, [isCategoryUpdated, isCategoryDeleted]);
 
     const screenTitle = `${mode === "edit" ? "Edit" : "Item"} Details`;
-
     const EditButtonGroup = () => (
         <>
             <Button
@@ -179,6 +194,13 @@ const WishlistEditScreen = ({route, navigation}) => {
                 />
                 )}
             </ButtonContainer>
+            <CustomAlert
+                visible={isAlertVisible}
+                title={alertTitle}
+                message={alertMessage}
+                onClose={handleAlertClose}
+            />
+            <CustomLoader visible={isLoading}/>
         </WishlistEditContainer>
     )
 }

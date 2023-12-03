@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useFormik } from "formik";
 
@@ -34,6 +34,8 @@ const WishlistAddScreen = ({ navigation }) => {
         hideAlert()
     }
 
+    const isWishlistItemCreated = useWishlistStore(state => state.isWishlistItemCreated)
+
     // State variables
     const addWishlistItem = useWishlistStore((state) => state.addWishlistItem);
 
@@ -56,7 +58,6 @@ const WishlistAddScreen = ({ navigation }) => {
                 // user_id: user.user_id
             });
             resetForm();
-            navigation.navigate("Wishlist", { screen: "WishlistMain" });
         }catch(error){
             stopLoading()
             showAlert("Error", `Failed to submit information. ${error}`)
@@ -73,6 +74,17 @@ const WishlistAddScreen = ({ navigation }) => {
     const handleClear = () => {
         formik.resetForm();
     };
+
+    // For navigating to next screen
+    useEffect(() => {
+        if (isWishlistItemCreated) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Wishlist", {
+                screen: "WishlistMain",
+                key: newKey
+            })
+        }
+    }, [isWishlistItemCreated]);
 
     return (
         <WishlistAddContainer>

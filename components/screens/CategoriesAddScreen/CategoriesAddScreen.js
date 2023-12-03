@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useFormik } from "formik";
 
@@ -40,6 +40,8 @@ const CategoriesAddScreen = ({navigation}) => {
         hideAlert()
     }
 
+    const isCategoryCreated = useCategoryStore(state => state.isCategoryCreated)
+
     // State variables
     const addCategory = useCategoryStore((state) => state.addCategory);
     const [selectedIcon, setSelectedIcon] = useState("");
@@ -80,7 +82,6 @@ const CategoriesAddScreen = ({navigation}) => {
                 // user_id: user.user_id
             });
             resetForm();
-            navigation.navigate("Categories", { screen: "CategoriesMain" });
         }catch(error){
             stopLoading()
             showAlert("Error", `Failed to submit information. ${error}`)
@@ -99,6 +100,17 @@ const CategoriesAddScreen = ({navigation}) => {
         setSelectedIcon("");
         formik.resetForm();
     };
+
+    // For navigating to next screen
+    useEffect(() => {
+        if (isCategoryCreated) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Categories", {
+                screen: "CategoriesMain",
+                key: newKey
+            })
+        }
+    }, [isCategoryCreated]);
 
 
     return (

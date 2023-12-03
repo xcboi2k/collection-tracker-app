@@ -104,7 +104,6 @@ const CollectionAddScreen = ({navigation}) => {
 
             // Reset the form and navigate
             resetForm();
-            navigation.navigate("Home", { screen: "HomeMain" });
         }catch(error){
             stopLoading()
             showAlert("Error", `Failed to submit information. ${error}`)

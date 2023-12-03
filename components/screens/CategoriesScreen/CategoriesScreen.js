@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation } from "@react-navigation/native";
 
 import { ICON_NAMES } from '../../../constants/constant'
@@ -12,11 +12,30 @@ import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
 import useCategoryStore from '../../../hooks/useCategoryStore';
 import useGetCategories from '../../../hooks/useGetCategories';
 
-const CategoriesScreen = () => {
-    const [categories] = useGetCategories();
+const CategoriesScreen = ({route}) => {
     const navigation = useNavigation();
 
+    const [categories] = useGetCategories();
     console.log(categories)
+
+    const isCategoryCreated = useCategoryStore(state => state.isCategoryCreated);
+    const isCategoryUpdated = useCategoryStore(state => state.isCategoryUpdated);
+    const isCategoryDeleted = useCategoryStore(state => state.isCategoryDeleted);
+    const setCategoryCreated = useCategoryStore((state) => state.setCategoryCreated);
+    const setCategoryUpdated = useCategoryStore((state) => state.setCategoryUpdated);
+    const setCategoryDeleted = useCategoryStore((state) => state.setCategoryDeleted);
+
+    // For reloading after making changes
+    const key = route.params?.key || 'defaultKey';
+    useEffect(() => {
+        if(isCategoryCreated){
+            setCategoryCreated(false)
+        }else if(isCategoryUpdated){
+            setCategoryUpdated(false)
+        }else if(isCategoryDeleted){
+            setCategoryDeleted(false)
+        }
+    }, [key]);
 
     const handleNavigation = (id) =>
         navigation.navigate("Categories", {

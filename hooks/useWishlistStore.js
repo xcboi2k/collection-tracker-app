@@ -13,6 +13,14 @@ const WishlistStore = (set, get) => ({
     wishlistItems: [],
     resetWishlistItems: () => set({wishlistItems: []}),
     setWishlistItems: (data) => set({wishlistItems: data}),
+
+    isWishlistItemCreated: false,
+    setWishlistItemCreated: (value) => set({ isWishlistItemCreated: value }),
+    isWishlistItemUpdated: false,
+    setWishlistItemUpdated: (value) => set({ isWishlistItemUpdated: value }),
+    isWishlistItemDeleted: false,
+    setWishlistItemDeleted: (value) => set({ isWishlistItemDeleted: value }),
+
     addWishlistItem: async(newItem) => {
         try{
             console.log(newItem);
@@ -21,6 +29,7 @@ const WishlistStore = (set, get) => ({
                 ...newItem, timestamp: serverTimestamp()
             });
 
+            set({ isWishlistItemCreated: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Wishlist item added.`)
         }
@@ -39,6 +48,7 @@ const WishlistStore = (set, get) => ({
                 ...updatedItem, timestamp: serverTimestamp()
             });
 
+            set({ isWishlistItemUpdated: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Wishlist item updated.`)
         }
@@ -55,6 +65,7 @@ const WishlistStore = (set, get) => ({
 
             await deleteDoc(docRef);
 
+            set({ isWishlistItemDeleted: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Wishlist item deleted.`)
         }

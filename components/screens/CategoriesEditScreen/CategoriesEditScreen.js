@@ -40,6 +40,9 @@ const CategoriesEditScreen = ({route, navigation}) => {
         hideAlert()
     }
 
+    const isCategoryUpdated = useCategoryStore(state => state.isCategoryUpdated);
+    const isCategoryDeleted = useCategoryStore(state => state.isCategoryDeleted)
+
     // Get the categoryID from the route params
     const { categoryID } = route.params;
 
@@ -93,7 +96,6 @@ const CategoriesEditScreen = ({route, navigation}) => {
             };
             updateCategory(categoryID, newCategory);
             resetForm();
-            navigation.navigate("Categories", { screen: "CategoriesMain" });
         }catch(error){
             stopLoading()
             showAlert("Error", `Failed to submit information. ${error}`)
@@ -125,8 +127,24 @@ const CategoriesEditScreen = ({route, navigation}) => {
     const handleDelete = () => {
         startLoading()
         deleteCategory(categoryID);
-        navigation.navigate("Categories", { screen: "CategoriesMain" });
     };
+
+    // For navigating to next screen
+    useEffect(() => {
+        if (isCategoryUpdated) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Categories", {
+                screen: "CategoriesMain",
+                key: newKey
+            })
+        } else if (isCategoryDeleted) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Categories", {
+                screen: "CategoriesMain",
+                key: newKey
+            })
+        }
+    }, [isCategoryUpdated, isCategoryDeleted]);
 
     return (
         <CategoriesEditContainer>

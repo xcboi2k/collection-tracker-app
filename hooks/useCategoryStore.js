@@ -10,11 +10,20 @@ const categoryStore = (set, get) => ({
     categories: [],
     reset: () => set({ categories: [] }),
     setCategories: (data) => set({ categories: data }),
+
+    isCategoryCreated: false,
+    setCategoryCreated: (value) => set({ isCategoryCreated: value }),
+    isCategoryUpdated: false,
+    setCategoryUpdated: (value) => set({ isCategoryUpdated: value }),
+    isCategoryDeleted: false,
+    setCategoryDeleted: (value) => set({ isCategoryDeleted: value }),
+
     addCategory: async (newCategory) => {
         try {
             await addDoc(collection(db, "categories"), { ...newCategory, created_at: serverTimestamp() });
             console.log("NEW DOCUMENT CREATED");
 
+            set({ isCategoryCreated: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Category added.`)
         }catch (error) {
@@ -37,6 +46,7 @@ const categoryStore = (set, get) => ({
 
             await deleteDoc(docRef);
 
+            set({ isCategoryDeleted: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Category deleted.`)
         } catch (error) {
@@ -49,6 +59,7 @@ const categoryStore = (set, get) => ({
         try {
             await updateDoc(docRef, updatedCategory);
 
+            set({ isCategoryUpdated: true })
             LoaderStore.getState().stopLoading();
             AlertStore.getState().showAlert('Success', `Category updated.`)
         } catch (error) {
