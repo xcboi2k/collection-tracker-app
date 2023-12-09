@@ -23,7 +23,7 @@ const DashboardCategoryItem = ({
                         value={total}
                         displayType={'text'}
                         thousandSeparator={true}
-                        prefix={'₱'}
+                        prefix={'₱ '}
                         decimalScale={2}
                         renderText={value => <Text>{value}</Text>}
                     />
