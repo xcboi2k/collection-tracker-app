@@ -10,7 +10,7 @@ export const CollectionAddContainer = styled(Container)`
 `;
 
 export const CollectionFormHolder = styled.View`
-    padding-top: 40px;
+    padding-top: 10px;
     width: 90%;
     align-items: center;
     justify-content: flex-start;
@@ -30,8 +30,8 @@ export const CollectionCategoryHolder = styled.View`
 `;
 
 export const ButtonContainer = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    width: 90%;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     margin-top: 20px;
 `;

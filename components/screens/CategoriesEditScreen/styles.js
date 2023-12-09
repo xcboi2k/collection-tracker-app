@@ -9,7 +9,7 @@ export const CategoriesEditContainer = styled(Container)`
 `;
 
 export const CategoriesFormHolder = styled.View`
-    padding-top: 40px;
+    padding-top: 10px;
     width: 90%;
     align-items: center;
     justify-content: flex-start;
@@ -17,7 +17,8 @@ export const CategoriesFormHolder = styled.View`
 
 export const ButtonContainer = styled.View`
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: ${({ mode }) =>
+        mode === "edit" ? "space-between" : "flex-end"};
     width: 90%;
     margin-top: 20px;
 `;

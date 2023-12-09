@@ -123,7 +123,7 @@ const WishlistEditScreen = ({route, navigation}) => {
                 key: newKey
             })
         }
-    }, [isCategoryUpdated, isCategoryDeleted]);
+    }, [isWishlistItemUpdated, isWishlistItemDeleted]);
 
     const screenTitle = `${mode === "edit" ? "Edit" : "Item"} Details`;
     const EditButtonGroup = () => (

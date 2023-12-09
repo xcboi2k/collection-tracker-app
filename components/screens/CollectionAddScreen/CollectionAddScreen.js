@@ -184,13 +184,13 @@ const CollectionAddScreen = ({navigation}) => {
                 />
                 <ButtonContainer>
                 <Button
-                    width="100%"
+                    width="90%"
                     title={"ADD"}
                     type={"filled"}
                     rounded={"10px"}
                     onPress={formik.handleSubmit}
                     buttonProps={{
-                        disabled: isFormFilled(),
+                        disabled: !isFormFilled(),
                     }}
                 />
                 </ButtonContainer>

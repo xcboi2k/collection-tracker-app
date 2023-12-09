@@ -9,7 +9,7 @@ export const CategoriesAddContainer = styled(Container)`
 `;
 
 export const CategoriesFormHolder = styled.View`
-    padding-top: 40px;
+    padding-top: 10px;
     width: 90%;
     align-items: center;
     justify-content: flex-start;

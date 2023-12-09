@@ -47,6 +47,7 @@ const CategoriesEditScreen = ({route, navigation}) => {
     const { categoryID } = route.params;
 
     // State variables
+    const [mode, setMode] = useState("details");
     const allCategories = useCategoryStore((state) => state.categories);
     const updateCategory = useCategoryStore((state) => state.updateCategory);
     const deleteCategory = useCategoryStore((state) => state.deleteCategory);
@@ -146,10 +147,34 @@ const CategoriesEditScreen = ({route, navigation}) => {
         }
     }, [isCategoryUpdated, isCategoryDeleted]);
 
+    const screenTitle = `${mode === "edit" ? "Edit" : "Category"} Details`;
+    const EditButtonGroup = () => (
+        <>
+            <Button
+                type="filled"
+                width="48%"
+                title="Save"
+                rounded="8px"
+                textSize={16}
+                noBorder={false}
+                onPress={formik.handleSubmit}
+            />
+            <Button
+                type="outlined"
+                width="48%"
+                title="Delete"
+                rounded="8px"
+                textSize={16}
+                noBorder={false}
+                onPress={showDeletePrompt}
+            />
+        </>
+    );
+
     return (
         <CategoriesEditContainer>
             <Header
-                title={"Edit Category"}
+                title={screenTitle}
                 onPressLeftIcon={() => 
                     navigation.navigate("Categories", {
                         screen: "CategoriesMain"
@@ -163,6 +188,7 @@ const CategoriesEditScreen = ({route, navigation}) => {
                         placeholder: "Enter Category Name",
                         onChangeText: formik.handleChange("categoryName"),
                         value: formik.values.categoryName,
+                        editable: mode === "edit"
                     }}
                     customLabel="Category Name:"
                 />
@@ -180,25 +206,20 @@ const CategoriesEditScreen = ({route, navigation}) => {
                     onAddPress={() => setShowColorWheel(true)}
                 />
             </CategoriesFormHolder>
-            <ButtonContainer>
-                <Button
-                    type="filled"
-                    width="45%"
-                    title="Save"
-                    rounded="8px"
-                    textSize={14}
-                    noBorder={false}
-                    onPress={formik.handleSubmit}
-                />
-                <Button
-                    type="outlined"
-                    width="45%"
-                    title="Delete"
-                    rounded="8px"
-                    textSize={14}
-                    noBorder={false}
-                    onPress={showDeletePrompt}
-                />
+            <ButtonContainer mode={mode}>
+                {mode === "edit" ? (
+                    <EditButtonGroup />
+                ) : (
+                    <Button
+                        type="outlined"
+                        width="45%"
+                        title="EDIT"
+                        rounded="8px"
+                        textSize={16}
+                        noBorder={false}
+                        onPress={() => setMode("edit")}
+                    />
+                )}
             </ButtonContainer>
             <CustomAlert 
                 visible={isAlertVisible}

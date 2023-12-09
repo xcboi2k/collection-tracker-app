@@ -8,12 +8,10 @@ export const WishlistContainer = styled(Container)`
     padding-bottom: 20px;
 `;
 
-export const HolderContainer = styled.View`
-    margin-top: 20px;
-    margin-bottom: 5px;
-    align-items: center;
+export const ScrollContainer = styled.ScrollView`
+    flex: 1;
     width: 90%;
-    height: 85%;
+    margin-top: 20px;
 `;
 
 export const DefaultText = styled.Text`

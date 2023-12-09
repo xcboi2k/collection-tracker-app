@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { ICON_NAMES } from '../../../constants/constant'
 
-import { WishlistContainer, HolderContainer, DefaultText } from './styles'
+import { WishlistContainer, DefaultText, ScrollContainer } from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import WishlistButton from '../../shared/WishlistButton/WishlistButton';
@@ -43,16 +43,6 @@ const WishlistScreen = ({route}) => {
             }
     });
 
-    const renderWishlistItem = ({ item }) => {
-        return(
-            <WishlistButton 
-                onPress={() => { handleNavigation(item.id); }}
-                name={item.wishlist_name}
-                amount={item.wishlist_amount}
-            />
-        );
-    };
-
     return (
         <WishlistContainer>
             <ScreenHeader 
@@ -65,17 +55,22 @@ const WishlistScreen = ({route}) => {
                 })
             }
             />
-                <HolderContainer>
+                <ScrollContainer>
                     {
-                        wishlistItems.length ?
-                        <FlatList 
-                            data={wishlistItems}
-                            renderItem={renderWishlistItem}
-                            keyExtractor={(item) => item.id}
-                        />
-                        : <DefaultText>Add an item to your Wishlist.</DefaultText>
+                        wishlistItems.length ? (
+                            wishlistItems.map((item, index) => (
+                                <WishlistButton
+                                    key={index}
+                                    onPress={() => { handleNavigation(item.id); }}
+                                    name={item.wishlist_name}
+                                    amount={item.wishlist_amount}
+                                />
+                            ))
+                        ) : (
+                            <DefaultText>Add an item to your Wishlist.</DefaultText>
+                        )
                     }
-                </HolderContainer>
+                </ScrollContainer>
         </WishlistContainer>
     )
 }

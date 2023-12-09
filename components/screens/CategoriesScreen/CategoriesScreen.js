@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { ICON_NAMES } from '../../../constants/constant'
 
-import { CategoriesContainer, CategoryList } from './styles'
+import { CategoriesContainer, CategoryList, CategoryListContainer, ScrollContainer } from './styles'
 
 import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
 import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
@@ -57,7 +57,26 @@ const CategoriesScreen = ({route}) => {
                 })
             }
             />
-            <CategoryList
+            <ScrollContainer>
+                <CategoryListContainer>
+                    {
+                        categories.map((item, index) => (
+                            <ButtonIcon
+                                name={item.category_icon}
+                                iconColor={item.category_color}
+                                iconSize={25}
+                                label={item.category_name}
+                                key={index}
+                                type=""
+                                onPress={() => { handleNavigation(item.id); }}
+                                styles={{ marginHorizontal: 10 }}
+                            />
+                        ))
+                    }      
+                </CategoryListContainer>
+                
+            </ScrollContainer>
+            {/* <CategoryList
                 data={categories}
                 renderItem={({ item }) => (
                     <ButtonIcon
@@ -82,7 +101,7 @@ const CategoriesScreen = ({route}) => {
                 extraData={{
                     categories: categories.length
                 }}
-            />
+            /> */}
         </CategoriesContainer>
     )
 }
