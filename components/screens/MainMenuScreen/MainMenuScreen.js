@@ -1,6 +1,7 @@
-import { View, Text, FlatList } from 'react-native'
-import React, { useEffect } from 'react'
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, FlatList, ActivityIndicator } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { onSnapshot, collection, query, orderBy, where } from 'firebase/firestore';
 
 import { 
     MainMenuContainer, 
@@ -18,6 +19,7 @@ import {
 import Icon from '../../common/Icon'
 import { ICON_NAMES } from '../../../constants/constant'
 import colors from '../../../assets/themes/colors'
+import { db } from '../../../firebase.js';
 
 import DashboardHeader from '../../shared/DashboardHeader'
 import DashboardChart from '../../shared/DashboardChart/DashboardChart'
@@ -32,7 +34,7 @@ import useCollectionStore from '../../../hooks/useCollectionStore';
 import LoaderStore from '../../../stores/LoaderStore.js';
 import AlertStore from '../../../stores/AlertStore.js';
 
-const MainMenuScreen = ({route}) => {
+const MainMenuScreen = () => {
     const navigation = useNavigation();
 
     // State management for loading indicators
@@ -53,22 +55,45 @@ const MainMenuScreen = ({route}) => {
         hideAlert()
     }
 
-    // Retrieve collection items, collection data, and chart data using custom hooks
-    const collectionItems = useCollectionStore((state) => state.collectionItems);
-    const [collectionData] = useGetCollectionItems();
     const chartData = useGetCollectionChartData();
 
-    // State variables for state changes
-    const isCollectionItemCreated = useCollectionStore(state => state.isCollectionItemCreated);
-    const setCollectionItemCreated = useCollectionStore((state) => state.setCollectionItemCreated);
-
     // For reloading after making changes
-    const key = route.params?.key || 'defaultKey';
-    useEffect(() => {
-        if(isCollectionItemCreated){
-            setCollectionItemCreated(false)
-        }
-    }, [key]);
+    const [collectionData, setCollectionData] = useState([]);
+    const [loading, setLoading] = useState(false)
+    const fetchCollection = async () => {
+        setLoading(true)
+        const collectionColRef = collection(db, "collection");
+        const collectionQuery = query(collectionColRef, orderBy("created_at", "desc"));
+
+        const unsubscribe = onSnapshot(collectionQuery, (snapshotData) => {
+            const userList = [];
+
+            snapshotData.forEach((doc) => {
+                userList.push({
+                    ...doc.data(),
+                    id: doc.id
+                });
+                // console.log("CATEGORY PUSHED", doc.id);
+            });
+            if(userList.length > 0){
+                setCollectionData(userList);
+                setLoading(false)
+            }
+        });
+
+        return unsubscribe;
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            console.log('Mount Main Menu');
+            fetchCollection()
+            
+            return () => {
+                console.log('Unmount Main Menu');
+            };
+        }, [])
+    );
     
     return (
         <MainMenuContainer>
@@ -77,39 +102,51 @@ const MainMenuScreen = ({route}) => {
             />
             <ScrollContainer>
                 {
-                    chartData.length ? (
-                    <HolderContainer>
-                        <DashboardChart title={"Collection Status"} chartData={chartData}/>
-                    </HolderContainer>
+                    loading ? (
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20, marginBottom: 20}}>
+                            <ActivityIndicator size="large" color={colors.primary.colorOne}/>
+                        </View>
                     ) : (
-                        <HolderContainer>
-                            <DefaultText>Start adding items to see graph</DefaultText>
-                        </HolderContainer>
+                        <>
+                            {
+                                chartData.length ? (
+                                    <HolderContainer>
+                                        <DashboardChart title={"Collection Status"} chartData={chartData}/>
+                                    </HolderContainer>
+                                ) : (
+                                    <HolderContainer>
+                                        <DefaultText>Start adding items to see graph</DefaultText>
+                                    </HolderContainer>
+                                )
+                            }
+                            <TitleButtonContainer>
+                                <Title>Recent Additions</Title>
+                                <RightIcon onPress={() => 
+                                    navigation.navigate("Home", {
+                                        screen: "CollectionAdd"
+                                    })}>
+                                    <Icon 
+                                        name={ICON_NAMES.SYSTEM_ICONS.ADD}
+                                        color={colors.primary.colorOne}
+                                        size={32}
+                                    />
+                                </RightIcon>
+                            </TitleButtonContainer>
+                            {
+                                collectionData.length ? (
+                                    <RecentPanelContainer>
+                                        {collectionData.slice(0,12).map((item, index) => (
+                                                <DashboardRecentPanel data={item} key={index}/>
+                                        ))}
+                                    </RecentPanelContainer>
+                                ) : (
+                                    <DefaultText>You have no recent additions</DefaultText>
+                                )
+                            }
+                        </>
                     )
                 }
-                <TitleButtonContainer>
-                    <Title>Recent Additions</Title>
-                    <RightIcon onPress={() => 
-                        navigation.navigate("Home", {
-                            screen: "CollectionAdd"
-                        })}>
-                        <Icon 
-                            name={ICON_NAMES.SYSTEM_ICONS.ADD}
-                            color={colors.primary.colorOne}
-                            size={32}
-                        />
-                    </RightIcon>
-                </TitleButtonContainer>
-                {collectionItems.length ? (
-                    <RecentPanelContainer>
-                        {collectionData.slice(0,12).map((item, index) => (
-                             <DashboardRecentPanel data={item} key={index}/>
-                        ))}
-                    </RecentPanelContainer>
-                ) : (
-                    <DefaultText>You have no recent additions</DefaultText>
-                )
-                }
+                
             </ScrollContainer>
             <CustomAlert 
                 visible={isAlertVisible}
