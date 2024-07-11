@@ -2,6 +2,8 @@ import { View, Text, FlatList, ActivityIndicator } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { onSnapshot, collection, query, orderBy, where } from 'firebase/firestore';
+import { FontAwesome } from '@expo/vector-icons';
+import { NumericFormat } from 'react-number-format';
 
 import { 
     MainMenuContainer, 
@@ -13,7 +15,11 @@ import {
     RightIcon, 
     DefaultText,
     HomeImg, 
-    ScrollContainer
+    ScrollContainer,
+    RowHolderContainer,
+    StatsTitleText,
+    StatsBodyText,
+    StatsPanelContainer
 } from './styles'
 
 import Icon from '../../common/Icon'
@@ -59,6 +65,11 @@ const MainMenuScreen = () => {
 
     // For reloading after making changes
     const [collectionData, setCollectionData] = useState([]);
+    const [totalValue, setTotalValue] = useState(0);
+    const [averageValue, setAverageValue] = useState(0);
+    const [mostExpensive, setMostExpensive] = useState(null);
+    const [leastExpensive, setLeastExpensive] = useState(null);
+    const [frequentCategory, setFrequentCategory] = useState('');
     const [loading, setLoading] = useState(false)
     const fetchCollection = async () => {
         setLoading(true)
@@ -94,6 +105,35 @@ const MainMenuScreen = () => {
             };
         }, [])
     );
+
+    console.log(collectionData)
+
+    useEffect(() => {
+        if(collectionData.length > 0){
+            // Total Value and Average Value
+            const totalAmount = collectionData.reduce((total, item) => total + item.collectionItem_amount, 0);
+            const averageAmount = totalAmount / collectionData.length;
+            // Most Expensive Item
+            const mostExpensiveItem = collectionData.reduce((max, item) => max.collectionItem_amount > item.collectionItem_amount ? max : item, collectionData[0]);
+
+            // Least Expensive Item
+            const leastExpensiveItem = collectionData.reduce((min, item) => min.collectionItem_amount < item.collectionItem_amount ? min : item, collectionData[0]);
+
+            // Most Frequent Category
+            const categoryCount = collectionData.reduce((acc, item) => {
+                acc[item.category_name] = (acc[item.category_name] || 0) + 1;
+                return acc;
+            }, {});
+            const mostFrequentCategory = Object.keys(categoryCount).reduce((a, b) => categoryCount[a] > categoryCount[b] ? a : b);
+
+            setTotalValue(totalAmount)
+            setAverageValue(averageAmount)
+            setMostExpensive(mostExpensiveItem)
+            setLeastExpensive(leastExpensiveItem)
+            setFrequentCategory(mostFrequentCategory)
+        }
+    }, [collectionData])
+    
     
     return (
         <MainMenuContainer>
@@ -112,6 +152,56 @@ const MainMenuScreen = () => {
                                 chartData.length ? (
                                     <HolderContainer>
                                         <DashboardChart title={"Collection Status"} chartData={chartData}/>
+                                        <HolderContainer>
+                                            <StatsPanelContainer width='100%'>
+                                                <StatsTitleText>Total Value of Collection</StatsTitleText>
+                                                <StatsBodyText size='30px'>
+                                                    <NumericFormat
+                                                        value={totalValue}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'₱ '}
+                                                        decimalScale={2}
+                                                        renderText={value => <Text>{value}</Text>}
+                                                    />
+                                                </StatsBodyText>
+                                            </StatsPanelContainer>
+                                        </HolderContainer>
+                                        <RowHolderContainer>
+                                            <StatsPanelContainer width='48%'>
+                                                <StatsTitleText>Total Items</StatsTitleText>
+                                                <StatsBodyText>{collectionData.length}</StatsBodyText>
+                                            </StatsPanelContainer>
+                                            <StatsPanelContainer width='48%'>
+                                                <StatsTitleText>Average Value of Collection</StatsTitleText>
+                                                <StatsBodyText>
+                                                    <NumericFormat
+                                                        value={averageValue}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'₱ '}
+                                                        decimalScale={2}
+                                                        renderText={value => <Text>{value}</Text>}
+                                                    />
+                                                </StatsBodyText>
+                                            </StatsPanelContainer>
+                                        </RowHolderContainer>
+                                        <RowHolderContainer>
+                                            <StatsPanelContainer width='48%'>
+                                                <StatsTitleText>Most Expensive Item</StatsTitleText>
+                                                <StatsBodyText size='15px'>{mostExpensive.collectionItem_name}</StatsBodyText>
+                                            </StatsPanelContainer>
+                                            <StatsPanelContainer width='48%'>
+                                                <StatsTitleText>Least Expensive Item</StatsTitleText>
+                                                <StatsBodyText size='15px'>{leastExpensive.collectionItem_name}</StatsBodyText>
+                                            </StatsPanelContainer>
+                                        </RowHolderContainer>
+                                        <HolderContainer>
+                                            <StatsPanelContainer width='100%'>
+                                                <StatsTitleText>Most Frequent Category</StatsTitleText>
+                                                <StatsBodyText size='30px'>{frequentCategory}</StatsBodyText>
+                                            </StatsPanelContainer>
+                                        </HolderContainer>
                                     </HolderContainer>
                                 ) : (
                                     <HolderContainer>

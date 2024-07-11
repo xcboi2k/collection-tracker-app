@@ -23,6 +23,37 @@ export const HolderContainer = styled.View`
     width: 100%;
 `;
 
+export const RowHolderContainer = styled.View`
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+`;
+
+export const StatsPanelContainer = styled.View`
+    justify-content:center;
+    align-items: center;
+    width: ${({ width }) => width};
+    height: 120px;
+    background-color: white;
+    padding: 12px;
+    border-radius: 15px;
+`;
+
+export const StatsTitleText = styled.Text`
+    font-family: ${FONTS.MEDIUM};
+    font-size: 10px;
+    color: ${colors.primary.black};
+    text-align: center;
+`;
+
+export const StatsBodyText = styled.Text`
+    font-family: ${FONTS.BOLD};
+    font-size: ${({ size }) => size ? size : '20px'};
+    color: ${colors.primary.colorOne};
+    text-align: center;
+`;
+
 export const RecentPanelContainer = styled.View`
     width: 100%;
     height: 500px;
