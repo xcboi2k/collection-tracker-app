@@ -79,7 +79,7 @@ const WishlistAddScreen = ({ navigation }) => {
     useEffect(() => {
         if (isWishlistItemCreated) {
             const newKey = Math.random().toString();
-            navigation.navigate("Wishlist", {
+            navigation.navigate("Wishlists", {
                 screen: "WishlistMain",
                 key: newKey
             })
@@ -91,7 +91,7 @@ const WishlistAddScreen = ({ navigation }) => {
             <Header 
                 title={"Add Wishlist Item"}
                 onPressLeftIcon={() => 
-                    navigation.navigate("Wishlist", {
+                    navigation.navigate("Wishlists", {
                         screen: "WishlistMain"
                     })
                 }

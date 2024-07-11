@@ -15,7 +15,7 @@ const WishlistNavigator = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="Wishlist"
+            initialRouteName="WishlistMain"
         >
             <WishlistStack.Screen
                 name="WishlistMain"

@@ -182,13 +182,13 @@ const CollectionEditScreen = ({route, navigation}) => {
     useEffect(() => {
         if (isCollectionItemUpdated) {
             const newKey = Math.random().toString();
-            navigation.navigate("Collection", {
+            navigation.navigate("Collections", {
                 screen: "CollectionMain",
                 key: newKey
             })
         } else if (isCollectionItemDeleted) {
             const newKey = Math.random().toString();
-            navigation.navigate("Collection", {
+            navigation.navigate("Collections", {
                 screen: "CollectionMain",
                 key: newKey
             })
@@ -224,7 +224,7 @@ const CollectionEditScreen = ({route, navigation}) => {
             <Header 
                 title={screenTitle}
                 onPressLeftIcon={() => 
-                    navigation.navigate("Collection", {
+                    navigation.navigate("Collections", {
                         screen: "CollectionMain"
                     })
                 }

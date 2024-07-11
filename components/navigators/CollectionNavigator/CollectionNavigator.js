@@ -14,7 +14,7 @@ const CollectionNavigator = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="Collection"
+            initialRouteName="CollectionMain"
         >
             <CollectionStack.Screen
                 name="CollectionMain"

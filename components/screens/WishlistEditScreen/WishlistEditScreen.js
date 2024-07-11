@@ -112,13 +112,13 @@ const WishlistEditScreen = ({route, navigation}) => {
     useEffect(() => {
         if (isWishlistItemUpdated) {
             const newKey = Math.random().toString();
-            navigation.navigate("Categories", {
-                screen: "CategoriesMain",
+            navigation.navigate("Wishlists", {
+                screen: "WishlistMain",
                 key: newKey
             })
         } else if (isWishlistItemDeleted) {
             const newKey = Math.random().toString();
-            navigation.navigate("Wishlist", {
+            navigation.navigate("Wishlists", {
                 screen: "WishlistMain",
                 key: newKey
             })
@@ -154,7 +154,7 @@ const WishlistEditScreen = ({route, navigation}) => {
             <Header 
                 title={screenTitle}
                 onPressLeftIcon={() => 
-                    navigation.navigate("Wishlist", {
+                    navigation.navigate("Wishlists", {
                         screen: "WishlistMain"
                     })
                 }

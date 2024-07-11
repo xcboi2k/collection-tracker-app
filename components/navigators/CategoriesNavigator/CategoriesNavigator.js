@@ -15,7 +15,7 @@ const CategoriesNavigator = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="Categories"
+            initialRouteName="CategoriesMain"
         >
             <CategoriesStack.Screen
                 name="CategoriesMain"
