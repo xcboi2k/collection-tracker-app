@@ -13,7 +13,7 @@ const WishlistButton = ({ onPress, name, amount}) => {
                     value={amount}
                     displayType={'text'}
                     thousandSeparator={true}
-                    prefix={'₱'}
+                    prefix={'₱ '}
                     decimalScale={2}
                     renderText={value => <Text>{value}</Text>}
                 />

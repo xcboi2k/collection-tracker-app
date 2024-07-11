@@ -1,6 +1,8 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import PropTypes from "prop-types";
+import { NumericFormat } from 'react-number-format';
+
 import Icon from '../../common/Icon';
 
 import { Category, CategoryName, CategoryTotal, TextHolder } from './styles';
@@ -13,10 +15,19 @@ const DashboardCategoryItem = ({
 }) => {
     return (
         <Category>
-            <Icon name={iconName} color={iconColor} />
+            <Icon name={iconName} color={iconColor} size={38}/>
             <TextHolder>
                 <CategoryName>{categoryName}</CategoryName>
-                <CategoryTotal>₱ {total}</CategoryTotal>
+                <CategoryTotal>
+                    <NumericFormat
+                        value={total}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'₱ '}
+                        decimalScale={2}
+                        renderText={value => <Text>{value}</Text>}
+                    />
+                </CategoryTotal>
             </TextHolder>
         </Category>
     )

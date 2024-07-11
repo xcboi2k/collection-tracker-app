@@ -13,11 +13,12 @@ const MainMenuNavigator = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="Home"
+            initialRouteName="HomeMain"
         >
             <MainMenuStack.Screen
                 name="HomeMain"
                 component={MainMenuScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <MainMenuStack.Screen
                 name="CollectionAdd"

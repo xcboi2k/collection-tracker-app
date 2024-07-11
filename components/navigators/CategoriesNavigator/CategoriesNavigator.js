@@ -15,11 +15,12 @@ const CategoriesNavigator = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="Categories"
+            initialRouteName="CategoriesMain"
         >
             <CategoriesStack.Screen
                 name="CategoriesMain"
                 component={CategoriesScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <CategoriesStack.Screen
                 name="CategoriesAdd"

@@ -21,15 +21,15 @@ const Tab = createBottomTabNavigator();
 const TabBarProps = (route) => ({
     tabBarIcon: ({ focused, color, size }) => {
         const iconColor = color,
-            iconSize = 40;
+            iconSize = 38;
 
         if (route.name === "Home") {
             return <HomeIcon color={iconColor} size={iconSize} />;
-        } else if (route.name === "Collection") {
+        } else if (route.name === "Collections") {
             return <CollectionIcon color={iconColor} size={iconSize} />;
         } else if (route.name === "Categories") {
             return <CategoriesIcon color={iconColor} size={iconSize} />;
-        } else if (route.name === "Wishlist") {
+        } else if (route.name === "Wishlists") {
             return <WishlistIcon color={iconColor} size={iconSize} />;
         }
     },
@@ -38,7 +38,7 @@ const TabBarProps = (route) => ({
     tabBarStyle: {
         backgroundColor: colors.primary.colorOne,
         position: "relative",
-        height: 120,
+        height: 90,
         alignContent: "center",
         justifyContent: "center",
         borderTopLeftRadius: 30,
@@ -46,14 +46,25 @@ const TabBarProps = (route) => ({
         paddingTop: 10,
     },
     tabBarItemStyle: {
-        paddingVertical: 25,
+        paddingVertical: 20,
     },
     tabBarLabelStyle: {
         fontFamily: FONTS.LIGHT,
         fontSize: 12,
-        paddingTop: 10,
+        marginTop: 18,
     },
     headerShown: false,
+    tabBarOnPress: ({ navigation, defaultHandler }) => {
+        const { name } = route;
+        const shouldReplaceStack = name === 'Home' || name === 'Collections' || name === 'Categories' || name === 'Wishlists'; // Adjust conditions as needed
+    
+        if (shouldReplaceStack) {
+          // Replace the stack with the desired screen
+            navigation.replace(name);
+        } else {
+          defaultHandler(); // Let the default handling occur for other tabs
+        }
+    },
 });
 
 const TabNavigator = () => {
@@ -64,9 +75,9 @@ const TabNavigator = () => {
         })}
     >
         <Tab.Screen name="Home" component={MainMenuNavigator} />
-        <Tab.Screen name="Collection" component={CollectionNavigator} />
+        <Tab.Screen name="Collections" component={CollectionNavigator} />
         <Tab.Screen name="Categories" component={CategoriesNavigator} />
-        <Tab.Screen name="Wishlist" component={WishlistNavigator} />
+        <Tab.Screen name="Wishlists" component={WishlistNavigator} />
     </Tab.Navigator>
     )
 }

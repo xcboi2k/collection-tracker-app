@@ -9,7 +9,7 @@ export const CollectionEditContainer = styled(Container)`
 `;
 
 export const CollectionFormHolder = styled.View`
-    padding-top: 40px;
+    padding-top: 10px;
     width: 90%;
     align-items: center;
     justify-content: flex-start;
@@ -17,8 +17,7 @@ export const CollectionFormHolder = styled.View`
 
 export const ScrollContainer = styled.ScrollView`
     width: 90%;
-    flex-grow: 0;
-    height: 65%;
+    flex: 1;
 `
 
 export const CollectionCategoryHolder = styled.View`
@@ -32,6 +31,6 @@ export const ButtonContainer = styled.View`
     flex-direction: row;
     justify-content: ${({ mode }) =>
         mode === "edit" ? "space-between" : "flex-end"};
-    width: 90%;
+    width: 100%;
     margin-top: 20px;
 `;

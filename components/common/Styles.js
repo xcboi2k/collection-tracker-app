@@ -19,7 +19,6 @@ export const Container = styled.View`
 `;
 
 export const Panel = styled.View`
-    elevation: 10;
     width: 100%;
     height: 250px;
     background-color: ${'#FFFFFF'};

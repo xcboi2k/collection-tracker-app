@@ -3,17 +3,32 @@ import firestore, { addDoc, collection, serverTimestamp, deleteDoc, doc, updateD
 
 import { db } from '../firebase';
 
+import LoaderStore from '../stores/LoaderStore';
+import AlertStore from '../stores/AlertStore';
+
 const categoryStore = (set, get) => ({
     categories: [],
     reset: () => set({ categories: [] }),
     setCategories: (data) => set({ categories: data }),
+
+    isCategoryCreated: false,
+    setCategoryCreated: (value) => set({ isCategoryCreated: value }),
+    isCategoryUpdated: false,
+    setCategoryUpdated: (value) => set({ isCategoryUpdated: value }),
+    isCategoryDeleted: false,
+    setCategoryDeleted: (value) => set({ isCategoryDeleted: value }),
+
     addCategory: async (newCategory) => {
         try {
             await addDoc(collection(db, "categories"), { ...newCategory, created_at: serverTimestamp() });
             console.log("NEW DOCUMENT CREATED");
-        }
-        catch (err) {
-            console.log("addCategoryError:", err);
+
+            set({ isCategoryCreated: true })
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Category added.`)
+        }catch (error) {
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to add category. ${error}`);
         }
     },
     deleteCategory: async (documentId) => {
@@ -30,19 +45,27 @@ const categoryStore = (set, get) => ({
             });
 
             await deleteDoc(docRef);
-        } catch (err) {
-            console.log("deleteCategoryError:", err);
+
+            set({ isCategoryDeleted: true })
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Category deleted.`)
+        } catch (error) {
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to delete category. ${error}`)
         }
     },
     updateCategory: async (documentId, updatedCategory) => {
         const docRef = doc(db, "categories", documentId);
         try {
-            // CREATE A REFERENCE TO THE DOCUMENT AND THE FILE
             await updateDoc(docRef, updatedCategory);
-        } catch (err) {
-            console.log("updateCategoryError:", err);
-        }
 
+            set({ isCategoryUpdated: true })
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Success', `Category updated.`)
+        } catch (error) {
+            LoaderStore.getState().stopLoading();
+            AlertStore.getState().showAlert('Error', `Failed to update category. ${error}`)
+        }
     },
 });
 

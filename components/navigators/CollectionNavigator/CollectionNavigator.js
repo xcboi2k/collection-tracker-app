@@ -14,11 +14,12 @@ const CollectionNavigator = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="Collection"
+            initialRouteName="CollectionMain"
         >
             <CollectionStack.Screen
                 name="CollectionMain"
                 component={CollectionScreen}
+                initialParams={{ key: Math.random().toString() }}
             />
             <CollectionStack.Screen
                 name="CollectionEdit"

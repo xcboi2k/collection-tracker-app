@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import colors from "./assets/themes/colors";
 import MainApp from './components/MainApp/MainApp'
 
 export default function App() {
@@ -23,6 +24,10 @@ export default function App() {
   }
   
   return (
-    <MainApp/>
+    <>
+      <StatusBar backgroundColor={colors.primary.colorOne}/>
+      <MainApp/>
+    </>
+    
   );
 }

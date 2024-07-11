@@ -7,41 +7,88 @@ import { WishlistEditContainer, WishlistFormHolder, ButtonContainer } from "./st
 import Header from '../../shared/Header/Header'
 import Button from '../../shared/Button';
 import TextInput from '../../shared/TextInput';
+import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
+import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
 
 import useWishlistStore from '../../../hooks/useWishlistStore';
 
+import LoaderStore from '../../../stores/LoaderStore';
+import AlertStore from '../../../stores/AlertStore';
+
 const WishlistEditScreen = ({route, navigation}) => {
+    // State management for loading indicators
+    const isLoading = LoaderStore(state => state.isLoading);
+    const startLoading = LoaderStore((state) => state.startLoading);
+    const stopLoading = LoaderStore((state) => state.stopLoading);
+
+    // State management for alert components
+    const isAlertVisible = AlertStore(state => state.isAlertVisible);
+    const alertTitle = AlertStore(state => state.alertTitle);
+    const alertMessage = AlertStore(state => state.alertMessage);
+    const showAlert = AlertStore((state) => state.showAlert);
+    const hideAlert = AlertStore((state) => state.hideAlert);
+
+    // Handle close alert function
+    const handleAlertClose = () => {
+        stopLoading()
+        hideAlert()
+    }
+
+    const isWishlistItemUpdated = useWishlistStore(state => state.isWishlistItemUpdated);
+    const isWishlistItemDeleted = useWishlistStore(state => state.isWishlistItemDeleted);
+
+    // Get the wishlistItemID from the route params
     const { wishlistItemID } = route.params
 
+    // State variables
     const wishlistItems = useWishlistStore((state) => state.wishlistItems);
     const updateWishlistItem = useWishlistStore((state) => state.updateWishlistItem);
     const deleteWishlistItem = useWishlistStore((state) => state.deleteWishlistItem);
-
     const [currentWishlistItem, setCurrentWishlistItem] = useState(() => {
         return wishlistItems.find(item => item.id === wishlistItemID);
     });
     const [mode, setMode] = useState("details");
     const [date, setDate] = useState(currentWishlistItem.created_at);
 
+    // Initial form values
+    const initialValues = {
+        wishlistName: currentWishlistItem.wishlist_name,
+        wishlistAmount: currentWishlistItem.wishlist_amount,
+        // userID: "",
+    };
+
+    // Fetch target wishlist item when wishlistItemID changes
     useEffect(() => {
         const targetWishlistItem = wishlistItems.find(item => item.id === wishlistItemID);
         
         setCurrentWishlistItem(targetWishlistItem);
     }, [wishlistItemID]);
 
-    const handleFormikSubmit = async (values) => {
-        const newWishlistItem = {
-            // user_id: user.user_id,
-            wishlist_name: values.wishlistName,
-            wishlist_amount: values.wishlistAmount,
-            created_at: date,
-        };
-        updateWishlistItem(wishlistItemID, newWishlistItem);
-        Alert.alert("SUCCESS", "Document Updated");
-        formik.resetForm();
-        navigation.navigate("Wishlist", { screen: "WishlistMain" });
+    // Handle formik form submission
+    const handleFormikSubmit = async (values, { resetForm }) => {
+        try{
+            const newWishlistItem = {
+                // user_id: user.user_id,
+                wishlist_name: values.wishlistName,
+                wishlist_amount: values.wishlistAmount,
+                created_at: date,
+            };
+            updateWishlistItem(wishlistItemID, newWishlistItem);
+            resetForm();
+        }catch(error){
+            stopLoading()
+            showAlert("Error", `Failed to submit information. ${error}`)
+        }
+        
     };
 
+    // Formik configuration
+    const formik = useFormik({
+        initialValues,
+        onSubmit: handleFormikSubmit,
+    });
+
+    // Show delete prompt
     const showDeletePrompt = () => {
         Alert.alert("Deleting file", "Are you sure ?", [{
             text: "Yes",
@@ -55,25 +102,30 @@ const WishlistEditScreen = ({route, navigation}) => {
 
     };
 
+    // Handle delete action
     const handleDelete = () => {
+        startLoading()
         deleteWishlistItem(wishlistItemID);
-        Alert.alert("Success", "Item Deleted.");
-        navigation.navigate("Home", { screen: "HomeMain" });
     };
 
-    const initialValues = {
-        wishlistName: currentWishlistItem.wishlist_name,
-        wishlistAmount: currentWishlistItem.wishlist_amount,
-        // userID: "",
-    };
-
-    const formik = useFormik({
-        initialValues,
-        onSubmit: handleFormikSubmit,
-    });
+    // For navigating to next screen
+    useEffect(() => {
+        if (isWishlistItemUpdated) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Wishlists", {
+                screen: "WishlistMain",
+                key: newKey
+            })
+        } else if (isWishlistItemDeleted) {
+            const newKey = Math.random().toString();
+            navigation.navigate("Wishlists", {
+                screen: "WishlistMain",
+                key: newKey
+            })
+        }
+    }, [isWishlistItemUpdated, isWishlistItemDeleted]);
 
     const screenTitle = `${mode === "edit" ? "Edit" : "Item"} Details`;
-
     const EditButtonGroup = () => (
         <>
             <Button
@@ -102,7 +154,7 @@ const WishlistEditScreen = ({route, navigation}) => {
             <Header 
                 title={screenTitle}
                 onPressLeftIcon={() => 
-                    navigation.navigate("Wishlist", {
+                    navigation.navigate("Wishlists", {
                         screen: "WishlistMain"
                     })
                 }
@@ -142,6 +194,13 @@ const WishlistEditScreen = ({route, navigation}) => {
                 />
                 )}
             </ButtonContainer>
+            <CustomAlert
+                visible={isAlertVisible}
+                title={alertTitle}
+                message={alertMessage}
+                onClose={handleAlertClose}
+            />
+            <CustomLoader visible={isLoading}/>
         </WishlistEditContainer>
     )
 }

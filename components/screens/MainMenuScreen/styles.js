@@ -11,23 +11,63 @@ export const MainMenuContainer = styled(Container)`
     padding-bottom: 20px;
 `;
 
-export const HolderContainer = styled.View`
-    margin-top: 20px;
-    margin-bottom: 5px;
-    align-items: center;
+export const ScrollContainer = styled.ScrollView`
+    flex: 1;
     width: 90%;
+`;
+
+export const HolderContainer = styled.View`
+    margin-top: 10px;
+    justify-content:center;
+    align-items: center;
+    width: 100%;
+`;
+
+export const RowHolderContainer = styled.View`
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+`;
+
+export const StatsPanelContainer = styled.View`
+    justify-content:center;
+    align-items: center;
+    width: ${({ width }) => width};
+    height: 120px;
+    background-color: white;
+    padding: 12px;
+    border-radius: 15px;
+`;
+
+export const StatsTitleText = styled.Text`
+    font-family: ${FONTS.MEDIUM};
+    font-size: 10px;
+    color: ${colors.primary.black};
+    text-align: center;
+`;
+
+export const StatsBodyText = styled.Text`
+    font-family: ${FONTS.BOLD};
+    font-size: ${({ size }) => size ? size : '20px'};
+    color: ${colors.primary.colorOne};
+    text-align: center;
 `;
 
 export const RecentPanelContainer = styled.View`
-    width: 95%;
-    align-items: center;
+    width: 100%;
+    height: 500px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 16px;
 `;
 
 export const TitleButtonContainer = styled.View`
-    width: 90%;
+    width: 100%;
     flex-direction: row;
     align-items: center;
-    margin-top: 7px;
+    margin-top: 15px;
 `;
 
 export const Title = styled.Text`
@@ -54,10 +94,7 @@ export const HomeImg = styled.Image`
 `;
 
 export const RecentList = styled.FlatList`
-    width: 100%;
     margin: 5px;
     padding: 10px;
-    height: 85%;
-    flex-grow: 0;
     /* background-color: ${colors.primary.black}; */
 `;
