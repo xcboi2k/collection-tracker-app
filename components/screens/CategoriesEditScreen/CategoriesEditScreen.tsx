@@ -1,38 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { Alert } from "react-native";
-import { useFormik } from "formik";
+import React, { useState, useEffect } from 'react'
+import { Alert } from 'react-native'
+import { useFormik } from 'formik'
 
-import { CategoriesEditContainer, CategoriesFormHolder, ButtonContainer } from "./styles";
+import {
+    CategoriesEditContainer,
+    CategoriesFormHolder,
+    ButtonContainer,
+} from './styles'
 
-import { ICON_NAMES } from "../../../constants/constant";
-import colorCollection from '../../../data/colorCollection';
+import { ICON_NAMES } from '../../../constants/constant'
+import colorCollection from '../../../data/colorCollection'
 
-import Button from '../../shared/Button';
-import TextInput from '../../shared/TextInput';
-import IconOnlySelector from '../../shared/IconOnlySelector';
-import ColorPickerPanel from '../../shared/ColorPickerPanel';
-import Header from '../../shared/Header/Header';
-import ColorPicker from '../../common/ColorPicker';
-import CustomAlert from '../../shared/CustomAlert/CustomAlert.js';
-import CustomLoader from '../../shared/CustomLoader/CustomLoader.js';
+import Button from '../../shared/Button'
+import TextInput from '../../shared/TextInput'
+import IconOnlySelector from '../../shared/IconOnlySelector'
+import ColorPickerPanel from '../../shared/ColorPickerPanel'
+import Header from '../../shared/Header/Header'
+import ColorPicker from '../../common/ColorPicker'
+import CustomAlert from '../../shared/CustomAlert/CustomAlert.js'
+import CustomLoader from '../../shared/CustomLoader/CustomLoader.js'
 
-import useCategoryStore from "../../../hooks/useCategoryStore";
+import useCategoryStore from '../../../stores/CategoryStore'
 
-import LoaderStore from '../../../stores/LoaderStore';
-import AlertStore from '../../../stores/AlertStore';
+import LoaderStore from '../../../stores/LoaderStore'
+import AlertStore from '../../../stores/AlertStore'
 
-const CategoriesEditScreen = ({route, navigation}) => {
+const CategoriesEditScreen = ({ route, navigation }) => {
     // State management for loading indicators
-    const isLoading = LoaderStore(state => state.isLoading);
-    const startLoading = LoaderStore((state) => state.startLoading);
-    const stopLoading = LoaderStore((state) => state.stopLoading);
+    const isLoading = LoaderStore((state) => state.isLoading)
+    const startLoading = LoaderStore((state) => state.startLoading)
+    const stopLoading = LoaderStore((state) => state.stopLoading)
 
     // State management for alert components
-    const isAlertVisible = AlertStore(state => state.isAlertVisible);
-    const alertTitle = AlertStore(state => state.alertTitle);
-    const alertMessage = AlertStore(state => state.alertMessage);
-    const showAlert = AlertStore((state) => state.showAlert);
-    const hideAlert = AlertStore((state) => state.hideAlert);
+    const isAlertVisible = AlertStore((state) => state.isAlertVisible)
+    const alertTitle = AlertStore((state) => state.alertTitle)
+    const alertMessage = AlertStore((state) => state.alertMessage)
+    const showAlert = AlertStore((state) => state.showAlert)
+    const hideAlert = AlertStore((state) => state.hideAlert)
 
     // Handle close alert function
     const handleAlertClose = () => {
@@ -40,114 +44,127 @@ const CategoriesEditScreen = ({route, navigation}) => {
         hideAlert()
     }
 
-    const isCategoryUpdated = useCategoryStore(state => state.isCategoryUpdated);
-    const isCategoryDeleted = useCategoryStore(state => state.isCategoryDeleted)
+    const isCategoryUpdated = useCategoryStore(
+        (state) => state.isCategoryUpdated
+    )
+    const isCategoryDeleted = useCategoryStore(
+        (state) => state.isCategoryDeleted
+    )
 
     // Get the categoryID from the route params
-    const { categoryID } = route.params;
+    const { categoryID } = route.params
 
     // State variables
-    const [mode, setMode] = useState("details");
-    const allCategories = useCategoryStore((state) => state.categories);
-    const updateCategory = useCategoryStore((state) => state.updateCategory);
-    const deleteCategory = useCategoryStore((state) => state.deleteCategory);
-    const [currentCategory, setCurrentCategory] = useState(() => allCategories.find(category => category.id === categoryID));
-    const [selectedIcon, setSelectedIcon] = useState(currentCategory.category_icon);
-    const [selectedColor, setSelectedColor] = useState(currentCategory.category_color);
-    const [showColorWheel, setShowColorWheel] = useState(false);
+    const [mode, setMode] = useState('details')
+    const allCategories = useCategoryStore((state) => state.categories)
+    const updateCategory = useCategoryStore((state) => state.updateCategory)
+    const deleteCategory = useCategoryStore((state) => state.deleteCategory)
+    const [currentCategory, setCurrentCategory] = useState(() =>
+        allCategories.find((category) => category.id === categoryID)
+    )
+    const [selectedIcon, setSelectedIcon] = useState(
+        currentCategory.category_icon
+    )
+    const [selectedColor, setSelectedColor] = useState(
+        currentCategory.category_color
+    )
+    const [showColorWheel, setShowColorWheel] = useState(false)
 
     // Initial form values
     const initialValues = {
         categoryIcon: currentCategory.category_icon,
         categoryName: currentCategory.category_name,
-        categoryColor: currentCategory.category_color
-    };
+        categoryColor: currentCategory.category_color,
+    }
 
     // Fetch target category when categoryID changes
     useEffect(() => {
-        const targetCategory = allCategories.find(category => category.id === categoryID);
+        const targetCategory = allCategories.find(
+            (category) => category.id === categoryID
+        )
         // console.log(targetTransaction);
-        setCurrentCategory(targetCategory);
-        setSelectedIcon(targetCategory.category_icon);
-    }, [categoryID]);
+        setCurrentCategory(targetCategory)
+        setSelectedIcon(targetCategory.category_icon)
+    }, [categoryID])
 
     // Handle icon press
     const handleIconPress = (icon) => {
-        setSelectedIcon(icon);
-        formik.setFieldValue("categoryIcon", icon);
-    };
+        setSelectedIcon(icon)
+        formik.setFieldValue('categoryIcon', icon)
+    }
 
     // Handle color press
     const handleColorPress = (color) => {
-        setSelectedColor(color);
-        formik.setFieldValue("categoryColor", color);
-        setShowColorWheel(false);
-    };
+        setSelectedColor(color)
+        formik.setFieldValue('categoryColor', color)
+        setShowColorWheel(false)
+    }
 
     // Handle formik form submission
     const handleFormikSubmit = async (values, { resetForm }) => {
-        try{
+        try {
             startLoading()
             const newCategory = {
                 // user_id: user.user_id,
                 category_name: values.categoryName,
                 category_icon: values.categoryIcon,
                 category_color: values.categoryColor,
-                id: categoryID
-            };
-            updateCategory(categoryID, newCategory);
-            resetForm();
-        }catch(error){
+                id: categoryID,
+            }
+            updateCategory(categoryID, newCategory)
+            resetForm()
+        } catch (error) {
             stopLoading()
-            showAlert("Error", `Failed to submit information. ${error}`)
+            showAlert('Error', `Failed to submit information. ${error}`)
         }
-        
-    };
+    }
 
     // Formik configuration
     const formik = useFormik({
         initialValues,
         onSubmit: handleFormikSubmit,
-    });
+    })
 
     // Show delete prompt
     const showDeletePrompt = () => {
-        Alert.alert("Deleting file", "Are you sure ?", [{
-            text: "Yes",
-            onPress: handleDelete,
-            style: "destructive"
-        }, {
-            text: "No",
-            onPress: () => { },
-            style: "cancel"
-        }]);
-
-    };
+        Alert.alert('Deleting file', 'Are you sure ?', [
+            {
+                text: 'Yes',
+                onPress: handleDelete,
+                style: 'destructive',
+            },
+            {
+                text: 'No',
+                onPress: () => {},
+                style: 'cancel',
+            },
+        ])
+    }
 
     // Handle delete action
     const handleDelete = () => {
         startLoading()
-        deleteCategory(categoryID);
-    };
+        deleteCategory(categoryID)
+    }
 
     // For navigating to next screen
     useEffect(() => {
         if (isCategoryUpdated) {
-            const newKey = Math.random().toString();
-            navigation.navigate("Categories", {
-                screen: "CategoriesMain",
-                key: newKey
+            const newKey = Math.random().toString()
+            navigation.navigate('Categories', {
+                screen: 'CategoriesMain',
+                key: newKey,
             })
         } else if (isCategoryDeleted) {
-            const newKey = Math.random().toString();
-            navigation.navigate("Categories", {
-                screen: "CategoriesMain",
-                key: newKey
+            const newKey = Math.random().toString()
+            navigation.navigate('Categories', {
+                screen: 'CategoriesMain',
+                key: newKey,
             })
         }
-    }, [isCategoryUpdated, isCategoryDeleted]);
+    }, [isCategoryUpdated, isCategoryDeleted])
 
-    const screenTitle = `${mode === "edit" ? "Edit" : "Category"} Details`;
+    const screenTitle = `${mode === 'edit' ? 'Edit' : 'Category'} Details`
     const EditButtonGroup = () => (
         <>
             <Button
@@ -169,26 +186,31 @@ const CategoriesEditScreen = ({route, navigation}) => {
                 onPress={showDeletePrompt}
             />
         </>
-    );
+    )
 
     return (
         <CategoriesEditContainer>
             <Header
                 title={screenTitle}
-                onPressLeftIcon={() => 
-                    navigation.navigate("Categories", {
-                        screen: "CategoriesMain"
+                onPressLeftIcon={() =>
+                    navigation.navigate('Categories', {
+                        screen: 'CategoriesMain',
                     })
                 }
             />
-            {showColorWheel && <ColorPicker handleColorPress={handleColorPress} setShowColorWheel={setShowColorWheel} />}
+            {showColorWheel && (
+                <ColorPicker
+                    handleColorPress={handleColorPress}
+                    setShowColorWheel={setShowColorWheel}
+                />
+            )}
             <CategoriesFormHolder>
-                <TextInput 
+                <TextInput
                     inputProps={{
-                        placeholder: "Enter Category Name",
-                        onChangeText: formik.handleChange("categoryName"),
+                        placeholder: 'Enter Category Name',
+                        onChangeText: formik.handleChange('categoryName'),
                         value: formik.values.categoryName,
-                        editable: mode === "edit"
+                        editable: mode === 'edit',
                     }}
                     customLabel="Category Name:"
                 />
@@ -207,7 +229,7 @@ const CategoriesEditScreen = ({route, navigation}) => {
                 />
             </CategoriesFormHolder>
             <ButtonContainer mode={mode}>
-                {mode === "edit" ? (
+                {mode === 'edit' ? (
                     <EditButtonGroup />
                 ) : (
                     <Button
@@ -217,17 +239,17 @@ const CategoriesEditScreen = ({route, navigation}) => {
                         rounded="8px"
                         textSize={16}
                         noBorder={false}
-                        onPress={() => setMode("edit")}
+                        onPress={() => setMode('edit')}
                     />
                 )}
             </ButtonContainer>
-            <CustomAlert 
+            <CustomAlert
                 visible={isAlertVisible}
                 title={alertTitle}
                 message={alertMessage}
                 onClose={handleAlertClose}
             />
-            <CustomLoader visible={isLoading}/>
+            <CustomLoader visible={isLoading} />
         </CategoriesEditContainer>
     )
 }
