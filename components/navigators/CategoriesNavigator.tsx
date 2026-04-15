@@ -1,13 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import CategoriesScreen from '../../screens/CategoriesScreen';
-import CategoriesAddScreen from '../../screens/CategoriesAddScreen';
-import CategoriesEditScreen from '../../screens/CategoriesEditScreen';
+import CategoriesScreen from '../../screens/CategoriesScreen'
+import CategoriesAddScreen from '../../screens/CategoriesAddScreen'
+import CategoriesEditScreen from '../../screens/CategoriesEditScreen'
 
-const CategoriesStack = createNativeStackNavigator();
+const CategoriesStack = createNativeStackNavigator()
 
 const CategoriesNavigator = () => {
     return (
