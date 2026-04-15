@@ -1,4 +1,4 @@
-import { ICON_NAMES } from "../constants/constant";
+import { ICON_NAMES } from '../constants/constant'
 
 export const chartData = [
     {
@@ -33,7 +33,7 @@ export const chartData = [
         iconName: ICON_NAMES.CATEGORIES_ICONS.TOY_BRICK,
         iconColor: '#F9C9A8',
     },
-];
+]
 
 export const itemData = [
     {
@@ -42,7 +42,7 @@ export const itemData = [
         itemAmount: 250,
         itemCategory: 'Star Wars 3.75 Action Figures',
         itemComment: 'Yellowing on body panels',
-        itemPhoto: ''
+        itemPhoto: '',
     },
     {
         id: 2,
@@ -50,7 +50,7 @@ export const itemData = [
         itemAmount: 750,
         itemCategory: 'Transformers Action Figures',
         itemComment: 'Good condition',
-        itemPhoto: ''
+        itemPhoto: '',
     },
     {
         id: 3,
@@ -58,39 +58,39 @@ export const itemData = [
         itemAmount: 150,
         itemCategory: 'Diecast Cars 1:64',
         itemComment: 'Brand New',
-        itemPhoto: ''
+        itemPhoto: '',
     },
-];
+]
 
 export const categoryData = [
     {
         categoryName: 'Diecast Cars 1:64',
         categoryIcon: '',
-        categoryColor: ''
+        categoryColor: '',
     },
     {
         categoryName: 'Transformers Action Figures',
         categoryIcon: '',
-        categoryColor: ''
+        categoryColor: '',
     },
     {
         categoryName: 'Star Wars 3.75 Action Figures',
         categoryIcon: '',
-        categoryColor: ''
+        categoryColor: '',
     },
-];
+]
 
 export const wishListData = [
     {
         itemName: 'Hasbro Star Wars 3.75 Jabba the Hutt',
-        itemBudget: 700
+        itemBudget: 700,
     },
     {
         itemName: 'Taikongzhans Kudea Superion',
-        itemBudget: 1300
+        itemBudget: 1300,
     },
     {
         itemName: 'Hasbro Star Wars 3.75 A-Wing Pilot POTF',
-        itemBudget: 200
+        itemBudget: 200,
     },
-];
+]
