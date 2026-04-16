@@ -15,8 +15,8 @@ import { ICON_NAMES } from '../../../constants/constant'
 import colors from '../../../assets/themes/colors.js'
 import { db } from '../../../firebase.js'
 
-import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
-import WishlistButton from '../../shared/WishlistButton/WishlistButton'
+import ScreenHeader from '../../shared/ScreenHeader'
+import WishlistButton from '../../shared/WishlistButton'
 
 import useCollectionStore from '../../../stores/CollectionStore'
 

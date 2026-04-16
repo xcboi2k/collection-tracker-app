@@ -21,8 +21,8 @@ import { ICON_NAMES } from '../../../constants/constant'
 import colors from '../../../assets/themes/colors'
 import { db } from '../../../firebase.js'
 
-import ScreenHeader from '../../shared/ScreenHeader/ScreenHeader'
-import ButtonIcon from '../../shared/ButtonIcon/ButtonIcon'
+import ScreenHeader from '../../shared/ScreenHeader'
+import ButtonIcon from '../../shared/ButtonIcon'
 
 import useCategoryStore from '../../../stores/CategoryStore'
 

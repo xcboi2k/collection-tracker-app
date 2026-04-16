@@ -8,11 +8,11 @@ import {
     ButtonContainer,
 } from './styles'
 
-import Header from '../../shared/Header/Header'
+import Header from '../../shared/Header'
 import Button from '../../shared/Button'
 import TextInput from '../../shared/TextInput'
-import CustomAlert from '../../shared/CustomAlert/CustomAlert.js'
-import CustomLoader from '../../shared/CustomLoader/CustomLoader.js'
+import CustomAlert from '../../shared/CustomAlert.js'
+import CustomLoader from '../../shared/CustomLoader.js'
 
 import useWishlistStore from '../../../stores/WishlistStore'
 

@@ -15,10 +15,10 @@ import Button from '../../shared/Button'
 import TextInput from '../../shared/TextInput'
 import IconOnlySelector from '../../shared/IconOnlySelector'
 import ColorPickerPanel from '../../shared/ColorPickerPanel'
-import Header from '../../shared/Header/Header'
+import Header from '../../shared/Header'
 import ColorPicker from '../../common/ColorPicker'
-import CustomAlert from '../../shared/CustomAlert/CustomAlert.js'
-import CustomLoader from '../../shared/CustomLoader/CustomLoader.js'
+import CustomAlert from '../../shared/CustomAlert.js'
+import CustomLoader from '../../shared/CustomLoader.js'
 
 import useCategoryStore from '../../../stores/CategoryStore'
 
