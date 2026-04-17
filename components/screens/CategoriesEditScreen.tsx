@@ -1,29 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { Alert } from 'react-native'
 import { useFormik } from 'formik'
+import React, { useEffect, useState } from 'react'
+import { Alert, View } from 'react-native'
 
-import {
-    CategoriesEditContainer,
-    CategoriesFormHolder,
-    ButtonContainer,
-} from './styles'
-
-import { ICON_NAMES } from '../../../constants/constant'
-import colorCollection from '../../../data/colorCollection'
-
-import Button from '../../shared/Button'
-import TextInput from '../../shared/TextInput'
-import IconOnlySelector from '../../shared/IconOnlySelector'
-import ColorPickerPanel from '../../shared/ColorPickerPanel'
-import Header from '../../shared/Header'
-import ColorPicker from '../../common/ColorPicker'
-import CustomAlert from '../../shared/CustomAlert.js'
-import CustomLoader from '../../shared/CustomLoader.js'
-
-import useCategoryStore from '../../../stores/CategoryStore'
-
-import LoaderStore from '../../../stores/LoaderStore'
-import AlertStore from '../../../stores/AlertStore'
+import CustomTextInput from '@/components/shared/CustomTextInput'
+import { ICON_NAMES } from '../../constants/constant'
+import colorCollection from '../../data/colorCollection'
+import AlertStore from '../../stores/AlertStore'
+import useCategoryStore from '../../stores/CategoryStore'
+import LoaderStore from '../../stores/LoaderStore'
+import ColorPicker from '../common/ColorPicker'
+import Button from '../shared/Button'
+import ColorPickerPanel from '../shared/ColorPickerPanel'
+import CustomAlert from '../shared/CustomAlert'
+import CustomLoader from '../shared/CustomLoader'
+import Header from '../shared/Header'
+import IconOnlySelector from '../shared/IconOnlySelector'
 
 const CategoriesEditScreen = ({ route, navigation }) => {
     // State management for loading indicators
@@ -171,7 +162,6 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                 type="filled"
                 width="48%"
                 title="Save"
-                rounded="8px"
                 textSize={16}
                 noBorder={false}
                 onPress={formik.handleSubmit}
@@ -180,7 +170,6 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                 type="outlined"
                 width="48%"
                 title="Delete"
-                rounded="8px"
                 textSize={16}
                 noBorder={false}
                 onPress={showDeletePrompt}
@@ -189,7 +178,8 @@ const CategoriesEditScreen = ({ route, navigation }) => {
     )
 
     return (
-        <CategoriesEditContainer>
+        <View className="flex-1 relative items-center pb-5">
+            {/* Header */}
             <Header
                 title={screenTitle}
                 onPressLeftIcon={() =>
@@ -198,14 +188,18 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                     })
                 }
             />
+
+            {/* Color Wheel */}
             {showColorWheel && (
                 <ColorPicker
                     handleColorPress={handleColorPress}
                     setShowColorWheel={setShowColorWheel}
                 />
             )}
-            <CategoriesFormHolder>
-                <TextInput
+
+            {/* Form */}
+            <View className="pt-2.5 w-[90%] items-center">
+                <CustomTextInput
                     inputProps={{
                         placeholder: 'Enter Category Name',
                         onChangeText: formik.handleChange('categoryName'),
@@ -214,12 +208,14 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                     }}
                     customLabel="Category Name:"
                 />
+
                 <IconOnlySelector
                     iconData={Object.values(ICON_NAMES.CATEGORIES_ICONS)}
                     onPress={handleIconPress}
                     selectedIcon={selectedIcon}
                     setSelectedIcon={setSelectedIcon}
                 />
+
                 <ColorPickerPanel
                     colorList={colorCollection}
                     onColorPress={handleColorPress}
@@ -227,30 +223,39 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                     setSelectedColor={setSelectedColor}
                     onAddPress={() => setShowColorWheel(true)}
                 />
-            </CategoriesFormHolder>
-            <ButtonContainer mode={mode}>
+            </View>
+
+            {/* Buttons */}
+            <View
+                className={`flex-row w-[90%] mt-5 ${
+                    mode === 'edit' ? 'justify-between' : 'justify-end'
+                }`}
+            >
                 {mode === 'edit' ? (
                     <EditButtonGroup />
                 ) : (
                     <Button
                         type="outlined"
                         width="45%"
-                        title="EDIT"
-                        rounded="8px"
+                        title="Edit"
                         textSize={16}
                         noBorder={false}
                         onPress={() => setMode('edit')}
                     />
                 )}
-            </ButtonContainer>
+            </View>
+
+            {/* Alert */}
             <CustomAlert
                 visible={isAlertVisible}
                 title={alertTitle}
                 message={alertMessage}
                 onClose={handleAlertClose}
             />
+
+            {/* Loader */}
             <CustomLoader visible={isLoading} />
-        </CategoriesEditContainer>
+        </View>
     )
 }
 

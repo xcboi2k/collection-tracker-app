@@ -1,4 +1,10 @@
-import { ActivityIndicator, FlatList, View } from 'react-native'
+import {
+    ActivityIndicator,
+    FlatList,
+    ScrollView,
+    Text,
+    View,
+} from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import {
@@ -9,16 +15,20 @@ import {
     where,
 } from 'firebase/firestore'
 
-import { CollectionContainer, DefaultText, ScrollContainer } from './styles'
+import {
+    CollectionContainer,
+    DefaultText,
+    ScrollContainer,
+} from './CollectionScreen/styles'
 
-import { ICON_NAMES } from '../../../constants/constant'
-import colors from '../../../assets/themes/colors.js'
+import { ICON_NAMES } from '../../constants/constant'
+import colors from '../../assets/themes/colors.js'
 import { db } from '../../../firebase.js'
 
-import ScreenHeader from '../../shared/ScreenHeader'
-import WishlistButton from '../../shared/WishlistButton'
+import ScreenHeader from '../shared/ScreenHeader'
+import WishlistButton from '../shared/WishlistButton'
 
-import useCollectionStore from '../../../stores/CollectionStore'
+import useCollectionStore from '../../stores/CollectionStore'
 
 const CollectionScreen = ({ route }) => {
     const navigation = useNavigation()
@@ -76,22 +86,17 @@ const CollectionScreen = ({ route }) => {
         })
 
     return (
-        <CollectionContainer>
-            <ScreenHeader title={'Collections'} />
-            <ScrollContainer>
+        <View className="flex-1 relative items-center pb-5">
+            {/* Header */}
+            <ScreenHeader title="Collections" />
+
+            {/* Scroll */}
+            <ScrollView className="flex-1 w-[90%] mt-5">
                 {loading ? (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginTop: 20,
-                            marginBottom: 20,
-                        }}
-                    >
+                    <View className="flex-1 justify-center items-center my-5">
                         <ActivityIndicator
                             size="large"
-                            color={colors.primary.colorOne}
+                            color="#1e40af" // replace with colors.primary.colorOne
                         />
                     </View>
                 ) : (
@@ -99,23 +104,21 @@ const CollectionScreen = ({ route }) => {
                         {collectionData.length ? (
                             collectionData.map((item, index) => (
                                 <WishlistButton
-                                    key={index}
-                                    onPress={() => {
-                                        handleNavigation(item.id)
-                                    }}
+                                    key={item.id ?? index}
+                                    onPress={() => handleNavigation(item.id)}
                                     name={item.collectionItem_name}
                                     amount={item.collectionItem_amount}
                                 />
                             ))
                         ) : (
-                            <DefaultText>
+                            <Text className="text-center text-[20px] w-full">
                                 Add an item to your Collection.
-                            </DefaultText>
+                            </Text>
                         )}
                     </>
                 )}
-            </ScrollContainer>
-        </CollectionContainer>
+            </ScrollView>
+        </View>
     )
 }
 

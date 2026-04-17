@@ -3,12 +3,19 @@ import { Text, TouchableOpacity, View } from 'react-native'
 
 import Icon from '../common/Icon'
 
+type ScreenHeaderProps = {
+    title: string
+    rightIconName?: string
+    rightIconSize?: number
+    onPressRightIcon?: () => void
+}
+
 const ScreenHeader = ({
     title,
     onPressRightIcon,
     rightIconName,
     rightIconSize,
-}) => {
+}: ScreenHeaderProps) => {
     return (
         <View className="w-full items-center p-1 h-[17%] bg-primary-100 rounded-b-[25px]">
             {/* Inner container */}

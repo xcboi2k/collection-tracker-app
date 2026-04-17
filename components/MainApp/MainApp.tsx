@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import TabNavigator from '../navigators/TabNavigator'
-import MainMenuScreen from '../screens/MainMenuScreen/MainMenuScreen'
+import MainMenuScreen from '../screens/MainMenuScreen'
 const Stack = createNativeStackNavigator()
 
 import useGetCategories from '../../hooks/useGetCategories'

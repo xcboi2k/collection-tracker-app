@@ -1,24 +1,14 @@
-import { ActivityIndicator, FlatList, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import {
-    onSnapshot,
-    collection,
-    query,
-    orderBy,
-    where,
-} from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import React, { useCallback, useState } from 'react'
+import { ScrollView, Text, View } from 'react-native'
 
-import { WishlistContainer, DefaultText, ScrollContainer } from './styles'
-
-import { ICON_NAMES } from '../../../constants/constant'
-import colors from '../../../assets/themes/colors'
+import LoadingView from '@/components/shared/LoadingView'
+import { ICON_NAMES } from '../../constants/constant'
 import { db } from '../../../firebase.js'
-
-import ScreenHeader from '../../shared/ScreenHeader'
-import WishlistButton from '../../shared/WishlistButton'
-
-import useWishlistStore from '../../../stores/WishlistStore'
+import useWishlistStore from '../../stores/WishlistStore'
+import ScreenHeader from '../shared/ScreenHeader'
+import WishlistButton from '../shared/WishlistButton'
 
 const WishlistScreen = ({ route }) => {
     const navigation = useNavigation()
@@ -72,9 +62,10 @@ const WishlistScreen = ({ route }) => {
         })
 
     return (
-        <WishlistContainer>
+        <View className="flex-1 relative items-center pb-5">
+            {/* Header */}
             <ScreenHeader
-                title={'Wishlist'}
+                title="Wishlist"
                 rightIconName={ICON_NAMES.SYSTEM_ICONS.ADD}
                 rightIconSize={32}
                 onPressRightIcon={() =>
@@ -83,44 +74,31 @@ const WishlistScreen = ({ route }) => {
                     })
                 }
             />
-            <ScrollContainer>
+
+            {/* Scroll */}
+            <ScrollView className="flex-1 w-[90%] mt-5">
                 {loading ? (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginTop: 20,
-                            marginBottom: 20,
-                        }}
-                    >
-                        <ActivityIndicator
-                            size="large"
-                            color={colors.primary.colorOne}
-                        />
-                    </View>
+                    <LoadingView />
                 ) : (
                     <>
                         {wishlistData.length ? (
                             wishlistData.map((item, index) => (
                                 <WishlistButton
-                                    key={index}
-                                    onPress={() => {
-                                        handleNavigation(item.id)
-                                    }}
+                                    key={item.id ?? index}
+                                    onPress={() => handleNavigation(item.id)}
                                     name={item.wishlist_name}
                                     amount={item.wishlist_amount}
                                 />
                             ))
                         ) : (
-                            <DefaultText>
+                            <Text className="text-center text-[20px] w-full">
                                 Add an item to your Wishlist.
-                            </DefaultText>
+                            </Text>
                         )}
                     </>
                 )}
-            </ScrollContainer>
-        </WishlistContainer>
+            </ScrollView>
+        </View>
     )
 }
 

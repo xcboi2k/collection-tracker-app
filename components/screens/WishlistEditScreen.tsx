@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { Alert } from 'react-native'
 import { useFormik } from 'formik'
+import React, { useEffect, useState } from 'react'
+import { Alert, View } from 'react-native'
 
-import {
-    WishlistEditContainer,
-    WishlistFormHolder,
-    ButtonContainer,
-} from './styles'
-
-import Header from '../../shared/Header'
-import Button from '../../shared/Button'
-import TextInput from '../../shared/TextInput'
-import CustomAlert from '../../shared/CustomAlert.js'
-import CustomLoader from '../../shared/CustomLoader.js'
-
-import useWishlistStore from '../../../stores/WishlistStore'
-
-import LoaderStore from '../../../stores/LoaderStore'
-import AlertStore from '../../../stores/AlertStore'
+import CustomTextInput from '@/components/shared/CustomTextInput'
+import AlertStore from '../../stores/AlertStore'
+import LoaderStore from '../../stores/LoaderStore'
+import useWishlistStore from '../../stores/WishlistStore'
+import Button from '../shared/Button'
+import CustomAlert from '../shared/CustomAlert.js'
+import CustomLoader from '../shared/CustomLoader.js'
+import Header from '../shared/Header'
 
 const WishlistEditScreen = ({ route, navigation }) => {
     // State management for loading indicators
@@ -147,7 +139,6 @@ const WishlistEditScreen = ({ route, navigation }) => {
                 type="filled"
                 width="45%"
                 title="Save"
-                rounded="8px"
                 textSize={16}
                 noBorder={false}
                 onPress={formik.handleSubmit}
@@ -156,7 +147,6 @@ const WishlistEditScreen = ({ route, navigation }) => {
                 type="outlined"
                 width="45%"
                 title="Delete"
-                rounded="8px"
                 textSize={16}
                 noBorder={false}
                 onPress={showDeletePrompt}
@@ -165,7 +155,8 @@ const WishlistEditScreen = ({ route, navigation }) => {
     )
 
     return (
-        <WishlistEditContainer>
+        <View className="flex-1 relative items-center pb-5">
+            {/* Header */}
             <Header
                 title={screenTitle}
                 onPressLeftIcon={() =>
@@ -174,8 +165,10 @@ const WishlistEditScreen = ({ route, navigation }) => {
                     })
                 }
             />
-            <WishlistFormHolder>
-                <TextInput
+
+            {/* Form */}
+            <View className="pt-2.5 w-[90%] items-center">
+                <CustomTextInput
                     inputProps={{
                         placeholder: 'Enter Wishlist Item Name',
                         onChangeText: formik.handleChange('wishlistName'),
@@ -184,7 +177,8 @@ const WishlistEditScreen = ({ route, navigation }) => {
                     }}
                     customLabel="Wishlist Item Name:"
                 />
-                <TextInput
+
+                <CustomTextInput
                     inputProps={{
                         placeholder: 'Enter Wishlist Item Amount',
                         onChangeText: formik.handleChange('wishlistAmount'),
@@ -193,30 +187,39 @@ const WishlistEditScreen = ({ route, navigation }) => {
                     }}
                     customLabel="Wishlist Item Amount:"
                 />
-            </WishlistFormHolder>
-            <ButtonContainer mode={mode}>
+            </View>
+
+            {/* Buttons */}
+            <View
+                className={`flex-row w-[90%] mt-5 ${
+                    mode === 'edit' ? 'justify-between' : 'justify-end'
+                }`}
+            >
                 {mode === 'edit' ? (
                     <EditButtonGroup />
                 ) : (
                     <Button
                         type="outlined"
                         width="45%"
-                        title="EDIT"
-                        rounded="8px"
+                        title="Edit"
                         textSize={16}
                         noBorder={false}
                         onPress={() => setMode('edit')}
                     />
                 )}
-            </ButtonContainer>
+            </View>
+
+            {/* Alert */}
             <CustomAlert
                 visible={isAlertVisible}
                 title={alertTitle}
                 message={alertMessage}
                 onClose={handleAlertClose}
             />
+
+            {/* Loader */}
             <CustomLoader visible={isLoading} />
-        </WishlistEditContainer>
+        </View>
     )
 }
 

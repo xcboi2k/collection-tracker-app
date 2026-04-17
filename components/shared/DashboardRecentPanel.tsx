@@ -3,7 +3,7 @@ import { Image, View } from 'react-native'
 
 import imgPlaceholder from '../../../assets/test.jpg'
 
-const DashboardRecentPanel = ({ data, styles }) => {
+const DashboardRecentPanel = ({ data }) => {
     return (
         <View className="justify-center items-center m-1">
             <Image

@@ -1,29 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { Alert } from 'react-native'
 import { useFormik } from 'formik'
+import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
 
-import {
-    CategoriesAddContainer,
-    CategoriesFormHolder,
-    ButtonContainer,
-} from './styles'
-
-import { ICON_NAMES } from '../../../constants/constant'
-import colorCollection from '../../../data/colorCollection'
-
-import Button from '../../shared/Button'
-import TextInput from '../../shared/TextInput'
-import IconOnlySelector from '../../shared/IconOnlySelector'
-import ColorPickerPanel from '../../shared/ColorPickerPanel'
-import Header from '../../shared/Header'
-import ColorPicker from '../../common/ColorPicker'
-import CustomAlert from '../../shared/CustomAlert.js'
-import CustomLoader from '../../shared/CustomLoader.js'
-
-import useCategoryStore from '../../../stores/CategoryStore'
-
-import LoaderStore from '../../../stores/LoaderStore'
-import AlertStore from '../../../stores/AlertStore'
+import CustomTextInput from '@/components/shared/CustomTextInput'
+import { ICON_NAMES } from '../../constants/constant'
+import colorCollection from '../../data/colorCollection'
+import AlertStore from '../../stores/AlertStore'
+import useCategoryStore from '../../stores/CategoryStore'
+import LoaderStore from '../../stores/LoaderStore'
+import ColorPicker from '../common/ColorPicker'
+import Button from '../shared/Button'
+import ColorPickerPanel from '../shared/ColorPickerPanel'
+import CustomAlert from '../shared/CustomAlert'
+import CustomLoader from '../shared/CustomLoader'
+import Header from '../shared/Header'
+import IconOnlySelector from '../shared/IconOnlySelector'
 
 const CategoriesAddScreen = ({ navigation }) => {
     // State management for loading indicators
@@ -119,23 +110,28 @@ const CategoriesAddScreen = ({ navigation }) => {
     }, [isCategoryCreated])
 
     return (
-        <CategoriesAddContainer>
+        <View className="flex-1 relative items-center pb-5">
+            {/* Header */}
             <Header
-                title={'Add Category'}
+                title="Add Category"
                 onPressLeftIcon={() =>
                     navigation.navigate('Categories', {
                         screen: 'CategoriesMain',
                     })
                 }
             />
+
+            {/* Color Wheel */}
             {showColorWheel && (
                 <ColorPicker
                     handleColorPress={handleColorPress}
                     setShowColorWheel={setShowColorWheel}
                 />
             )}
-            <CategoriesFormHolder>
-                <TextInput
+
+            {/* Form */}
+            <View className="pt-2.5 w-[90%] items-center">
+                <CustomTextInput
                     inputProps={{
                         placeholder: 'Enter Category Name',
                         onChangeText: formik.handleChange('categoryName'),
@@ -143,12 +139,14 @@ const CategoriesAddScreen = ({ navigation }) => {
                     }}
                     customLabel="Category Name:"
                 />
+
                 <IconOnlySelector
                     iconData={Object.values(ICON_NAMES.CATEGORIES_ICONS)}
                     onPress={handleIconPress}
                     selectedIcon={selectedIcon}
                     setSelectedIcon={setSelectedIcon}
                 />
+
                 <ColorPickerPanel
                     colorList={colorCollection}
                     onColorPress={handleColorPress}
@@ -156,13 +154,14 @@ const CategoriesAddScreen = ({ navigation }) => {
                     setSelectedColor={setSelectedColor}
                     onAddPress={() => setShowColorWheel(true)}
                 />
-            </CategoriesFormHolder>
-            <ButtonContainer>
+            </View>
+
+            {/* Buttons */}
+            <View className="flex-row justify-between w-[90%] mt-5">
                 <Button
                     type="filled"
                     width="45%"
                     title="Save"
-                    rounded="8px"
                     textSize={14}
                     noBorder={false}
                     onPress={formik.handleSubmit}
@@ -171,20 +170,23 @@ const CategoriesAddScreen = ({ navigation }) => {
                     type="outlined"
                     width="45%"
                     title="Clear"
-                    rounded="8px"
                     textSize={14}
                     noBorder={false}
                     onPress={handleClear}
                 />
-            </ButtonContainer>
+            </View>
+
+            {/* Alert */}
             <CustomAlert
                 visible={isAlertVisible}
                 title={alertTitle}
                 message={alertMessage}
                 onClose={handleAlertClose}
             />
+
+            {/* Loader */}
             <CustomLoader visible={isLoading} />
-        </CategoriesAddContainer>
+        </View>
     )
 }
 

@@ -1,33 +1,20 @@
-import { Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
+import React, { useEffect, useState } from 'react'
+import { ScrollView, View } from 'react-native'
 import uuid from 'react-native-uuid'
 
-import {
-    CollectionAddContainer,
-    CollectionFormHolder,
-    CollectionCategoryHolder,
-    ButtonContainer,
-    ScrollContainer,
-} from './styles'
-
-import colors from '../../../assets/themes/colors'
-import { ICON_NAMES } from '../../../constants/constant'
-
-import CommentInput from '../../shared/CommentInput'
-import IconSelector from '../../shared/IconSelector'
-import Button from '../../shared/Button'
-import TextInput from '../../shared/TextInput'
-import Header from '../../shared/Header'
-import CustomAlert from '../../shared/CustomAlert.js'
-import CustomLoader from '../../shared/CustomLoader.js'
-
-import useCollectionStore from '../../../stores/CollectionStore'
-import useUploadImage from '../../../hooks/useUploadImage'
-import useGetCategories from '../../../hooks/useGetCategories'
-
-import LoaderStore from '../../../stores/LoaderStore'
-import AlertStore from '../../../stores/AlertStore'
+import CustomTextInput from '@/components/shared/CustomTextInput'
+import useGetCategories from '../../hooks/useGetCategories'
+import useUploadImage from '../../hooks/useUploadImage'
+import AlertStore from '../../stores/AlertStore'
+import useCollectionStore from '../../stores/CollectionStore'
+import LoaderStore from '../../stores/LoaderStore'
+import Button from '../shared/Button'
+import CommentInput from '../shared/CommentInput'
+import CustomAlert from '../shared/CustomAlert.js'
+import CustomLoader from '../shared/CustomLoader.js'
+import Header from '../shared/Header'
+import IconSelector from '../shared/IconSelector'
 
 const CollectionAddScreen = ({ navigation }) => {
     // State management for loading indicators
@@ -147,17 +134,20 @@ const CollectionAddScreen = ({ navigation }) => {
     }, [isCollectionItemCreated])
 
     return (
-        <CollectionAddContainer>
+        <View className="flex-1 relative items-center pb-5">
+            {/* Header */}
             <Header
-                title={'Add Item'}
+                title="Add Item"
                 onPressLeftIcon={() =>
                     navigation.navigate('Home', {
                         screen: 'HomeMain',
                     })
                 }
             />
-            <CollectionFormHolder>
-                <TextInput
+
+            {/* Form */}
+            <View className="pt-2.5 w-[90%] items-center">
+                <CustomTextInput
                     inputProps={{
                         placeholder: 'Enter Collection Item Name',
                         onChangeText: formik.handleChange('collectionItemName'),
@@ -165,7 +155,8 @@ const CollectionAddScreen = ({ navigation }) => {
                     }}
                     customLabel="Collection Item Name:"
                 />
-                <TextInput
+
+                <CustomTextInput
                     inputProps={{
                         placeholder: 'Enter Amount',
                         keyboardType: 'number-pad',
@@ -174,17 +165,25 @@ const CollectionAddScreen = ({ navigation }) => {
                     }}
                     customLabel="Collection Item Amount:"
                 />
-            </CollectionFormHolder>
-            <ScrollContainer>
-                <CollectionCategoryHolder>
+            </View>
+
+            {/* Scrollable Content */}
+            <ScrollView
+                className="w-[90%] h-[65%]"
+                showsVerticalScrollIndicator={false}
+            >
+                {/* Category Selector */}
+                <View className="mb-7.5 w-full h-[120px] justify-start">
                     <IconSelector
                         iconData={categories}
                         handlePress={handleIconPress}
                         selectedIcon={selectedIcon}
                     />
-                </CollectionCategoryHolder>
+                </View>
+
+                {/* Comment Input */}
                 <CommentInput
-                    customLabel={'Comments'}
+                    customLabel="Comments"
                     inputProps={{
                         placeholder: 'Add a comment',
                         value: formik.values.comment,
@@ -194,27 +193,32 @@ const CollectionAddScreen = ({ navigation }) => {
                     onPress={chooseImage}
                     filename={filename}
                 />
-                <ButtonContainer>
+
+                {/* Button */}
+                <View className="items-center justify-center w-full mt-5">
                     <Button
                         width="90%"
-                        title={'ADD'}
-                        type={'filled'}
-                        rounded={'10px'}
+                        title="Add"
+                        type="filled"
                         onPress={formik.handleSubmit}
                         buttonProps={{
                             disabled: !isFormFilled(),
                         }}
                     />
-                </ButtonContainer>
-            </ScrollContainer>
+                </View>
+            </ScrollView>
+
+            {/* Alert */}
             <CustomAlert
                 visible={isAlertVisible}
                 title={alertTitle}
                 message={alertMessage}
                 onClose={handleAlertClose}
             />
+
+            {/* Loader */}
             <CustomLoader visible={isLoading} />
-        </CollectionAddContainer>
+        </View>
     )
 }
 

@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Alert } from 'react-native'
 import { useFormik } from 'formik'
+import React, { useEffect } from 'react'
+import { View } from 'react-native'
 
-import {
-    WishlistAddContainer,
-    WishlistFormHolder,
-    ButtonContainer,
-} from './styles'
-
-import Header from '../../shared/Header'
-import Button from '../../shared/Button'
-import TextInput from '../../shared/TextInput'
-import CustomAlert from '../../shared/CustomAlert.js'
-import CustomLoader from '../../shared/CustomLoader.js'
-
-import useWishlistStore from '../../../stores/WishlistStore'
-
-import LoaderStore from '../../../stores/LoaderStore'
-import AlertStore from '../../../stores/AlertStore'
+import CustomTextInput from '@/components/shared/CustomTextInput'
+import AlertStore from '../../stores/AlertStore'
+import LoaderStore from '../../stores/LoaderStore'
+import useWishlistStore from '../../stores/WishlistStore'
+import Button from '../shared/Button'
+import CustomAlert from '../shared/CustomAlert.js'
+import CustomLoader from '../shared/CustomLoader.js'
+import Header from '../shared/Header'
 
 const WishlistAddScreen = ({ navigation }) => {
     // State management for loading indicators
@@ -93,17 +85,20 @@ const WishlistAddScreen = ({ navigation }) => {
     }, [isWishlistItemCreated])
 
     return (
-        <WishlistAddContainer>
+        <View className="flex-1 relative items-center pb-5">
+            {/* Header */}
             <Header
-                title={'Add Wishlist Item'}
+                title="Add Wishlist Item"
                 onPressLeftIcon={() =>
                     navigation.navigate('Wishlists', {
                         screen: 'WishlistMain',
                     })
                 }
             />
-            <WishlistFormHolder>
-                <TextInput
+
+            {/* Form */}
+            <View className="pt-2.5 w-[90%] items-center">
+                <CustomTextInput
                     inputProps={{
                         placeholder: 'Enter Wishlist Item Name',
                         onChangeText: formik.handleChange('wishlistName'),
@@ -111,7 +106,8 @@ const WishlistAddScreen = ({ navigation }) => {
                     }}
                     customLabel="Wishlist Item Name:"
                 />
-                <TextInput
+
+                <CustomTextInput
                     inputProps={{
                         placeholder: 'Enter Wishlist Item Amount',
                         keyboardType: 'number-pad',
@@ -120,35 +116,40 @@ const WishlistAddScreen = ({ navigation }) => {
                     }}
                     customLabel="Wishlist Item Amount:"
                 />
-            </WishlistFormHolder>
-            <ButtonContainer>
+            </View>
+
+            {/* Buttons */}
+            <View className="flex-row justify-between w-[90%] mt-5">
                 <Button
                     type="filled"
                     width="45%"
                     title="Save"
-                    rounded="8px"
                     textSize={14}
                     noBorder={false}
                     onPress={formik.handleSubmit}
                 />
+
                 <Button
                     type="outlined"
                     width="45%"
                     title="Clear"
-                    rounded="8px"
                     textSize={14}
                     noBorder={false}
                     onPress={handleClear}
                 />
-            </ButtonContainer>
+            </View>
+
+            {/* Alert */}
             <CustomAlert
                 visible={isAlertVisible}
                 title={alertTitle}
                 message={alertMessage}
                 onClose={handleAlertClose}
             />
+
+            {/* Loader */}
             <CustomLoader visible={isLoading} />
-        </WishlistAddContainer>
+        </View>
     )
 }
 

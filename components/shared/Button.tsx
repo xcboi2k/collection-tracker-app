@@ -1,7 +1,33 @@
 import React from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import {
+    StyleProp,
+    Text,
+    TextStyle,
+    TouchableOpacity,
+    ViewStyle,
+} from 'react-native'
 
 import Icon from '../common/Icon'
+
+type ButtonProps = {
+    onPress: () => void
+    title: string
+
+    type?: 'filled' | 'outlined' | 'ghost'
+
+    width?: string | number // e.g. "100%" or 200
+    textSize?: number
+
+    iconName?: string
+    iconColor?: string
+    iconSize?: number
+
+    noBorder?: boolean
+
+    styles?: StyleProp<ViewStyle>
+    buttonProps?: Record<string, any>
+    buttonLabelStyle?: StyleProp<TextStyle>
+}
 
 const Button = ({
     onPress,
@@ -16,7 +42,7 @@ const Button = ({
     styles,
     buttonProps,
     buttonLabelStyle,
-}) => {
+}: ButtonProps) => {
     const isFilled = type === 'filled'
 
     return (

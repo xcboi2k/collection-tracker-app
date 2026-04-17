@@ -1,30 +1,15 @@
-import { ActivityIndicator, FlatList, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import {
-    onSnapshot,
-    collection,
-    query,
-    orderBy,
-    where,
-} from 'firebase/firestore'
+import { collection, onSnapshot, query } from 'firebase/firestore'
+import React, { useCallback, useState } from 'react'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 
-import {
-    CategoriesContainer,
-    CategoryList,
-    CategoryListContainer,
-    ScrollContainer,
-} from './styles'
-
-import preMadeCategories from '../../../data/preMadeCategories'
-import { ICON_NAMES } from '../../../constants/constant'
-import colors from '../../../assets/themes/colors'
+import LoadingView from '@/components/shared/LoadingView'
+import { ICON_NAMES } from '../../constants/constant'
+import preMadeCategories from '../../data/preMadeCategories'
 import { db } from '../../../firebase.js'
-
-import ScreenHeader from '../../shared/ScreenHeader'
-import ButtonIcon from '../../shared/ButtonIcon'
-
-import useCategoryStore from '../../../stores/CategoryStore'
+import useCategoryStore from '../../stores/CategoryStore'
+import ButtonIcon from '../shared/ButtonIcon'
+import ScreenHeader from '../shared/ScreenHeader'
 
 const CategoriesScreen = ({ route }) => {
     const navigation = useNavigation()
@@ -90,9 +75,10 @@ const CategoriesScreen = ({ route }) => {
         })
 
     return (
-        <CategoriesContainer>
+        <View className="flex-1 relative items-center pb-5">
+            {/* Header */}
             <ScreenHeader
-                title={'Categories'}
+                title="Categories"
                 rightIconName={ICON_NAMES.SYSTEM_ICONS.ADD}
                 rightIconSize={32}
                 onPressRightIcon={() =>
@@ -101,42 +87,36 @@ const CategoriesScreen = ({ route }) => {
                     })
                 }
             />
-            <ScrollContainer>
+
+            {/* Scroll */}
+            <ScrollView className="w-[90%] flex-1">
                 {loading ? (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginTop: 20,
-                            marginBottom: 20,
-                        }}
-                    >
-                        <ActivityIndicator
-                            size="large"
-                            color={colors.primary.colorOne}
-                        />
-                    </View>
+                    <LoadingView />
                 ) : (
-                    <CategoryListContainer>
+                    <View className="w-full flex-row flex-wrap justify-between p-4 mt-2.5">
                         {categoryData.map((item, index) => (
-                            <ButtonIcon
-                                name={item.category_icon}
-                                iconColor={item.category_color}
-                                iconSize={25}
-                                label={item.category_name}
-                                key={index}
-                                type=""
-                                onPress={() => {
-                                    handleNavigation(item.id)
-                                }}
-                                styles={{ marginHorizontal: 10 }}
-                            />
+                            <TouchableOpacity
+                                key={item.id ?? index}
+                                onPress={() => handleNavigation(item.id)}
+                                className="mb-3"
+                            >
+                                <ButtonIcon
+                                    name={item.category_icon}
+                                    iconColor={item.category_color}
+                                    iconSize={25}
+                                    label={item.category_name}
+                                    type=""
+                                    styles={{ marginHorizontal: 10 }}
+                                    onPress={() => {
+                                        handleNavigation(item.id)
+                                    }}
+                                />
+                            </TouchableOpacity>
                         ))}
-                    </CategoryListContainer>
+                    </View>
                 )}
-            </ScrollContainer>
-        </CategoriesContainer>
+            </ScrollView>
+        </View>
     )
 }
 
