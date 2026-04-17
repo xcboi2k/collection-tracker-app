@@ -11,17 +11,17 @@ export type RootStackParamList = {
 
     //collection
     CollectionMain: undefined
-    CollectionEdit: undefined
+    CollectionEdit: { collectionItemID?: number }
 
     //categories
     CategoriesMain: undefined
     CategoriesAdd: undefined
-    CategoriesEdit: undefined
+    CategoriesEdit: { categoryID?: number }
 
     //wishilist
     WishlistMain: undefined
     WishlistAdd: undefined
-    WishlistEdit: undefined
+    WishlistEdit: { wishlistItemID?: number }
 
     //tabs
     Home: undefined

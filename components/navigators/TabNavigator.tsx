@@ -1,22 +1,19 @@
-import { View, Text } from 'react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-
-import HomeIcon from '@/assets/icons/HomeIcon'
-import CollectionIcon from '@/assets/icons/CollectionIcon'
 import CategoriesIcon from '@/assets/icons/CategoriesIcon'
+import CollectionIcon from '@/assets/icons/CollectionIcon'
+import HomeIcon from '@/assets/icons/HomeIcon'
 import WishListIcon from '@/assets/icons/WishListIcon'
-
 import colors from '@/assets/themes/colors'
 import { FONTS } from '@/constants/constant'
-
-import MainMenuNavigator from './MainMenuNavigator'
-import CollectionNavigator from './CollectionNavigator'
+import { RootStackParamList } from '@/types/navigation'
 import CategoriesNavigator from './CategoriesNavigator'
+import CollectionNavigator from './CollectionNavigator'
+import MainMenuNavigator from './MainMenuNavigator'
 import WishlistNavigator from './WishlistNavigator'
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<RootStackParamList>()
 
 const TabBarProps = (route) => ({
     tabBarIcon: ({ focused, color, size }) => {

@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Alert, ScrollView, View } from 'react-native'
 import uuid from 'react-native-uuid'
 
-import { deleteObject, ref } from 'firebase/storage'
-import { storage } from '../../../firebase'
 import Button from '../shared/Button'
 import CommentInput from '../shared/CommentInput'
 import CustomAlert from '../shared/CustomAlert.js'
@@ -79,6 +77,7 @@ const CollectionEditScreen = ({ route, navigation }) => {
         icon: '',
         currentIcon: '',
         id: '',
+        color: '',
     })
 
     // Initial form values
@@ -116,53 +115,48 @@ const CollectionEditScreen = ({ route, navigation }) => {
 
     // Handle formik form submission
     const handleFormikSubmit = async (values, { resetForm }) => {
-        try {
-            startLoading()
-
-            let imgFile,
-                oldImgRef = currentCollectionItem.comment_img_ref
-
-            if (image && oldImgRef) {
-                const oldFileRef = ref(storage, oldImgRef)
-                await deleteObject(oldFileRef)
-                imgFile = await uploadImage()
-            } else if (image && !oldImgRef) {
-            }
-
-            let updatedImgRef = imgFile
-                ? imgFile.imgRef
-                : currentCollectionItem.comment_img_ref
-            let updatedImg = imgFile
-                ? imgFile.imgUri
-                : currentCollectionItem.comment_img
-            const collectionItemIcon =
-                values.collectionItemIcon ===
-                currentCollectionItem.collectionItem_icon
-                    ? currentCollectionItem.collectionItem_icon
-                    : selectedIcon.currentIcon
-            const categoryName =
-                values.categoryName === currentCollectionItem.category_name
-                    ? currentCollectionItem.category_name
-                    : selectedIcon.label
-
-            const updateCollectionItem = {
-                collectionItem_amount: Number(values.amount),
-                category_name: categoryName,
-                comment_img_ref: updatedImgRef,
-                comment_img: updatedImg,
-                collectionItem_name: values.collectionItemName,
-                collectionItem_icon: collectionItemIcon,
-                collectionItem_color: values.collectionItemColor,
-                created_at: date,
-            }
-            updateCollectionItem(collectionItemID, updateCollectionItem)
-
-            resetForm()
-            navigation.navigate('Home', { screen: 'HomeMain' })
-        } catch (error) {
-            stopLoading()
-            showAlert('Error', `Failed to submit information. ${error}`)
-        }
+        // try {
+        //     startLoading()
+        //     let imgFile,
+        //         oldImgRef = currentCollectionItem.comment_img_ref
+        //     if (image && oldImgRef) {
+        //         const oldFileRef = ref(storage, oldImgRef)
+        //         await deleteObject(oldFileRef)
+        //         imgFile = await uploadImage()
+        //     } else if (image && !oldImgRef) {
+        //     }
+        //     let updatedImgRef = imgFile
+        //         ? imgFile.imgRef
+        //         : currentCollectionItem.comment_img_ref
+        //     let updatedImg = imgFile
+        //         ? imgFile.imgUri
+        //         : currentCollectionItem.comment_img
+        //     const collectionItemIcon =
+        //         values.collectionItemIcon ===
+        //         currentCollectionItem.collectionItem_icon
+        //             ? currentCollectionItem.collectionItem_icon
+        //             : selectedIcon.currentIcon
+        //     const categoryName =
+        //         values.categoryName === currentCollectionItem.category_name
+        //             ? currentCollectionItem.category_name
+        //             : selectedIcon.label
+        //     const updateCollectionItem = {
+        //         collectionItem_amount: Number(values.amount),
+        //         category_name: categoryName,
+        //         comment_img_ref: updatedImgRef,
+        //         comment_img: updatedImg,
+        //         collectionItem_name: values.collectionItemName,
+        //         collectionItem_icon: collectionItemIcon,
+        //         collectionItem_color: values.collectionItemColor,
+        //         created_at: date,
+        //     }
+        //     updateCollectionItem(collectionItemID, updateCollectionItem)
+        //     resetForm()
+        //     navigation.navigate('Home', { screen: 'HomeMain' })
+        // } catch (error) {
+        //     stopLoading()
+        //     showAlert('Error', `Failed to submit information. ${error}`)
+        // }
     }
 
     // Formik configuration

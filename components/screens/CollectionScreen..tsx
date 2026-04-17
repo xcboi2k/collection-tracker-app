@@ -1,37 +1,16 @@
-import {
-    ActivityIndicator,
-    FlatList,
-    ScrollView,
-    Text,
-    View,
-} from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import {
-    onSnapshot,
-    collection,
-    query,
-    orderBy,
-    where,
-} from 'firebase/firestore'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import React, { useCallback, useState } from 'react'
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native'
 
-import {
-    CollectionContainer,
-    DefaultText,
-    ScrollContainer,
-} from './CollectionScreen/styles'
-
-import { ICON_NAMES } from '../../constants/constant'
-import colors from '../../assets/themes/colors.js'
-import { db } from '../../../firebase.js'
-
+import { RootStackParamList } from '@/types/navigation'
+import useCollectionStore from '../../stores/CollectionStore'
 import ScreenHeader from '../shared/ScreenHeader'
 import WishlistButton from '../shared/WishlistButton'
 
-import useCollectionStore from '../../stores/CollectionStore'
-
 const CollectionScreen = ({ route }) => {
-    const navigation = useNavigation()
+    const navigation =
+        useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
     const [collectionData, setCollectionData] = useState([])
     const setCollectionItems = useCollectionStore(
@@ -39,31 +18,28 @@ const CollectionScreen = ({ route }) => {
     )
     const [loading, setLoading] = useState(false)
     const fetchCollection = async () => {
-        setLoading(true)
-        const collectionColRef = collection(db, 'collection')
-        const collectionQuery = query(
-            collectionColRef,
-            orderBy('created_at', 'desc')
-        )
-
-        const unsubscribe = onSnapshot(collectionQuery, (snapshotData) => {
-            const userList = []
-
-            snapshotData.forEach((doc) => {
-                userList.push({
-                    ...doc.data(),
-                    id: doc.id,
-                })
-                // console.log("CATEGORY PUSHED", doc.id);
-            })
-            if (userList.length > 0) {
-                setCollectionData(userList)
-                setCollectionItems(userList)
-                setLoading(false)
-            }
-        })
-
-        return unsubscribe
+        // setLoading(true)
+        // const collectionColRef = collection(db, 'collection')
+        // const collectionQuery = query(
+        //     collectionColRef,
+        //     orderBy('created_at', 'desc')
+        // )
+        // const unsubscribe = onSnapshot(collectionQuery, (snapshotData) => {
+        //     const userList = []
+        //     snapshotData.forEach((doc) => {
+        //         userList.push({
+        //             ...doc.data(),
+        //             id: doc.id,
+        //         })
+        //         // console.log("CATEGORY PUSHED", doc.id);
+        //     })
+        //     if (userList.length > 0) {
+        //         setCollectionData(userList)
+        //         setCollectionItems(userList)
+        //         setLoading(false)
+        //     }
+        // })
+        // return unsubscribe
     }
 
     useFocusEffect(
@@ -78,11 +54,8 @@ const CollectionScreen = ({ route }) => {
     )
 
     const handleNavigation = (id) =>
-        navigation.navigate('Collections', {
-            screen: 'CollectionEdit',
-            params: {
-                collectionItemID: id,
-            },
+        navigation.navigate('CollectionEdit', {
+            collectionItemID: id,
         })
 
     return (

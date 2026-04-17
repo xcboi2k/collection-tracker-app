@@ -1,18 +1,20 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { collection, onSnapshot, query } from 'firebase/firestore'
 import React, { useCallback, useState } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import LoadingView from '@/components/shared/LoadingView'
 import { ICON_NAMES } from '../../constants/constant'
 import preMadeCategories from '../../data/preMadeCategories'
-import { db } from '../../../firebase.js'
 import useCategoryStore from '../../stores/CategoryStore'
 import ButtonIcon from '../shared/ButtonIcon'
 import ScreenHeader from '../shared/ScreenHeader'
 
+import { RootStackParamList } from '@/types/navigation'
+
 const CategoriesScreen = ({ route }) => {
-    const navigation = useNavigation()
+    const navigation =
+        useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
     const [categoryData, setCategoryData] = useState([])
     const setCategories = useCategoryStore((state) => state.setCategories)
@@ -20,39 +22,52 @@ const CategoriesScreen = ({ route }) => {
 
     const fetchCategories = () => {
         setLoading(true)
-        const categoryColRef = collection(db, 'categories')
-        const categoryQuery = query(categoryColRef)
+        // const categoryColRef = collection(db, 'categories')
+        // const categoryQuery = query(categoryColRef)
 
-        const unsubscribe = onSnapshot(categoryQuery, (snapshotData) => {
-            // console.log("FETCH CATEGORIES");
+        // const unsubscribe = onSnapshot(categoryQuery, (snapshotData) => {
+        //     // console.log("FETCH CATEGORIES");
+        //     const prepCategories = preMadeCategories.map((category) => ({
+        //         ...category,
+        //         // user_id: userID
+        //     }))
+        //     const userList = []
+
+        //     snapshotData.forEach((doc) => {
+        //         // check if doc is already in the array;
+        //         if (prepCategories.some((item) => item.id === doc.id)) {
+        //             const objIndex = prepCategories.findIndex(
+        //                 (item) => item.id === doc.id
+        //             )
+        //             prepCategories.splice(objIndex, 1)
+        //         }
+        //         userList.push({
+        //             ...doc.data(),
+        //             id: doc.id,
+        //         })
+        //         // console.log("CATEGORY PUSHED", doc.id);
+        //     })
+        //     if (userList.length > 0) {
+        //         setCategories([...prepCategories, ...userList])
+        //         setCategoryData([...prepCategories, ...userList])
+        //         setLoading(false)
+        //     }
+        // })
+
+        // return unsubscribe
+
+        try {
             const prepCategories = preMadeCategories.map((category) => ({
                 ...category,
                 // user_id: userID
             }))
-            const userList = []
-
-            snapshotData.forEach((doc) => {
-                // check if doc is already in the array;
-                if (prepCategories.some((item) => item.id === doc.id)) {
-                    const objIndex = prepCategories.findIndex(
-                        (item) => item.id === doc.id
-                    )
-                    prepCategories.splice(objIndex, 1)
-                }
-                userList.push({
-                    ...doc.data(),
-                    id: doc.id,
-                })
-                // console.log("CATEGORY PUSHED", doc.id);
-            })
-            if (userList.length > 0) {
-                setCategories([...prepCategories, ...userList])
-                setCategoryData([...prepCategories, ...userList])
-                setLoading(false)
-            }
-        })
-
-        return unsubscribe
+            setCategories([...prepCategories])
+            setCategoryData([...prepCategories])
+            setLoading(false)
+        } catch (error) {
+            console.log('Error fetching categories:', error)
+            setLoading(false)
+        }
     }
 
     useFocusEffect(
@@ -67,11 +82,8 @@ const CategoriesScreen = ({ route }) => {
     )
 
     const handleNavigation = (id) =>
-        navigation.navigate('Categories', {
-            screen: 'CategoriesEdit',
-            params: {
-                categoryID: id,
-            },
+        navigation.navigate('CategoriesEdit', {
+            categoryID: id,
         })
 
     return (
@@ -81,11 +93,7 @@ const CategoriesScreen = ({ route }) => {
                 title="Categories"
                 rightIconName={ICON_NAMES.SYSTEM_ICONS.ADD}
                 rightIconSize={32}
-                onPressRightIcon={() =>
-                    navigation.navigate('Categories', {
-                        screen: 'CategoriesAdd',
-                    })
-                }
+                onPressRightIcon={() => navigation.navigate('CategoriesAdd')}
             />
 
             {/* Scroll */}

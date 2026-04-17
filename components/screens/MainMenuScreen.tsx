@@ -1,12 +1,12 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
 import LoadingView from '@/components/shared/LoadingView'
+import { RootStackParamList } from '@/types/navigation'
 import { formatPeso } from '@/utils/formatCurrency'
 import { ICON_NAMES } from '../../constants/constant'
-import { db } from '../../../firebase.js'
 import useGetCollectionChartData from '../../hooks/useGetCollectionChartData'
 import AlertStore from '../../stores/AlertStore.js'
 import LoaderStore from '../../stores/LoaderStore.js'
@@ -18,7 +18,8 @@ import DashboardHeader from '../shared/DashboardHeader'
 import DashboardRecentPanel from '../shared/DashboardRecentPanel.js'
 
 const MainMenuScreen = () => {
-    const navigation = useNavigation()
+    const navigation =
+        useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
     // State management for loading indicators
     const isLoading = LoaderStore((state) => state.isLoading)
@@ -49,30 +50,27 @@ const MainMenuScreen = () => {
     const [frequentCategory, setFrequentCategory] = useState('')
     const [loading, setLoading] = useState(false)
     const fetchCollection = async () => {
-        setLoading(true)
-        const collectionColRef = collection(db, 'collection')
-        const collectionQuery = query(
-            collectionColRef,
-            orderBy('created_at', 'desc')
-        )
-
-        const unsubscribe = onSnapshot(collectionQuery, (snapshotData) => {
-            const userList = []
-
-            snapshotData.forEach((doc) => {
-                userList.push({
-                    ...doc.data(),
-                    id: doc.id,
-                })
-                // console.log("CATEGORY PUSHED", doc.id);
-            })
-            if (userList.length > 0) {
-                setCollectionData(userList)
-                setLoading(false)
-            }
-        })
-
-        return unsubscribe
+        // setLoading(true)
+        // const collectionColRef = collection(db, 'collection')
+        // const collectionQuery = query(
+        //     collectionColRef,
+        //     orderBy('created_at', 'desc')
+        // )
+        // const unsubscribe = onSnapshot(collectionQuery, (snapshotData) => {
+        //     const userList = []
+        //     snapshotData.forEach((doc) => {
+        //         userList.push({
+        //             ...doc.data(),
+        //             id: doc.id,
+        //         })
+        //         // console.log("CATEGORY PUSHED", doc.id);
+        //     })
+        //     if (userList.length > 0) {
+        //         setCollectionData(userList)
+        //         setLoading(false)
+        //     }
+        // })
+        // return unsubscribe
     }
 
     useFocusEffect(
@@ -235,9 +233,7 @@ const MainMenuScreen = () => {
                             <TouchableOpacity
                                 className="ml-auto"
                                 onPress={() =>
-                                    navigation.navigate('Home', {
-                                        screen: 'CollectionAdd',
-                                    })
+                                    navigation.navigate('CollectionAdd')
                                 }
                             >
                                 <Icon
