@@ -3,9 +3,9 @@ import React from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import CategoriesScreen from '../../screens/CategoriesScreen'
-import CategoriesAddScreen from '../../screens/CategoriesAddScreen'
-import CategoriesEditScreen from '../../screens/CategoriesEditScreen'
+import CategoriesScreen from '../screens/CategoriesScreen'
+import CategoriesAddScreen from '../screens/CategoriesAddScreen'
+import CategoriesEditScreen from '../screens/CategoriesEditScreen'
 
 const CategoriesStack = createNativeStackNavigator()
 

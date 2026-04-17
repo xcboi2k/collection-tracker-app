@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import MainMenuScreen from '../../screens/MainMenuScreen';
-import CollectionAddScreen from '../../screens/CollectionAddScreen';
+import MainMenuScreen from '../screens/MainMenuScreen'
+import CollectionAddScreen from '../screens/CollectionAddScreen'
 
-const MainMenuStack = createNativeStackNavigator();
+const MainMenuStack = createNativeStackNavigator()
 
 const MainMenuNavigator = () => {
     return (

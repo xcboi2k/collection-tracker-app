@@ -1,13 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import WishlistScreen from '../../screens/WishlistScreen';
-import WishlistAddScreen from '../../screens/WishlistAddScreen';
-import WishlistEditScreen from '../../screens/WishlistEditScreen';
+import WishlistScreen from '../screens/WishlistScreen'
+import WishlistAddScreen from '../screens/WishlistAddScreen'
+import WishlistEditScreen from '../screens/WishlistEditScreen'
 
-const WishlistStack = createNativeStackNavigator();
+const WishlistStack = createNativeStackNavigator()
 
 const WishlistNavigator = () => {
     return (
