@@ -2,13 +2,14 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import TabNavigator from '../navigators/TabNavigator'
-import MainMenuScreen from '../screens/main/MainMenuScreen'
 const Stack = createNativeStackNavigator()
 
-import useGetCategories from '../../hooks/useGetCategories'
+import UserStore from '@/stores/UserStore'
+import AuthNavigator from '../navigators/AuthNavigator'
 
 const MainApp = () => {
-    useGetCategories()
+    const isLoggedIn = UserStore((state) => state.isLoggedIn)
+    // useGetCategories()
     return (
         <NavigationContainer>
             <Stack.Navigator
@@ -17,7 +18,11 @@ const MainApp = () => {
                 }}
                 id=""
             >
-                <Stack.Screen name="MainMenuTab" component={TabNavigator} />
+                {isLoggedIn === true ? (
+                    <Stack.Screen name="MainMenuTab" component={TabNavigator} />
+                ) : (
+                    <Stack.Screen name="Auth" component={AuthNavigator} />
+                )}
             </Stack.Navigator>
         </NavigationContainer>
     )
