@@ -1,30 +1,28 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useCallback, useState } from 'react'
-import { ActivityIndicator, ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 
+import LoadingView from '@/components/shared/LoadingView'
 import { RootStackParamList } from '@/types/navigation'
-import useCollectionStore from '../../stores/CollectionStore'
-import ScreenHeader from '../shared/ScreenHeader'
-import WishlistButton from '../shared/WishlistButton'
+import { ICON_NAMES } from '@/constants/constant'
+import useWishlistStore from '@/stores/WishlistStore'
+import ScreenHeader from '@/components/shared/ScreenHeader'
+import WishlistButton from '@/components/shared/WishlistButton'
 
-const CollectionScreen = ({ route }) => {
+const WishlistScreen = ({ route }) => {
     const navigation =
         useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-    const [collectionData, setCollectionData] = useState([])
-    const setCollectionItems = useCollectionStore(
-        (state) => state.setCollectionItems
-    )
+    const [wishlistData, setWishlistData] = useState([])
+    const setWishlistItems = useWishlistStore((state) => state.setWishlistItems)
     const [loading, setLoading] = useState(false)
-    const fetchCollection = async () => {
+
+    const fetchWishlistItems = () => {
         // setLoading(true)
-        // const collectionColRef = collection(db, 'collection')
-        // const collectionQuery = query(
-        //     collectionColRef,
-        //     orderBy('created_at', 'desc')
-        // )
-        // const unsubscribe = onSnapshot(collectionQuery, (snapshotData) => {
+        // const wishlistColRef = collection(db, 'wishlist')
+        // const wishlistQuery = query(wishlistColRef, orderBy('wishlist_name'))
+        // const unsubscribe = onSnapshot(wishlistQuery, (snapshotData) => {
         //     const userList = []
         //     snapshotData.forEach((doc) => {
         //         userList.push({
@@ -34,8 +32,8 @@ const CollectionScreen = ({ route }) => {
         //         // console.log("CATEGORY PUSHED", doc.id);
         //     })
         //     if (userList.length > 0) {
-        //         setCollectionData(userList)
-        //         setCollectionItems(userList)
+        //         setWishlistItems(userList)
+        //         setWishlistData(userList)
         //         setLoading(false)
         //     }
         // })
@@ -44,48 +42,48 @@ const CollectionScreen = ({ route }) => {
 
     useFocusEffect(
         useCallback(() => {
-            console.log('Mount Collection')
-            fetchCollection()
+            console.log('Mount Wishlist')
+            fetchWishlistItems()
 
             return () => {
-                console.log('Unmount Collection')
+                console.log('Unmount Wishlist')
             }
         }, [])
     )
 
     const handleNavigation = (id) =>
-        navigation.navigate('CollectionEdit', {
-            collectionItemID: id,
+        navigation.navigate('WishlistEdit', {
+            wishlistItemID: id,
         })
 
     return (
         <View className="flex-1 relative items-center pb-5">
             {/* Header */}
-            <ScreenHeader title="Collections" />
+            <ScreenHeader
+                title="Wishlist"
+                rightIconName={ICON_NAMES.SYSTEM_ICONS.ADD}
+                rightIconSize={32}
+                onPressRightIcon={() => navigation.navigate('WishlistAdd')}
+            />
 
             {/* Scroll */}
             <ScrollView className="flex-1 w-[90%] mt-5">
                 {loading ? (
-                    <View className="flex-1 justify-center items-center my-5">
-                        <ActivityIndicator
-                            size="large"
-                            color="#1e40af" // replace with colors.primary.colorOne
-                        />
-                    </View>
+                    <LoadingView />
                 ) : (
                     <>
-                        {collectionData.length ? (
-                            collectionData.map((item, index) => (
+                        {wishlistData.length ? (
+                            wishlistData.map((item, index) => (
                                 <WishlistButton
                                     key={item.id ?? index}
                                     onPress={() => handleNavigation(item.id)}
-                                    name={item.collectionItem_name}
-                                    amount={item.collectionItem_amount}
+                                    name={item.wishlist_name}
+                                    amount={item.wishlist_amount}
                                 />
                             ))
                         ) : (
                             <Text className="text-center text-[20px] w-full">
-                                Add an item to your Collection.
+                                Add an item to your Wishlist.
                             </Text>
                         )}
                     </>
@@ -95,4 +93,4 @@ const CollectionScreen = ({ route }) => {
     )
 }
 
-export default CollectionScreen
+export default WishlistScreen

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
@@ -60,12 +59,6 @@ const IconSelector = ({ iconData, selectedIcon, handlePress }) => {
             </ScrollView>
         </View>
     )
-}
-
-IconSelector.propTypes = {
-    iconData: PropTypes.array.isRequired,
-    selectedIcon: PropTypes.object.isRequired,
-    handlePress: PropTypes.func.isRequired,
 }
 
 export default IconSelector

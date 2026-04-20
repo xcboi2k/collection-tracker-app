@@ -1,10 +1,10 @@
 import { Picker } from '@react-native-picker/picker'
-import PropTypes from 'prop-types'
+
 import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import { SelectList } from 'react-native-dropdown-select-list'
 
-import colors from '../../assets/themes/colors'
+import colors from '@/assets/themes/colors'
 
 type CustomDropdownProps = {
     data: any // required
@@ -198,17 +198,6 @@ const Dropdown = ({
             )}
         </View>
     )
-}
-
-Dropdown.propTypes = {
-    dropdownItems: PropTypes.array.isRequired,
-    setDropdownItems: PropTypes.func.isRequired,
-    dropdownProps: PropTypes.object,
-    customLabel: PropTypes.string,
-    width: PropTypes.string,
-    style: PropTypes.object,
-    setValue: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
 }
 
 export default Dropdown

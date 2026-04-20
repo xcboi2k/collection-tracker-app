@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import TabNavigator from '../navigators/TabNavigator'
-import MainMenuScreen from '../screens/MainMenuScreen'
+import MainMenuScreen from '../screens/main/MainMenuScreen'
 const Stack = createNativeStackNavigator()
 
 import useGetCategories from '../../hooks/useGetCategories'
@@ -15,6 +15,7 @@ const MainApp = () => {
                 screenOptions={{
                     headerShown: false,
                 }}
+                id=""
             >
                 <Stack.Screen name="MainMenuTab" component={TabNavigator} />
             </Stack.Navigator>

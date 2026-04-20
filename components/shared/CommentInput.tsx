@@ -1,8 +1,7 @@
 import React from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import PropTypes from 'prop-types'
 
-import Icon from '../common/Icon'
+import Icon from '@/components/common/Icon'
 
 const CommentInput = ({
     customLabel,
@@ -61,15 +60,6 @@ const CommentInput = ({
             <Text>{!filename ? 'No File Chosen' : filename}</Text>
         </View>
     )
-}
-
-CommentInput.propTypes = {
-    customLabel: PropTypes.string,
-    width: PropTypes.string,
-    inputProps: PropTypes.object,
-    imageUri: PropTypes.object,
-    onPress: PropTypes.func,
-    filename: PropTypes.string,
 }
 
 export default CommentInput

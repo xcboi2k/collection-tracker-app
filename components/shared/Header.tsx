@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
-import Icon from '../common/Icon'
+import Icon from '@/components/common/Icon'
 
 const Header = ({ title, onPressLeftIcon }) => {
     return (

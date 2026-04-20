@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
-import Icon from '../common/Icon'
+import Icon from '@/components/common/Icon'
 
 const ColorPickerPanel = ({
     colorList = [],
@@ -58,13 +57,6 @@ const ColorPickerPanel = ({
             </View>
         </View>
     )
-}
-
-ColorPickerPanel.propTypes = {
-    colorList: PropTypes.arrayOf(PropTypes.object),
-    selectedColor: PropTypes.string,
-    onColorPress: PropTypes.func,
-    onAddPress: PropTypes.func,
 }
 
 export default ColorPickerPanel

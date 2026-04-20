@@ -3,9 +3,9 @@ import React from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import WishlistScreen from '../screens/WishlistScreen'
-import WishlistAddScreen from '../screens/WishlistAddScreen'
-import WishlistEditScreen from '../screens/WishlistEditScreen'
+import WishlistScreen from '../screens/main/WishlistScreen'
+import WishlistAddScreen from '../screens/main/WishlistAddScreen'
+import WishlistEditScreen from '../screens/main/WishlistEditScreen'
 
 const WishlistStack = createNativeStackNavigator()
 

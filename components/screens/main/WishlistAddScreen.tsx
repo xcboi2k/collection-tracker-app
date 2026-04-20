@@ -3,13 +3,13 @@ import React, { useEffect } from 'react'
 import { View } from 'react-native'
 
 import CustomTextInput from '@/components/shared/CustomTextInput'
-import AlertStore from '../../stores/AlertStore'
-import LoaderStore from '../../stores/LoaderStore'
-import useWishlistStore from '../../stores/WishlistStore'
-import Button from '../shared/Button'
-import CustomAlert from '../shared/CustomAlert.js'
-import CustomLoader from '../shared/CustomLoader.js'
-import Header from '../shared/Header'
+import AlertStore from '@/stores/AlertStore'
+import LoaderStore from '@/stores/LoaderStore'
+import useWishlistStore from '@/stores/WishlistStore'
+import Button from '@/components/shared/ButtonText'
+import CustomAlert from '@/components/shared/CustomAlert'
+import CustomLoader from '@/components/shared/CustomLoader'
+import Header from '@/components/shared/Header'
 
 const WishlistAddScreen = ({ navigation }) => {
     // State management for loading indicators

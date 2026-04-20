@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Text, View } from 'react-native'
 
-import imagePlaceHolder from '../../../assets/icon.png'
+import imagePlaceHolder from '@/assets/icon.png'
 
 const DashboardHeader = ({ title }) => {
     return (

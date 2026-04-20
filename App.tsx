@@ -1,33 +1,17 @@
 import './global.css'
-import React, { useState } from 'react'
-import AppLoading from 'expo-app-loading'
 import { StatusBar } from 'expo-status-bar'
-import { useFonts } from 'expo-font'
-
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-
+import { StyleSheet, Text, View } from 'react-native'
 import colors from './assets/themes/colors'
-import MainApp from './components/MainApp/MainApp'
+import LoginScreen from './components/screens/auth/LoginScreen'
+import MainMenuScreen from './components/screens/main/MainMenuScreen'
+import MainApp from './components/MainApp'
+import SignUpScreen from './components/screens/auth/SignUpScreen'
 
 export default function App() {
-    let [fontsLoaded] = useFonts({
-        'Inter-Bold': require('./assets/fonts/Inter-Bold.otf'),
-        'Inter-Light': require('./assets/fonts/Inter-Light.otf'),
-        'Inter-Regular': require('./assets/fonts/Inter-Regular.otf'),
-        'Inter-Medium': require('./assets/fonts/Inter-Medium.otf'),
-        'Inter-Black': require('./assets/fonts/Inter-Black.otf'),
-        'Inter-Italic': require('./assets/fonts/Inter-Italic.otf'),
-    })
-
-    if (!fontsLoaded) {
-        return <AppLoading />
-    }
-
     return (
         <>
-            <StatusBar backgroundColor={colors.primary.colorOne} />
-            <MainApp />
+            <StatusBar backgroundColor={'#FFFFFF'} />
+            <SignUpScreen />
         </>
     )
 }

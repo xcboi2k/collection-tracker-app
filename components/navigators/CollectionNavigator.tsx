@@ -3,8 +3,8 @@ import React from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import CollectionScreen from '../screens/CollectionScreen.'
-import CollectionEditScreen from '../screens/CollectionEditScreen.'
+import CollectionScreen from '../screens/main/CollectionScreen.'
+import CollectionEditScreen from '../screens/main/CollectionEditScreen.'
 
 const CollectionStack = createNativeStackNavigator()
 

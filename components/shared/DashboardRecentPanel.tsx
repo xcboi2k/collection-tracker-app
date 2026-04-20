@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { Image, View } from 'react-native'
 
-import imgPlaceholder from '../../../assets/test.jpg'
+import imgPlaceholder from '@/assets/test.jpg'
 
 const DashboardRecentPanel = ({ data }) => {
     return (

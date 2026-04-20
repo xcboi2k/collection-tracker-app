@@ -4,11 +4,11 @@ import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import LoadingView from '@/components/shared/LoadingView'
-import { ICON_NAMES } from '../../constants/constant'
-import preMadeCategories from '../../data/preMadeCategories'
-import useCategoryStore from '../../stores/CategoryStore'
-import ButtonIcon from '../shared/ButtonIcon'
-import ScreenHeader from '../shared/ScreenHeader'
+import { ICON_NAMES } from '../../../constants/constant'
+import preMadeCategories from '../../../data/preMadeCategories'
+import useCategoryStore from '../../../stores/CategoryStore'
+import ButtonIcon from '../../shared/ButtonIcon'
+import ScreenHeader from '../../shared/ScreenHeader'
 
 import { RootStackParamList } from '@/types/navigation'
 

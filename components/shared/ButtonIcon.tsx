@@ -1,9 +1,7 @@
 import React, { memo } from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 
-import PropTypes from 'prop-types'
-
-import Icon from '../common/Icon'
+import Icon from '@/components/common/Icon'
 
 type ButtonIconProps = {
     onPress: () => void
@@ -78,17 +76,6 @@ const ButtonIcon = ({
             )}
         </View>
     )
-}
-
-ButtonIcon.propTypes = {
-    onPress: PropTypes.func.isRequired,
-    type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    iconColor: PropTypes.string,
-    iconSize: PropTypes.number,
-    styles: PropTypes.object,
-    imageUri: PropTypes.object,
-    filename: PropTypes.string,
 }
 
 export default memo(ButtonIcon)

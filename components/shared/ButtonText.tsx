@@ -29,12 +29,12 @@ type ButtonProps = {
     buttonLabelStyle?: StyleProp<TextStyle>
 }
 
-const Button = ({
+const ButtonText = ({
     onPress,
     title,
     type,
     width = '100%',
-    textSize = 20,
+    textSize = 16,
     iconColor,
     iconSize,
     iconName,
@@ -49,7 +49,7 @@ const Button = ({
         <TouchableOpacity
             onPress={onPress}
             className={`
-        ${width}
+        ${width ? `w-[${width}]` : 'w-full'}
         px-3 py-2
         rounded-md
         flex-row items-center justify-around
@@ -72,7 +72,6 @@ const Button = ({
           ${textSize}
           text-center
           font-bold
-          uppercase
           ${isFilled ? 'text-white' : 'text-primary-100'}
         `}
                 style={buttonLabelStyle}
@@ -83,4 +82,4 @@ const Button = ({
     )
 }
 
-export default Button
+export default ButtonText

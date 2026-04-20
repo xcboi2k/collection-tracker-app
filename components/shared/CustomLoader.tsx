@@ -1,7 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, Modal, View } from 'react-native'
 
-import colors from '../../assets/themes/colors'
+import colors from '@/assets/themes/colors'
 
 const CustomLoader = ({ visible }) => {
     return (

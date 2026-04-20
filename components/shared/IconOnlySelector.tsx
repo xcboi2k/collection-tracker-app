@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
-import colors from '../../assets/themes/colors'
+import colors from '@/assets/themes/colors'
 
 import ButtonIcon from './ButtonIcon'
 

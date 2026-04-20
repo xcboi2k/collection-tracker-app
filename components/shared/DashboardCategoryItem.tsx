@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { Text, View } from 'react-native'
 
-import Icon from '../common/Icon'
+import Icon from '@/components/common/Icon'
 import { formatPeso } from '@/utils/formatCurrency'
 
 const DashboardCategoryItem = ({
@@ -30,14 +29,6 @@ const DashboardCategoryItem = ({
             </View>
         </View>
     )
-}
-
-DashboardCategoryItem.propTypes = {
-    categoryName: PropTypes.string,
-    total: PropTypes.number,
-    inputProps: PropTypes.object,
-    iconColor: PropTypes.string,
-    iconName: PropTypes.string,
 }
 
 export default DashboardCategoryItem
