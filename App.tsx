@@ -2,6 +2,7 @@ import './global.css'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 import * as Sentry from '@sentry/react-native'
+import Toast from 'react-native-toast-message'
 
 import colors from './assets/themes/colors'
 import LoginScreen from './components/screens/auth/LoginScreen'
@@ -14,6 +15,7 @@ function App() {
         <>
             <StatusBar backgroundColor={'#FFFFFF'} />
             <SignUpScreen />
+            <Toast />
         </>
     )
 }
