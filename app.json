@@ -32,6 +32,18 @@
         "projectId": "21e151c6-543c-4277-972b-13fd04ab5083"
       }
     },
-    "owner": "xcboi2k"
+    "owner": "xcboi2k",
+    "plugins": [
+      "expo-sqlite",
+      "@sentry/react-native",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "collectorplus",
+          "organization": "xcboi2k"
+        }
+      ]
+    ]
   }
 }
