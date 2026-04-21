@@ -1,50 +1,48 @@
 {
-  "expo": {
-    "name": "CollectorPlus",
-    "slug": "collectplus",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.xcboi2k.collectplus"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "21e151c6-543c-4277-972b-13fd04ab5083"
-      }
-    },
-    "owner": "xcboi2k",
-    "plugins": [
-      "expo-sqlite",
-      "@sentry/react-native",
-      [
-        "@sentry/react-native/expo",
-        {
-          "url": "https://sentry.io/",
-          "project": "collectorplus",
-          "organization": "xcboi2k"
-        }
-      ],
-      "expo-secure-store"
-    ]
-  }
+    "expo": {
+        "name": "CollectorPlus",
+        "slug": "collectplus",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/splash-icon.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.xcboi2k.collectplus"
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "21e151c6-543c-4277-972b-13fd04ab5083"
+            }
+        },
+        "owner": "xcboi2k",
+        "plugins": [
+            "expo-sqlite",
+            "@sentry/react-native",
+            [
+                "@sentry/react-native/expo",
+                {
+                    "url": "https://sentry.io/",
+                    "project": "collectorplus",
+                    "organization": "xcboi2k"
+                }
+            ],
+            "expo-secure-store"
+        ]
+    }
 }
