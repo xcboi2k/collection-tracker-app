@@ -43,7 +43,8 @@
           "project": "collectorplus",
           "organization": "xcboi2k"
         }
-      ]
+      ],
+      "expo-secure-store"
     ]
   }
 }
