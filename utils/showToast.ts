@@ -3,6 +3,7 @@ import Toast from 'react-native-toast-message'
 type ToastType = 'success' | 'error' | 'info'
 
 export const showToast = (type: ToastType, text1: string, text2?: string) => {
+    console.log('showing toast...')
     Toast.show({
         type,
         text1,

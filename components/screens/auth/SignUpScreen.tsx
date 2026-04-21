@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import * as Yup from 'yup'
 
@@ -7,9 +7,18 @@ import CollectorPlusIcon from '@/assets/collector-plus_icon.png'
 import ButtonText from '@/components/shared/ButtonText'
 import CustomTextInput from '@/components/shared/CustomTextInput'
 import { INITIAL_VALUES } from '@/constants/formvalues'
+import useSignUpUser from '@/hooks/auth/useSignUpUser'
 
 export default function SignUpScreen() {
     const submitRef = useRef(null)
+
+    // Handles signing up
+    const { signUpUser } = useSignUpUser()
+
+    // Assigns sign up function to formik upon initialization
+    useEffect(() => {
+        submitRef.current = signUpUser
+    }, [signUpUser])
 
     const formik = useFormik({
         initialValues: INITIAL_VALUES.CREATE_ACCOUNT,
