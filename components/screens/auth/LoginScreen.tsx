@@ -1,18 +1,31 @@
 import { useFormik } from 'formik'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import * as Yup from 'yup'
 
 import CollectorPlusIcon from '@/assets/collector-plus_icon.png'
 import ButtonText from '@/components/shared/ButtonText'
+import CustomLoader from '@/components/shared/CustomLoader'
 import CustomTextInput from '@/components/shared/CustomTextInput'
 import { INITIAL_VALUES } from '@/constants/formvalues'
+import useLoginUser from '@/hooks/auth/useLoginUser'
+import LoaderStore from '@/stores/LoaderStore'
 
 export default function LoginScreen() {
     // const navigation =
     //     useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
+    const isLoading = LoaderStore((state) => state.isLoading)
+
     const submitRef = useRef(null)
+
+    // Handles signing up
+    const { loginUser } = useLoginUser()
+
+    // Assigns sign up function to formik upon initialization
+    useEffect(() => {
+        submitRef.current = loginUser
+    }, [loginUser])
 
     const formik = useFormik({
         initialValues: INITIAL_VALUES.SIGN_IN,
@@ -106,6 +119,7 @@ export default function LoginScreen() {
                     </View>
                 </View>
             </ScrollView>
+            <CustomLoader visible={isLoading} />
         </View>
     )
 }
