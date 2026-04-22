@@ -1,20 +1,17 @@
 import { useFormik } from 'formik'
-import React, { useEffect, useState } from 'react'
-import { ScrollView, View } from 'react-native'
-import uuid from 'react-native-uuid'
+import React, { useState } from 'react'
+import { ScrollView, Text, View } from 'react-native'
+import * as Yup from 'yup'
 
-import CustomTextInput from '@/components/shared/CustomTextInput'
-import useGetCategories from '@/hooks/useGetCategories'
-import useUploadImage from '@/hooks/useUploadImage'
-import AlertStore from '@/stores/AlertStore'
-import useCollectionStore from '@/stores/CollectionStore'
-import LoaderStore from '@/stores/LoaderStore'
 import Button from '@/components/shared/ButtonText'
 import CommentInput from '@/components/shared/CommentInput'
-import CustomAlert from '@/components/shared/CustomAlert'
 import CustomLoader from '@/components/shared/CustomLoader'
+import CustomTextInput from '@/components/shared/CustomTextInput'
 import Header from '@/components/shared/Header'
 import IconSelector from '@/components/shared/IconSelector'
+import useAddCollectionItem from '@/hooks/main/collections/useAddCollectionItem'
+import useGetCategories from '@/hooks/useGetCategories'
+import LoaderStore from '@/stores/LoaderStore'
 
 const CollectionAddScreen = ({ navigation }) => {
     // State management for loading indicators
@@ -22,42 +19,15 @@ const CollectionAddScreen = ({ navigation }) => {
     const startLoading = LoaderStore((state) => state.startLoading)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    // State management for alert components
-    const isAlertVisible = AlertStore((state) => state.isAlertVisible)
-    const alertTitle = AlertStore((state) => state.alertTitle)
-    const alertMessage = AlertStore((state) => state.alertMessage)
-    const showAlert = AlertStore((state) => state.showAlert)
-    const hideAlert = AlertStore((state) => state.hideAlert)
-
-    // Handle close alert function
-    const handleAlertClose = () => {
-        stopLoading()
-        hideAlert()
-    }
-
-    const isCollectionItemCreated = useCollectionStore(
-        (state) => state.isCollectionItemCreated
-    )
-
-    // Generate a unique photo ID using uuid.v4()
-    let photoId = uuid.v4()
-
     // State variables
-    const [date, setDate] = useState(new Date())
     const [categories] = useGetCategories()
-    const addCollectionItem = useCollectionStore(
-        (state) => state.addCollectionItem
-    )
-    const [image, chooseImage, uploadImage, filename] = useUploadImage(
-        photoId,
-        'collection/'
-    )
     const [selectedIcon, setSelectedIcon] = useState({
         label: '',
         icon: '',
         currentIcon: '',
         id: '',
     })
+    const [iconError, setIconError] = useState('')
 
     // Initial form values
     const initialValues = {
@@ -71,67 +41,78 @@ const CollectionAddScreen = ({ navigation }) => {
 
     // Handle icon press
     const handleIconPress = (icon) => {
+        setIconError('')
         setSelectedIcon(icon)
         formik.setFieldValue('categoryName', icon.label)
         formik.setFieldValue('collectionItemIcon', icon.currentIcon)
         formik.setFieldValue('collectionItemColor', icon.color)
     }
 
+    const goToNextScreen = () => {
+        const newKey = Math.random().toString()
+        navigation.navigate('Home', {
+            screen: 'HomeMain',
+            key: newKey,
+        })
+    }
+    const { addCollectionItem } = useAddCollectionItem()
     // Handle formik form submission
     const handleFormikSubmit = async (values, { resetForm }) => {
-        try {
-            startLoading()
+        startLoading()
+        let hasError = false
 
-            let imgFile
-            // Upload image if selected
-            if (image) {
-                imgFile = await uploadImage()
-            }
-
-            // Add collection item
-            addCollectionItem({
-                collectionItem_amount: Number(values.amount),
-                category_name: values.categoryName,
-                comment_img_ref: imgFile ? imgFile.imgRef : '',
-                comment_img: imgFile ? imgFile.imgUri : '',
-                comments: values.comments,
-                collectionItem_name: values.collectionItemName,
-                collectionItem_icon: values.collectionItemIcon,
-                collectionItem_color: values.collectionItemColor,
-                category_id: selectedIcon.id,
-                created_at: date,
-            })
-
-            // Reset the form and navigate
-            resetForm()
-        } catch (error) {
+        if (!selectedIcon) {
             stopLoading()
-            showAlert('Error', `Failed to submit information. ${error}`)
+            setIconError('Please select a category icon')
+            hasError = true
+        } else {
+            stopLoading()
+            setIconError('')
         }
+
+        if (hasError) return
+
+        // Add collection item
+        addCollectionItem(
+            {
+                collectionItemAmount: Number(values.amount),
+                collectionItemName: values.collectionItemName,
+                collectionItemIcon: values.collectionItemIcon,
+                collectionItemColor: values.collectionItemColor,
+                comments: values.comments,
+                categoryID: selectedIcon.id,
+                categoryName: values.categoryName,
+            },
+            resetForm,
+            goToNextScreen
+        )
     }
 
     // Formik configuration
     const formik = useFormik({
         initialValues,
         onSubmit: handleFormikSubmit,
+        validationSchema: Yup.object().shape({
+            amount: Yup.number()
+                .typeError('Amount must be a number')
+                .positive('Amount must be greater than 0')
+                .required('Amount is required'),
+
+            collectionItemName: Yup.string()
+                .min(2, 'Name must be at least 2 characters')
+                .max(50, 'Name must not exceed 50 characters')
+                .required('Collection item name is required'),
+
+            collectionItemIcon: Yup.string().required('Please select an icon'),
+
+            collectionItemColor: Yup.string().required('Please select a color'),
+
+            categoryName: Yup.string()
+                .min(2, 'Category name must be at least 2 characters')
+                .max(50, 'Category name must not exceed 50 characters')
+                .required('Category name is required'),
+        }),
     })
-
-    // Check if the form fields are valid
-    const isFormFilled = () => {
-        // Check if all fields have non-empty values
-        return Object.values(formik.values).every((value) => value !== '')
-    }
-
-    // For navigating to next screen
-    useEffect(() => {
-        if (isCollectionItemCreated) {
-            const newKey = Math.random().toString()
-            navigation.navigate('Home', {
-                screen: 'HomeMain',
-                key: newKey,
-            })
-        }
-    }, [isCollectionItemCreated])
 
     return (
         <View className="flex-1 relative items-center pb-5">
@@ -154,6 +135,12 @@ const CollectionAddScreen = ({ navigation }) => {
                         value: formik.values.collectionItemName,
                     }}
                     customLabel="Collection Item Name:"
+                    hasStatus={true}
+                    statusText={
+                        formik.errors.collectionItemName &&
+                        formik.touched.collectionItemName &&
+                        formik.errors.collectionItemName
+                    }
                 />
 
                 <CustomTextInput
@@ -164,6 +151,12 @@ const CollectionAddScreen = ({ navigation }) => {
                         value: formik.values.amount,
                     }}
                     customLabel="Collection Item Amount:"
+                    hasStatus={true}
+                    statusText={
+                        formik.errors.amount &&
+                        formik.touched.amount &&
+                        formik.errors.amount
+                    }
                 />
             </View>
 
@@ -179,6 +172,11 @@ const CollectionAddScreen = ({ navigation }) => {
                         handlePress={handleIconPress}
                         selectedIcon={selectedIcon}
                     />
+                    {iconError ? (
+                        <Text className="text-red-500 text-sm mt-2">
+                            {iconError}
+                        </Text>
+                    ) : null}
                 </View>
 
                 {/* Comment Input */}
@@ -189,9 +187,9 @@ const CollectionAddScreen = ({ navigation }) => {
                         value: formik.values.comment,
                         onChangeText: formik.handleChange('comments'),
                     }}
-                    imageUri={image}
-                    onPress={chooseImage}
-                    filename={filename}
+                    // imageUri={image}
+                    // onPress={chooseImage}
+                    // filename={filename}
                 />
 
                 {/* Button */}
@@ -201,21 +199,12 @@ const CollectionAddScreen = ({ navigation }) => {
                         title="Add"
                         type="filled"
                         onPress={formik.handleSubmit}
-                        buttonProps={{
-                            disabled: !isFormFilled(),
-                        }}
+                        // buttonProps={{
+                        //     disabled: !isFormFilled(),
+                        // }}
                     />
                 </View>
             </ScrollView>
-
-            {/* Alert */}
-            <CustomAlert
-                visible={isAlertVisible}
-                title={alertTitle}
-                message={alertMessage}
-                onClose={handleAlertClose}
-            />
-
             {/* Loader */}
             <CustomLoader visible={isLoading} />
         </View>

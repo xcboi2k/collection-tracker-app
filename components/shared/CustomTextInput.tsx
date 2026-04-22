@@ -21,6 +21,8 @@ interface CustomTextInputProps {
     isPassword?: boolean
     isMobileNumber?: boolean
     measurementText?: string
+    hasStatus?: boolean
+    statusText?: any
 }
 
 export default function CustomTextInput({
@@ -35,8 +37,8 @@ export default function CustomTextInput({
     inputFontSize,
     isPassword = false,
     // isLoginDisabled,
-    // hasStatus = false,
-    // statusText,
+    hasStatus = false,
+    statusText,
     // statusOnPress,
     // statusOnPressText,
     isMobileNumber = false,
@@ -87,6 +89,15 @@ export default function CustomTextInput({
                     <Text className="ml-auto">{measurementText}</Text>
                 )}
             </View>
+            {hasStatus === true && (
+                <View className="w-full flex-row items-center">
+                    {statusText && (
+                        <Text className="text-[10px] font-medium text-red-500">
+                            {statusText}
+                        </Text>
+                    )}
+                </View>
+            )}
         </View>
     )
 }

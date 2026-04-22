@@ -1,19 +1,18 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { Alert, ScrollView, View } from 'react-native'
-import uuid from 'react-native-uuid'
+import { Alert, ScrollView, Text, View } from 'react-native'
+import * as Yup from 'yup'
 
 import Button from '@/components/shared/ButtonText'
 import CommentInput from '@/components/shared/CommentInput'
-import CustomAlert from '@/components/shared/CustomAlert'
 import CustomLoader from '@/components/shared/CustomLoader'
+import CustomTextInput from '@/components/shared/CustomTextInput'
 import Header from '@/components/shared/Header'
 import IconSelector from '@/components/shared/IconSelector'
+import useDeleteCollectionItem from '@/hooks/main/collections/useDeleteCollectionItem'
+import useUpdateCollectionItem from '@/hooks/main/collections/useUpdateCollectionItem'
 import useGetCategories from '@/hooks/useGetCategories'
-import useUploadImage from '@/hooks/useUploadImage'
 import useCollectionStore from '@/stores/CollectionStore'
-import CustomTextInput from '@/components/shared/CustomTextInput'
-import AlertStore from '@/stores/AlertStore'
 import LoaderStore from '@/stores/LoaderStore'
 
 const CollectionEditScreen = ({ route, navigation }) => {
@@ -22,47 +21,12 @@ const CollectionEditScreen = ({ route, navigation }) => {
     const startLoading = LoaderStore((state) => state.startLoading)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    // State management for alert components
-    const isAlertVisible = AlertStore((state) => state.isAlertVisible)
-    const alertTitle = AlertStore((state) => state.alertTitle)
-    const alertMessage = AlertStore((state) => state.alertMessage)
-    const showAlert = AlertStore((state) => state.showAlert)
-    const hideAlert = AlertStore((state) => state.hideAlert)
-
-    // Handle close alert function
-    const handleAlertClose = () => {
-        stopLoading()
-        hideAlert()
-    }
-
-    const isCollectionItemUpdated = useCollectionStore(
-        (state) => state.isCollectionItemUpdated
-    )
-    const isCollectionItemDeleted = useCollectionStore(
-        (state) => state.isCollectionItemDeleted
-    )
-
     // Get the collectionItemID from the route params
     const { collectionItemID } = route.params
 
     // State variables
     const collectionItems = useCollectionStore((state) => state.collectionItems)
-    const updateCollectionItem = useCollectionStore(
-        (state) => state.updateCollectionItem
-    )
-    const deleteCollectionItem = useCollectionStore(
-        (state) => state.deleteCollectionItem
-    )
     const [categories] = useGetCategories()
-
-    // Generate a unique photo ID using uuid.v4()
-    const photoId = uuid.v4()
-
-    // State variables related to image handling
-    const [image, chooseImage, uploadImage, filename] = useUploadImage(
-        photoId,
-        'collection/'
-    )
 
     // Set the currentCollectionItem state based on collectionItemID
     const [currentCollectionItem, setCurrentCollectionItem] = useState(() => {
@@ -71,7 +35,6 @@ const CollectionEditScreen = ({ route, navigation }) => {
 
     // State variables for mode, date, and selected icon
     const [mode, setMode] = useState('details')
-    const [date, setDate] = useState(currentCollectionItem.created_at)
     const [selectedIcon, setSelectedIcon] = useState({
         label: '',
         icon: '',
@@ -79,6 +42,7 @@ const CollectionEditScreen = ({ route, navigation }) => {
         id: '',
         color: '',
     })
+    const [iconError, setIconError] = useState('')
 
     // Initial form values
     const initialValues = {
@@ -107,6 +71,7 @@ const CollectionEditScreen = ({ route, navigation }) => {
 
     // Handle icon press
     const handleIconPress = (icon) => {
+        setIconError('')
         setSelectedIcon(icon)
         formik.setFieldValue('categoryName', icon.label)
         formik.setFieldValue('collectionItemIcon', icon.currentIcon)
@@ -114,55 +79,69 @@ const CollectionEditScreen = ({ route, navigation }) => {
     }
 
     // Handle formik form submission
+    const goToNextScreen = () => {
+        const newKey = Math.random().toString()
+        navigation.navigate('Collections', {
+            screen: 'CollectionMain',
+            key: newKey,
+        })
+    }
+    const { updateCollectionItem } = useUpdateCollectionItem()
     const handleFormikSubmit = async (values, { resetForm }) => {
-        // try {
-        //     startLoading()
-        //     let imgFile,
-        //         oldImgRef = currentCollectionItem.comment_img_ref
-        //     if (image && oldImgRef) {
-        //         const oldFileRef = ref(storage, oldImgRef)
-        //         await deleteObject(oldFileRef)
-        //         imgFile = await uploadImage()
-        //     } else if (image && !oldImgRef) {
-        //     }
-        //     let updatedImgRef = imgFile
-        //         ? imgFile.imgRef
-        //         : currentCollectionItem.comment_img_ref
-        //     let updatedImg = imgFile
-        //         ? imgFile.imgUri
-        //         : currentCollectionItem.comment_img
-        //     const collectionItemIcon =
-        //         values.collectionItemIcon ===
-        //         currentCollectionItem.collectionItem_icon
-        //             ? currentCollectionItem.collectionItem_icon
-        //             : selectedIcon.currentIcon
-        //     const categoryName =
-        //         values.categoryName === currentCollectionItem.category_name
-        //             ? currentCollectionItem.category_name
-        //             : selectedIcon.label
-        //     const updateCollectionItem = {
-        //         collectionItem_amount: Number(values.amount),
-        //         category_name: categoryName,
-        //         comment_img_ref: updatedImgRef,
-        //         comment_img: updatedImg,
-        //         collectionItem_name: values.collectionItemName,
-        //         collectionItem_icon: collectionItemIcon,
-        //         collectionItem_color: values.collectionItemColor,
-        //         created_at: date,
-        //     }
-        //     updateCollectionItem(collectionItemID, updateCollectionItem)
-        //     resetForm()
-        //     navigation.navigate('Home', { screen: 'HomeMain' })
-        // } catch (error) {
-        //     stopLoading()
-        //     showAlert('Error', `Failed to submit information. ${error}`)
-        // }
+        startLoading()
+        let hasError = false
+
+        if (!selectedIcon) {
+            stopLoading()
+            setIconError('Please select a category icon')
+            hasError = true
+        } else {
+            stopLoading()
+            setIconError('')
+        }
+
+        if (hasError) return
+
+        updateCollectionItem(
+            collectionItemID,
+            {
+                collectionItemAmount: Number(values.amount),
+                collectionItemName: values.collectionItemName,
+                collectionItemIcon: values.collectionItemIcon,
+                collectionItemColor: values.collectionItemColor,
+                comments: values.comments,
+                categoryID: selectedIcon.id,
+                categoryName: values.categoryName,
+            },
+            resetForm,
+            goToNextScreen
+        )
     }
 
     // Formik configuration
     const formik = useFormik({
         initialValues,
         onSubmit: handleFormikSubmit,
+        validationSchema: Yup.object().shape({
+            amount: Yup.number()
+                .typeError('Amount must be a number')
+                .positive('Amount must be greater than 0')
+                .required('Amount is required'),
+
+            collectionItemName: Yup.string()
+                .min(2, 'Name must be at least 2 characters')
+                .max(50, 'Name must not exceed 50 characters')
+                .required('Collection item name is required'),
+
+            collectionItemIcon: Yup.string().required('Please select an icon'),
+
+            collectionItemColor: Yup.string().required('Please select a color'),
+
+            categoryName: Yup.string()
+                .min(2, 'Category name must be at least 2 characters')
+                .max(50, 'Category name must not exceed 50 characters')
+                .required('Category name is required'),
+        }),
     })
 
     // Show delete prompt
@@ -181,31 +160,12 @@ const CollectionEditScreen = ({ route, navigation }) => {
         ])
     }
 
+    const { deleteCollectionItem } = useDeleteCollectionItem()
     // Handle delete action
     const handleDelete = () => {
         startLoading()
-        deleteCollectionItem(
-            collectionItemID,
-            currentCollectionItem.comment_img_ref
-        )
+        deleteCollectionItem(collectionItemID, goToNextScreen)
     }
-
-    // For navigating to next screen
-    useEffect(() => {
-        if (isCollectionItemUpdated) {
-            const newKey = Math.random().toString()
-            navigation.navigate('Collections', {
-                screen: 'CollectionMain',
-                key: newKey,
-            })
-        } else if (isCollectionItemDeleted) {
-            const newKey = Math.random().toString()
-            navigation.navigate('Collections', {
-                screen: 'CollectionMain',
-                key: newKey,
-            })
-        }
-    }, [isCollectionItemUpdated, isCollectionItemDeleted])
 
     const screenTitle = `${mode === 'edit' ? 'Edit' : 'Item'} Details`
     const EditButtonGroup = () => (
@@ -251,6 +211,12 @@ const CollectionEditScreen = ({ route, navigation }) => {
                         editable: mode === 'edit',
                     }}
                     customLabel="Collection Item Name:"
+                    hasStatus={true}
+                    statusText={
+                        formik.errors.collectionItemName &&
+                        formik.touched.collectionItemName &&
+                        formik.errors.collectionItemName
+                    }
                 />
 
                 <CustomTextInput
@@ -262,6 +228,12 @@ const CollectionEditScreen = ({ route, navigation }) => {
                         editable: mode === 'edit',
                     }}
                     customLabel="Collection Item Amount:"
+                    hasStatus={true}
+                    statusText={
+                        formik.errors.amount &&
+                        formik.touched.amount &&
+                        formik.errors.amount
+                    }
                 />
             </View>
 
@@ -278,6 +250,11 @@ const CollectionEditScreen = ({ route, navigation }) => {
                         handlePress={handleIconPress}
                         selectedIcon={selectedIcon}
                     />
+                    {iconError ? (
+                        <Text className="text-red-500 text-sm mt-2">
+                            {iconError}
+                        </Text>
+                    ) : null}
                 </View>
 
                 {/* Comment Input */}
@@ -289,13 +266,6 @@ const CollectionEditScreen = ({ route, navigation }) => {
                         onChangeText: formik.handleChange('comments'),
                         editable: mode === 'edit',
                     }}
-                    imageUri={{
-                        uri: image
-                            ? image.uri
-                            : currentCollectionItem.comment_img,
-                    }}
-                    onPress={chooseImage}
-                    filename={filename}
                 />
 
                 {/* Buttons */}
@@ -318,15 +288,6 @@ const CollectionEditScreen = ({ route, navigation }) => {
                     )}
                 </View>
             </ScrollView>
-
-            {/* Alert */}
-            <CustomAlert
-                visible={isAlertVisible}
-                title={alertTitle}
-                message={alertMessage}
-                onClose={handleAlertClose}
-            />
-
             {/* Loader */}
             <CustomLoader visible={isLoading} />
         </View>

@@ -7,9 +7,9 @@ const CommentInput = ({
     customLabel,
     inputProps,
     width = '100%',
-    imageUri,
-    onPress,
-    filename,
+    // imageUri,
+    // onPress,
+    // filename,
 }) => {
     return (
         <View className={width}>
@@ -36,7 +36,7 @@ const CommentInput = ({
                 />
 
                 {/* Image Button */}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={onPress}
                     className="h-full w-[30%] items-center justify-center bg-primary-100"
                 >
@@ -53,11 +53,11 @@ const CommentInput = ({
                             resizeMode="cover"
                         />
                     )}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
 
             {/* Filename */}
-            <Text>{!filename ? 'No File Chosen' : filename}</Text>
+            {/* <Text>{!filename ? 'No File Chosen' : filename}</Text> */}
         </View>
     )
 }
