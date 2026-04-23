@@ -24,7 +24,6 @@ export default function useUpdateCategory() {
                     category_name: values.name,
                     category_icon: values.icon,
                     category_color: values.color,
-                    updated_at: new Date().toISOString(),
                 })
                 .eq('id', id)
 
