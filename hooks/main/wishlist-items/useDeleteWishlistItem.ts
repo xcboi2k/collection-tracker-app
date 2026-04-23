@@ -7,32 +7,32 @@ import { cleanAuthError } from '@/utils/errors/cleanError'
 import UserStore from '@/stores/UserStore'
 import LoaderStore from '@/stores/LoaderStore'
 
-export default function useAddCategory() {
+export default function useDeleteWishlistItem() {
     const user = UserStore((state) => state.user)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    const addCategory = async (values, { resetForm }, goToNextScreen) => {
+    const deleteWishlistItem = async (id, goToNextScreen) => {
         try {
-            const { data, error } = await supabase.from('categories').insert([
-                {
-                    category_name: values.categoryName,
-                    category_icon: values.categoryIcon,
-                    category_color: values.categoryColor,
-                },
-            ])
+            const { data, error } = await supabase
+                .from('wishlist_items')
+                .delete()
+                .eq('id', id)
 
-            console.log('add category response:', data)
-            console.log('add category error:', error)
+            console.log('delete wishlist item response:', data)
+            console.log('delete wishlist item error:', error)
             if (error) {
                 stopLoading()
-                showToast('error', 'Error', 'Failed to add category')
+                showToast('error', 'Error', 'Failed to delete wishlist item')
                 Sentry.captureException(
-                    `Failed to add category in ${user.email}. ${cleanAuthError(error)}`
+                    `Failed to delete wishlist item in ${user.email}. ${cleanAuthError(error)}`
                 )
             } else {
-                resetForm()
                 stopLoading()
-                showToast('success', 'Success', 'Successfully added a category')
+                showToast(
+                    'success',
+                    'Success',
+                    'Successfully deleted wishlist item'
+                )
                 goToNextScreen()
             }
         } catch (error) {
@@ -41,10 +41,10 @@ export default function useAddCategory() {
             await new Promise((resolve) => setTimeout(resolve, 100))
             showToast('error', 'Error', `Service not available right now.`)
             Sentry.captureException(
-                `Failed to add category in ${user.email}. Service not available right now. ${error}`
+                `Failed to delete wishlist item in ${user.email}. Service not available right now. ${error}`
             )
         }
     }
 
-    return { addCategory }
+    return { deleteWishlistItem }
 }

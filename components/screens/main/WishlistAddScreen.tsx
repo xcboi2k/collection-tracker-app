@@ -1,6 +1,7 @@
 import { useFormik } from 'formik'
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
+import * as Yup from 'yup'
 
 import CustomTextInput from '@/components/shared/CustomTextInput'
 import AlertStore from '@/stores/AlertStore'
@@ -10,6 +11,7 @@ import Button from '@/components/shared/ButtonText'
 import CustomAlert from '@/components/shared/CustomAlert'
 import CustomLoader from '@/components/shared/CustomLoader'
 import Header from '@/components/shared/Header'
+import useAddWishlistItem from '@/hooks/main/wishlist-items/useAddWishlistItem'
 
 const WishlistAddScreen = ({ navigation }) => {
     // State management for loading indicators
@@ -17,72 +19,54 @@ const WishlistAddScreen = ({ navigation }) => {
     const startLoading = LoaderStore((state) => state.startLoading)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    // State management for alert components
-    const isAlertVisible = AlertStore((state) => state.isAlertVisible)
-    const alertTitle = AlertStore((state) => state.alertTitle)
-    const alertMessage = AlertStore((state) => state.alertMessage)
-    const showAlert = AlertStore((state) => state.showAlert)
-    const hideAlert = AlertStore((state) => state.hideAlert)
-
-    // Handle close alert function
-    const handleAlertClose = () => {
-        stopLoading()
-        hideAlert()
-    }
-
-    const isWishlistItemCreated = useWishlistStore(
-        (state) => state.isWishlistItemCreated
-    )
-
-    // State variables
-    const addWishlistItem = useWishlistStore((state) => state.addWishlistItem)
-
     // Initial form values
     const initialValues = {
         wishlistName: '',
         wishlistAmount: '',
-        // userID: "",
-        createdAt: '',
-        updatedAt: '',
     }
 
+    const goToNextScreen = () => {
+        const newKey = Math.random().toString()
+        navigation.navigate('Wishlists', {
+            screen: 'WishlistMain',
+            key: newKey,
+        })
+    }
+    const { addWishlistItem } = useAddWishlistItem()
     // Handle formik form submission
     const handleFormikSubmit = async (values, { resetForm }) => {
-        try {
-            addWishlistItem({
-                wishlist_name: values.wishlistName,
-                wishlist_amount: values.wishlistAmount,
-                created_at: new Date(),
-                // user_id: user.user_id
-            })
-            resetForm()
-        } catch (error) {
-            stopLoading()
-            showAlert('Error', `Failed to submit information. ${error}`)
-        }
+        startLoading()
+        addWishlistItem(
+            {
+                wishlistName: values.wishlistName,
+                wishlistAmount: values.wishlistAmount,
+            },
+            resetForm,
+            goToNextScreen
+        )
     }
 
     // Formik configuration
     const formik = useFormik({
         initialValues,
         onSubmit: handleFormikSubmit,
+        validationSchema: Yup.object().shape({
+            wishlistAmount: Yup.number()
+                .typeError('Amount must be a number')
+                .positive('Amount must be greater than 0')
+                .required('Amount is required'),
+
+            wishlistName: Yup.string()
+                .min(2, 'Name must be at least 2 characters')
+                .max(50, 'Name must not exceed 50 characters')
+                .required('Collection item name is required'),
+        }),
     })
 
     // Handle clear button press
     const handleClear = () => {
         formik.resetForm()
     }
-
-    // For navigating to next screen
-    useEffect(() => {
-        if (isWishlistItemCreated) {
-            const newKey = Math.random().toString()
-            navigation.navigate('Wishlists', {
-                screen: 'WishlistMain',
-                key: newKey,
-            })
-        }
-    }, [isWishlistItemCreated])
 
     return (
         <View className="flex-1 relative items-center pb-5">
@@ -105,6 +89,12 @@ const WishlistAddScreen = ({ navigation }) => {
                         value: formik.values.wishlistName,
                     }}
                     customLabel="Wishlist Item Name:"
+                    hasStatus={true}
+                    statusText={
+                        formik.errors.wishlistName &&
+                        formik.touched.wishlistName &&
+                        formik.errors.wishlistName
+                    }
                 />
 
                 <CustomTextInput
@@ -115,6 +105,12 @@ const WishlistAddScreen = ({ navigation }) => {
                         value: formik.values.wishlistAmount,
                     }}
                     customLabel="Wishlist Item Amount:"
+                    hasStatus={true}
+                    statusText={
+                        formik.errors.wishlistAmount &&
+                        formik.touched.wishlistAmount &&
+                        formik.errors.wishlistAmount
+                    }
                 />
             </View>
 
@@ -123,7 +119,7 @@ const WishlistAddScreen = ({ navigation }) => {
                 <Button
                     type="filled"
                     width="45%"
-                    title="Save"
+                    title="Submit"
                     textSize={14}
                     noBorder={false}
                     onPress={formik.handleSubmit}
@@ -138,14 +134,6 @@ const WishlistAddScreen = ({ navigation }) => {
                     onPress={handleClear}
                 />
             </View>
-
-            {/* Alert */}
-            <CustomAlert
-                visible={isAlertVisible}
-                title={alertTitle}
-                message={alertMessage}
-                onClose={handleAlertClose}
-            />
 
             {/* Loader */}
             <CustomLoader visible={isLoading} />
