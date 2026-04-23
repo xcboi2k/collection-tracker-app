@@ -11,7 +11,7 @@ import Header from '@/components/shared/Header'
 import IconSelector from '@/components/shared/IconSelector'
 import useDeleteCollectionItem from '@/hooks/main/collections/useDeleteCollectionItem'
 import useUpdateCollectionItem from '@/hooks/main/collections/useUpdateCollectionItem'
-import useGetCategories from '@/hooks/useGetCategories'
+import useGetCategories from '@/hooks/main/categories/useGetCategories'
 import useCollectionStore from '@/stores/CollectionStore'
 import LoaderStore from '@/stores/LoaderStore'
 
@@ -26,7 +26,7 @@ const CollectionEditScreen = ({ route, navigation }) => {
 
     // State variables
     const collectionItems = useCollectionStore((state) => state.collectionItems)
-    const [categories] = useGetCategories()
+    const { data } = useGetCategories()
 
     // Set the currentCollectionItem state based on collectionItemID
     const [currentCollectionItem, setCurrentCollectionItem] = useState(() => {
@@ -246,7 +246,7 @@ const CollectionEditScreen = ({ route, navigation }) => {
                 {/* Category Selector */}
                 <View className="mb-7.5 w-full h-[120px] justify-start">
                     <IconSelector
-                        iconData={categories}
+                        iconData={data}
                         handlePress={handleIconPress}
                         selectedIcon={selectedIcon}
                     />

@@ -10,7 +10,7 @@ import CustomTextInput from '@/components/shared/CustomTextInput'
 import Header from '@/components/shared/Header'
 import IconSelector from '@/components/shared/IconSelector'
 import useAddCollectionItem from '@/hooks/main/collections/useAddCollectionItem'
-import useGetCategories from '@/hooks/useGetCategories'
+import useGetCategories from '@/hooks/main/categories/useGetCategories'
 import LoaderStore from '@/stores/LoaderStore'
 
 const CollectionAddScreen = ({ navigation }) => {
@@ -20,7 +20,7 @@ const CollectionAddScreen = ({ navigation }) => {
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
     // State variables
-    const [categories] = useGetCategories()
+    const { data } = useGetCategories()
     const [selectedIcon, setSelectedIcon] = useState({
         label: '',
         icon: '',
@@ -168,7 +168,7 @@ const CollectionAddScreen = ({ navigation }) => {
                 {/* Category Selector */}
                 <View className="mb-7.5 w-full h-[120px] justify-start">
                     <IconSelector
-                        iconData={categories}
+                        iconData={data}
                         handlePress={handleIconPress}
                         selectedIcon={selectedIcon}
                     />

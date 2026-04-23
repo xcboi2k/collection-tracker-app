@@ -1,17 +1,18 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { Alert, View } from 'react-native'
+import { Alert, Text, View } from 'react-native'
+import * as Yup from 'yup'
 
 import CustomTextInput from '@/components/shared/CustomTextInput'
+import useDeleteCategory from '@/hooks/main/categories/useDeleteCategory'
+import useUpdateCategory from '@/hooks/main/categories/useUpdateCategory'
 import { ICON_NAMES } from '../../../constants/constant'
 import colorCollection from '../../../data/colorCollection'
-import AlertStore from '../../../stores/AlertStore'
 import useCategoryStore from '../../../stores/CategoryStore'
 import LoaderStore from '../../../stores/LoaderStore'
 import ColorPicker from '../../common/ColorPicker'
 import Button from '../../shared/ButtonText'
 import ColorPickerPanel from '../../shared/ColorPickerPanel'
-import CustomAlert from '../../shared/CustomAlert'
 import CustomLoader from '../../shared/CustomLoader'
 import Header from '../../shared/Header'
 import IconOnlySelector from '../../shared/IconOnlySelector'
@@ -22,34 +23,12 @@ const CategoriesEditScreen = ({ route, navigation }) => {
     const startLoading = LoaderStore((state) => state.startLoading)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    // State management for alert components
-    const isAlertVisible = AlertStore((state) => state.isAlertVisible)
-    const alertTitle = AlertStore((state) => state.alertTitle)
-    const alertMessage = AlertStore((state) => state.alertMessage)
-    const showAlert = AlertStore((state) => state.showAlert)
-    const hideAlert = AlertStore((state) => state.hideAlert)
-
-    // Handle close alert function
-    const handleAlertClose = () => {
-        stopLoading()
-        hideAlert()
-    }
-
-    const isCategoryUpdated = useCategoryStore(
-        (state) => state.isCategoryUpdated
-    )
-    const isCategoryDeleted = useCategoryStore(
-        (state) => state.isCategoryDeleted
-    )
-
     // Get the categoryID from the route params
     const { categoryID } = route.params
 
     // State variables
     const [mode, setMode] = useState('details')
     const allCategories = useCategoryStore((state) => state.categories)
-    const updateCategory = useCategoryStore((state) => state.updateCategory)
-    const deleteCategory = useCategoryStore((state) => state.deleteCategory)
     const [currentCategory, setCurrentCategory] = useState(() =>
         allCategories.find((category) => category.id === categoryID)
     )
@@ -59,6 +38,8 @@ const CategoriesEditScreen = ({ route, navigation }) => {
     const [selectedColor, setSelectedColor] = useState(
         currentCategory.category_color
     )
+    const [iconError, setIconError] = useState('')
+    const [colorError, setColorError] = useState('')
     const [showColorWheel, setShowColorWheel] = useState(false)
 
     // Initial form values
@@ -80,40 +61,69 @@ const CategoriesEditScreen = ({ route, navigation }) => {
 
     // Handle icon press
     const handleIconPress = (icon) => {
+        setIconError('')
         setSelectedIcon(icon)
         formik.setFieldValue('categoryIcon', icon)
     }
 
     // Handle color press
     const handleColorPress = (color) => {
+        setColorError('')
         setSelectedColor(color)
         formik.setFieldValue('categoryColor', color)
         setShowColorWheel(false)
     }
 
+    const { updateCategory } = useUpdateCategory()
+    const goToNextScreen = () => {
+        setSelectedColor('')
+        setSelectedIcon('')
+        const newKey = Math.random().toString()
+        navigation.navigate('Categories', {
+            screen: 'CategoriesMain',
+            key: newKey,
+        })
+    }
     // Handle formik form submission
     const handleFormikSubmit = async (values, { resetForm }) => {
-        try {
-            startLoading()
-            const newCategory = {
-                // user_id: user.user_id,
-                category_name: values.categoryName,
-                category_icon: values.categoryIcon,
-                category_color: values.categoryColor,
-                id: categoryID,
-            }
-            updateCategory(categoryID, newCategory)
-            resetForm()
-        } catch (error) {
+        startLoading()
+        let hasError = false
+
+        if (!selectedIcon) {
             stopLoading()
-            showAlert('Error', `Failed to submit information. ${error}`)
+            setIconError('Please select an icon')
+            hasError = true
         }
+        if (!selectedColor) {
+            stopLoading()
+            setColorError('Please select a color')
+            hasError = true
+        }
+
+        if (hasError) return
+
+        updateCategory(
+            categoryID,
+            {
+                categoryName: values.categoryName,
+                categoryColor: values.categoryColor,
+                categoryIcon: values.categoryIcon,
+            },
+            resetForm,
+            goToNextScreen
+        )
     }
 
     // Formik configuration
     const formik = useFormik({
         initialValues,
         onSubmit: handleFormikSubmit,
+        validationSchema: Yup.object().shape({
+            categoryName: Yup.string()
+                .min(2, 'Name must be at least 2 characters')
+                .max(50, 'Name must not exceed 50 characters')
+                .required('Category name is required'),
+        }),
     })
 
     // Show delete prompt
@@ -132,28 +142,12 @@ const CategoriesEditScreen = ({ route, navigation }) => {
         ])
     }
 
+    const { deleteCategory } = useDeleteCategory()
     // Handle delete action
     const handleDelete = () => {
         startLoading()
-        deleteCategory(categoryID)
+        deleteCategory(categoryID, goToNextScreen)
     }
-
-    // For navigating to next screen
-    useEffect(() => {
-        if (isCategoryUpdated) {
-            const newKey = Math.random().toString()
-            navigation.navigate('Categories', {
-                screen: 'CategoriesMain',
-                key: newKey,
-            })
-        } else if (isCategoryDeleted) {
-            const newKey = Math.random().toString()
-            navigation.navigate('Categories', {
-                screen: 'CategoriesMain',
-                key: newKey,
-            })
-        }
-    }, [isCategoryUpdated, isCategoryDeleted])
 
     const screenTitle = `${mode === 'edit' ? 'Edit' : 'Category'} Details`
     const EditButtonGroup = () => (
@@ -207,22 +201,40 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                         editable: mode === 'edit',
                     }}
                     customLabel="Category Name:"
+                    hasStatus={true}
+                    statusText={
+                        formik.errors.categoryName &&
+                        formik.touched.categoryName &&
+                        formik.errors.categoryName
+                    }
                 />
 
-                <IconOnlySelector
-                    iconData={Object.values(ICON_NAMES.CATEGORIES_ICONS)}
-                    onPress={handleIconPress}
-                    selectedIcon={selectedIcon}
-                    setSelectedIcon={setSelectedIcon}
-                />
+                <View className="mb-6 w-full h-[120px] justify-start">
+                    <IconOnlySelector
+                        iconData={Object.values(ICON_NAMES.CATEGORIES_ICONS)}
+                        onPress={handleIconPress}
+                        selectedIcon={selectedIcon}
+                    />
+                    {iconError ? (
+                        <Text className="text-red-500 text-sm mt-2">
+                            {iconError}
+                        </Text>
+                    ) : null}
+                </View>
 
-                <ColorPickerPanel
-                    colorList={colorCollection}
-                    onColorPress={handleColorPress}
-                    selectedColor={selectedColor}
-                    setSelectedColor={setSelectedColor}
-                    onAddPress={() => setShowColorWheel(true)}
-                />
+                <View className="mb-6 w-full h-[120px] justify-start">
+                    <ColorPickerPanel
+                        colorList={colorCollection}
+                        onColorPress={handleColorPress}
+                        selectedColor={selectedColor}
+                        onAddPress={() => setShowColorWheel(true)}
+                    />
+                    {colorError ? (
+                        <Text className="text-red-500 text-sm mt-2">
+                            {colorError}
+                        </Text>
+                    ) : null}
+                </View>
             </View>
 
             {/* Buttons */}
@@ -244,14 +256,6 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                     />
                 )}
             </View>
-
-            {/* Alert */}
-            <CustomAlert
-                visible={isAlertVisible}
-                title={alertTitle}
-                message={alertMessage}
-                onClose={handleAlertClose}
-            />
 
             {/* Loader */}
             <CustomLoader visible={isLoading} />
