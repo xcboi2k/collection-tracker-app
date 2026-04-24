@@ -1,5 +1,6 @@
+import { useFocusEffect } from '@react-navigation/native'
 import { useFormik } from 'formik'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Alert, ScrollView, Text, View } from 'react-native'
 import * as Yup from 'yup'
 
@@ -9,9 +10,9 @@ import CustomLoader from '@/components/shared/CustomLoader'
 import CustomTextInput from '@/components/shared/CustomTextInput'
 import Header from '@/components/shared/Header'
 import IconSelector from '@/components/shared/IconSelector'
+import useGetCategories from '@/hooks/main/categories/useGetCategories'
 import useDeleteCollectionItem from '@/hooks/main/collections/useDeleteCollectionItem'
 import useUpdateCollectionItem from '@/hooks/main/collections/useUpdateCollectionItem'
-import useGetCategories from '@/hooks/main/categories/useGetCategories'
 import useCollectionStore from '@/stores/CollectionStore'
 import LoaderStore from '@/stores/LoaderStore'
 
@@ -26,7 +27,18 @@ const CollectionEditScreen = ({ route, navigation }) => {
 
     // State variables
     const collectionItems = useCollectionStore((state) => state.collectionItems)
-    const { data } = useGetCategories()
+    const { data, getCategories } = useGetCategories()
+
+    useFocusEffect(
+        useCallback(() => {
+            console.log('Mount Collection Edit')
+            getCategories()
+
+            return () => {
+                console.log('Unmount Collection Edit')
+            }
+        }, [])
+    )
 
     // Set the currentCollectionItem state based on collectionItemID
     const [currentCollectionItem, setCurrentCollectionItem] = useState(() => {
@@ -46,10 +58,10 @@ const CollectionEditScreen = ({ route, navigation }) => {
 
     // Initial form values
     const initialValues = {
-        amount: String(currentCollectionItem.collectionItem_amount),
-        collectionItemName: currentCollectionItem.collectionItem_name,
-        collectionItemIcon: currentCollectionItem.collectionItem_icon,
-        collectionItemColor: currentCollectionItem.collectionItem_color,
+        amount: String(currentCollectionItem.collectionitem_amount),
+        collectionItemName: currentCollectionItem.collectionitem_name,
+        collectionItemIcon: currentCollectionItem.collectionitem_icon,
+        collectionItemColor: currentCollectionItem.collectionitem_color,
         categoryName: currentCollectionItem.category_name,
         comments: currentCollectionItem.comments,
     }
@@ -62,9 +74,9 @@ const CollectionEditScreen = ({ route, navigation }) => {
         setCurrentCollectionItem(targetCollectionItem)
         setSelectedIcon({
             label: targetCollectionItem.category_name,
-            icon: targetCollectionItem.transaction_icon,
-            color: targetCollectionItem.transaction_color,
-            currentIcon: targetCollectionItem.transaction_icon,
+            icon: targetCollectionItem.collectionitem_icon,
+            color: targetCollectionItem.collectionitem_color,
+            currentIcon: targetCollectionItem.collectionitem_icon,
             id: targetCollectionItem.category_id,
         })
     }, [collectionItemID])
@@ -244,7 +256,7 @@ const CollectionEditScreen = ({ route, navigation }) => {
                 keyboardShouldPersistTaps="handled"
             >
                 {/* Category Selector */}
-                <View className="mb-7.5 w-full h-[120px] justify-start">
+                <View className="mb-7.5 w-full h-[120px] justify-start mb-6">
                     <IconSelector
                         iconData={data}
                         handlePress={handleIconPress}

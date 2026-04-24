@@ -178,7 +178,7 @@ const CollectionAddScreen = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
             >
                 {/* Category Selector */}
-                <View className="mb-7.5 w-full h-[120px] justify-start">
+                <View className="mb-7.5 w-full h-[120px] justify-start mb-6">
                     <IconSelector
                         iconData={data}
                         handlePress={handleIconPress}

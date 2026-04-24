@@ -30,7 +30,7 @@ const WishlistEditScreen = ({ route, navigation }) => {
     // Initial form values
     const initialValues = {
         wishlistName: currentWishlistItem.wishlist_name,
-        wishlistAmount: currentWishlistItem.wishlist_amount,
+        wishlistAmount: String(currentWishlistItem.wishlist_amount),
     }
 
     // Fetch target wishlist item when wishlistItemID changes
