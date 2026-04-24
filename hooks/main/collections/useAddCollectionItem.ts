@@ -11,16 +11,16 @@ export default function useAddCollectionItem() {
     const user = UserStore((state) => state.user)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    const addCollectionItem = async (values, { resetForm }, goToNextScreen) => {
+    const addCollectionItem = async (values, resetForm, goToNextScreen) => {
         try {
             const { data, error } = await supabase
                 .from('collection_items')
                 .insert([
                     {
-                        collectionItem_name: values.collectionItemName,
-                        collectionItem_amount: values.collectionItemAmount,
-                        collectionItem_icon: values.collectionItemIcon,
-                        collectionItem_color: values.cocollectionItemColor,
+                        collectionitem_name: values.collectionItemName,
+                        collectionitem_amount: values.collectionItemAmount,
+                        collectionitem_icon: values.collectionItemIcon,
+                        collectionitem_color: values.collectionItemColor,
                         comments: values.comments,
                         category_id: values.categoryID,
                         category_name: values.categoryName,

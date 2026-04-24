@@ -30,31 +30,16 @@ const IconSelector = ({ iconData, selectedIcon, handlePress }) => {
     }
 
     return (
-        <View className="w-[90%] mb-2.5">
+        <View className="w-[90%] mb-6">
             {/* Title */}
-            <Text className="text-[20px] font-bold mb-2.5">Icons:</Text>
+            <Text className="text-[20px] font-bold">Icons:</Text>
 
             {/* Horizontal scroll */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View className="flex-row h-[100px] items-center">
-                    {iconData?.map((item, index) => {
-                        const isSelected = selectedIcon === item.icon
-
-                        return (
-                            <TouchableOpacity
-                                key={item.id ?? index}
-                                onPress={() => onSelect?.(item)}
-                                className={`w-[60px] h-[60px] mx-2 justify-center items-center rounded-lg ${
-                                    isSelected
-                                        ? 'bg-blue-500'
-                                        : 'bg-transparent'
-                                }`}
-                            >
-                                {/* Icon */}
-                                {item.icon}
-                            </TouchableOpacity>
-                        )
-                    })}
+                    {iconData?.map((item, index) =>
+                        renderItem({ item, index })
+                    )}
                 </View>
             </ScrollView>
         </View>

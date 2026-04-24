@@ -9,7 +9,7 @@ import { ICON_NAMES } from '../../../constants/constant'
 import colorCollection from '../../../data/colorCollection'
 import LoaderStore from '../../../stores/LoaderStore'
 import ColorPicker from '../../common/ColorPicker'
-import Button from '../../shared/ButtonText'
+import ButtonText from '../../shared/ButtonText'
 import ColorPickerPanel from '../../shared/ColorPickerPanel'
 import CustomLoader from '../../shared/CustomLoader'
 import Header from '../../shared/Header'
@@ -144,7 +144,7 @@ const CategoriesAddScreen = ({ navigation }) => {
                     }
                 />
 
-                <View className="mb-6 w-full h-[120px] justify-start">
+                <View className="w-full justify-start">
                     <IconOnlySelector
                         iconData={Object.values(ICON_NAMES.CATEGORIES_ICONS)}
                         onPress={handleIconPress}
@@ -157,7 +157,7 @@ const CategoriesAddScreen = ({ navigation }) => {
                     ) : null}
                 </View>
 
-                <View className="mb-6 w-full h-[120px] justify-start">
+                <View className="w-full justify-start">
                     <ColorPickerPanel
                         colorList={colorCollection}
                         onColorPress={handleColorPress}
@@ -174,7 +174,7 @@ const CategoriesAddScreen = ({ navigation }) => {
 
             {/* Buttons */}
             <View className="flex-row justify-between w-[90%] mt-5">
-                <Button
+                <ButtonText
                     type="filled"
                     width="45%"
                     title="Submit"
@@ -182,7 +182,7 @@ const CategoriesAddScreen = ({ navigation }) => {
                     noBorder={false}
                     onPress={formik.handleSubmit}
                 />
-                <Button
+                <ButtonText
                     type="outlined"
                     width="45%"
                     title="Clear"

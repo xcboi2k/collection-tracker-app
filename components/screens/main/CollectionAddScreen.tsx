@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import * as Yup from 'yup'
 
@@ -12,6 +12,7 @@ import IconSelector from '@/components/shared/IconSelector'
 import useAddCollectionItem from '@/hooks/main/collections/useAddCollectionItem'
 import useGetCategories from '@/hooks/main/categories/useGetCategories'
 import LoaderStore from '@/stores/LoaderStore'
+import { useFocusEffect } from '@react-navigation/native'
 
 const CollectionAddScreen = ({ navigation }) => {
     // State management for loading indicators
@@ -20,7 +21,7 @@ const CollectionAddScreen = ({ navigation }) => {
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
     // State variables
-    const { data } = useGetCategories()
+    const { data, getCategories } = useGetCategories()
     const [selectedIcon, setSelectedIcon] = useState({
         label: '',
         icon: '',
@@ -113,6 +114,17 @@ const CollectionAddScreen = ({ navigation }) => {
                 .required('Category name is required'),
         }),
     })
+
+    useFocusEffect(
+        useCallback(() => {
+            console.log('Mount Collection Add')
+            getCategories()
+
+            return () => {
+                console.log('Unmount Collection Add')
+            }
+        }, [])
+    )
 
     return (
         <View className="flex-1 relative items-center pb-5">

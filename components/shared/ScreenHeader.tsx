@@ -17,13 +17,15 @@ const ScreenHeader = ({
     rightIconSize,
 }: ScreenHeaderProps) => {
     return (
-        <View className="w-full items-center p-1 h-[17%] bg-primary-100 rounded-b-[25px]">
+        <View className="w-full bg-primary-100 rounded-b-[30px] pb-6 pt-10 items-center">
             {/* Inner container */}
-            <View className="w-[92%] flex-row items-center justify-between mt-8">
-                {/* Title */}
-                <Text className="text-[20px] font-bold text-white ml-2.5">
-                    {title}
-                </Text>
+            <View className="w-[92%] flex-row items-center justify-between">
+                {/* Greeting + Title */}
+                <View>
+                    <Text className="text-white text-2xl font-bold mt-1">
+                        {title}
+                    </Text>
+                </View>
 
                 {/* Right Icon */}
                 {rightIconName && (

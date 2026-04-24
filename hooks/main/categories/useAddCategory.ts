@@ -11,7 +11,7 @@ export default function useAddCategory() {
     const user = UserStore((state) => state.user)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    const addCategory = async (values, { resetForm }, goToNextScreen) => {
+    const addCategory = async (values, resetForm, goToNextScreen) => {
         try {
             const { data, error } = await supabase.from('categories').insert([
                 {

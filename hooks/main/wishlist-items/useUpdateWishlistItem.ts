@@ -14,7 +14,7 @@ export default function useUpdateWishlistItem() {
     const updateWishlistItem = async (
         id,
         values,
-        { resetForm },
+        resetForm,
         goToNextScreen
     ) => {
         try {

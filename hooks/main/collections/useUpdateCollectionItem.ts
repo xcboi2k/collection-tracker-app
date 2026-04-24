@@ -14,20 +14,20 @@ export default function useUpdateCollectionItem() {
     const updateCollectionItem = async (
         id,
         values,
-        { resetForm },
+        resetForm,
         goToNextScreen
     ) => {
         try {
             const { data, error } = await supabase
                 .from('collection_items')
                 .update({
-                    collectionItem_name: values.name,
-                    collectionItem_amount: values.amount,
+                    collectionitem_name: values.collectionItemName,
+                    collectionitem_amount: values.collectionItemAmount,
+                    collectionitem_icon: values.collectionItemIcon,
+                    collectionitem_color: values.collectionItemColor,
                     category_id: values.category_id,
                     category_name: values.category_name,
                     comments: values.comments,
-                    collectionItem_icon: values.icon,
-                    collectionItem_color: values.color,
                 })
                 .eq('id', id)
 

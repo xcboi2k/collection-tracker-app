@@ -11,12 +11,7 @@ export default function useUpdateCategory() {
     const user = UserStore((state) => state.user)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    const updateCategory = async (
-        id,
-        values,
-        { resetForm },
-        goToNextScreen
-    ) => {
+    const updateCategory = async (id, values, resetForm, goToNextScreen) => {
         try {
             const { data, error } = await supabase
                 .from('categories')

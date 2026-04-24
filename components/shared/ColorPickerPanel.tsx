@@ -1,7 +1,9 @@
 import React from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 
 import Icon from '@/components/common/Icon'
+import { ICON_NAMES } from '@/constants/constant'
 
 const ColorPickerPanel = ({
     colorList = [],
@@ -43,10 +45,10 @@ const ColorPickerPanel = ({
                             >
                                 {isSelected && (
                                     <View className="items-center justify-center">
-                                        <Icon
-                                            name={'check'}
-                                            color="#FFFFFF"
-                                            size={20}
+                                        <FontAwesome6
+                                            name="circle-check"
+                                            size={24}
+                                            color="white"
                                         />
                                     </View>
                                 )}

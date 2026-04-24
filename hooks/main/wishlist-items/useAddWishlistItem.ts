@@ -11,7 +11,7 @@ export default function useAddWishlistItem() {
     const user = UserStore((state) => state.user)
     const stopLoading = LoaderStore((state) => state.stopLoading)
 
-    const addWishlistItem = async (values, { resetForm }, goToNextScreen) => {
+    const addWishlistItem = async (values, resetForm, goToNextScreen) => {
         try {
             const { data, error } = await supabase
                 .from('wishlist_items')
