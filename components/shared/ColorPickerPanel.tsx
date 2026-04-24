@@ -12,9 +12,9 @@ const ColorPickerPanel = ({
     onAddPress,
 }) => {
     return (
-        <View className="w-full mb-5">
+        <View className="w-full">
             {/* Label */}
-            <Text className="font-bold text-[20px] mb-2.5">Colors:</Text>
+            <Text className="font-bold text-[16px] mb-2">Colors:</Text>
 
             {/* Row */}
             <View className="flex-row items-center">

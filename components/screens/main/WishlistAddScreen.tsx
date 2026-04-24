@@ -12,6 +12,7 @@ import CustomAlert from '@/components/shared/CustomAlert'
 import CustomLoader from '@/components/shared/CustomLoader'
 import Header from '@/components/shared/Header'
 import useAddWishlistItem from '@/hooks/main/wishlist-items/useAddWishlistItem'
+import ButtonText from '@/components/shared/ButtonText'
 
 const WishlistAddScreen = ({ navigation }) => {
     // State management for loading indicators
@@ -115,23 +116,14 @@ const WishlistAddScreen = ({ navigation }) => {
             </View>
 
             {/* Buttons */}
-            <View className="flex-row justify-between w-[90%] mt-5">
-                <Button
+            <View className="items-center justify-center w-full">
+                <ButtonText
+                    width="100%"
                     type="filled"
-                    width="45%"
                     title="Submit"
                     textSize={14}
                     noBorder={false}
                     onPress={formik.handleSubmit}
-                />
-
-                <Button
-                    type="outlined"
-                    width="45%"
-                    title="Clear"
-                    textSize={14}
-                    noBorder={false}
-                    onPress={handleClear}
                 />
             </View>
 

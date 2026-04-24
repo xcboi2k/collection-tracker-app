@@ -18,13 +18,13 @@ const IconOnlySelector = ({ iconData, selectedIcon, onPress }) => {
     )
 
     return (
-        <View className="w-full mb-2.5">
+        <View className="w-full">
             {/* Title */}
-            <Text className="text-[20px] font-bold mb-2.5">Icons:</Text>
+            <Text className="text-[16px] font-bold mb-2">Icons:</Text>
 
             {/* Horizontal scroll wrapper */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <View className="flex-row h-[100px]">
+                <View className="flex-row">
                     {iconData?.map((item, index) => {
                         const isSelected = selectedIcon === item.icon
 

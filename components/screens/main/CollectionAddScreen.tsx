@@ -3,14 +3,14 @@ import React, { useCallback, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import * as Yup from 'yup'
 
-import Button from '@/components/shared/ButtonText'
+import ButtonText from '@/components/shared/ButtonText'
 import CommentInput from '@/components/shared/CommentInput'
 import CustomLoader from '@/components/shared/CustomLoader'
 import CustomTextInput from '@/components/shared/CustomTextInput'
 import Header from '@/components/shared/Header'
 import IconSelector from '@/components/shared/IconSelector'
-import useAddCollectionItem from '@/hooks/main/collections/useAddCollectionItem'
 import useGetCategories from '@/hooks/main/categories/useGetCategories'
+import useAddCollectionItem from '@/hooks/main/collections/useAddCollectionItem'
 import LoaderStore from '@/stores/LoaderStore'
 import { useFocusEffect } from '@react-navigation/native'
 
@@ -205,9 +205,9 @@ const CollectionAddScreen = ({ navigation }) => {
                 />
 
                 {/* Button */}
-                <View className="items-center justify-center w-full mt-5">
-                    <Button
-                        width="90%"
+                <View className="items-center justify-center w-full">
+                    <ButtonText
+                        width="100%"
                         title="Add"
                         type="filled"
                         onPress={formik.handleSubmit}

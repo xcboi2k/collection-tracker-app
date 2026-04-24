@@ -55,7 +55,7 @@ export default function CustomTextInput({
         >
             <Text
                 style={{ color: customLabelColor || '#232323' }}
-                className="text-[14px] font-bold mb-[5px]"
+                className="text-[16px] font-bold mb-[5px]"
             >
                 {customLabel}
             </Text>

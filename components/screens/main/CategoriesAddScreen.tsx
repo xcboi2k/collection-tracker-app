@@ -144,7 +144,7 @@ const CategoriesAddScreen = ({ navigation }) => {
                     }
                 />
 
-                <View className="w-full justify-start">
+                <View className="w-full justify-start mb-6">
                     <IconOnlySelector
                         iconData={Object.values(ICON_NAMES.CATEGORIES_ICONS)}
                         onPress={handleIconPress}
@@ -157,7 +157,7 @@ const CategoriesAddScreen = ({ navigation }) => {
                     ) : null}
                 </View>
 
-                <View className="w-full justify-start">
+                <View className="w-full justify-start mb-6">
                     <ColorPickerPanel
                         colorList={colorCollection}
                         onColorPress={handleColorPress}
@@ -173,22 +173,14 @@ const CategoriesAddScreen = ({ navigation }) => {
             </View>
 
             {/* Buttons */}
-            <View className="flex-row justify-between w-[90%] mt-5">
+            <View className="items-center justify-center w-full">
                 <ButtonText
+                    width="100%"
                     type="filled"
-                    width="45%"
                     title="Submit"
                     textSize={14}
                     noBorder={false}
                     onPress={formik.handleSubmit}
-                />
-                <ButtonText
-                    type="outlined"
-                    width="45%"
-                    title="Clear"
-                    textSize={14}
-                    noBorder={false}
-                    onPress={handleClear}
                 />
             </View>
 
