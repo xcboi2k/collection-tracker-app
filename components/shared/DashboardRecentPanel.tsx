@@ -1,20 +1,21 @@
 import React, { memo } from 'react'
-import { Image, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
 
 import imgPlaceholder from '@/assets/test.jpg'
+import { formatPeso } from '@/utils/formatCurrency'
 
 const DashboardRecentPanel = ({ data }) => {
     return (
-        <View className="justify-center items-center m-1">
-            <Image
-                source={
-                    data?.comment_img
-                        ? { uri: data.comment_img }
-                        : imgPlaceholder
-                }
-                className="w-[100px] h-[100px] rounded-[15px]"
-                resizeMode="cover"
-            />
+        <View className="flex-row justify-between items-center m-2 p-4 bg-white rounded-xl shadow-sm">
+            {/* Left: Name */}
+            <Text className="text-lg font-semibold text-gray-900 flex-1">
+                {data?.collectionitem_name}
+            </Text>
+
+            {/* Right: Amount */}
+            <Text className="text-lg font-bold text-primary-100">
+                {formatPeso(data?.collectionitem_amount)}
+            </Text>
         </View>
     )
 }

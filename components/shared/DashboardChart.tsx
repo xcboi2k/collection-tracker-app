@@ -26,7 +26,7 @@ const DashboardChart = ({ title, chartData }) => {
     }))
 
     return (
-        <View className="w-full flex-1">
+        <View className="w-full flex-1 mb-6">
             {/* Title */}
             <View className="flex-row justify-between items-center px-1 mb-1 pr-5">
                 <Text className="text-[20px] font-bold">{title}</Text>

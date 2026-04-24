@@ -23,9 +23,9 @@ const DashboardCategoryItem = ({
                 </Text>
 
                 {/* Total */}
-                <Text className="text-[13px] font-normal text-black text-left">
+                {/* <Text className="text-[13px] font-normal text-black text-left">
                     {formatPeso(total)}
-                </Text>
+                </Text> */}
             </View>
         </View>
     )

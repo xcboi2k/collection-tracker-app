@@ -6,6 +6,7 @@ import { showToast } from '@/utils/showToast'
 import { cleanAuthError } from '@/utils/errors/cleanError'
 import CollectionStore from '@/stores/CollectionStore'
 import UserStore from '@/stores/UserStore'
+import useGetCategories from '../categories/useGetCategories'
 
 export default function useGetCollectionItems() {
     const setCollectionItems = CollectionStore(
@@ -15,6 +16,7 @@ export default function useGetCollectionItems() {
 
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState(null)
+    const [chartData, setChartData] = useState(null)
 
     const getCollectionItems = async () => {
         setLoading(true)
@@ -35,9 +37,31 @@ export default function useGetCollectionItems() {
                 console.log(error)
                 setData([])
             } else {
-                setLoading(false)
                 setData(data)
                 setCollectionItems(data)
+
+                const categoryData = []
+                data.forEach((item) => {
+                    const category = item.category_name
+                    const amount = item.collectionitem_amount
+                    const icon = item.collectionitem_icon
+                    const color = item.collectionitem_color
+
+                    // Check if the category already exists in the categoryData array
+                    const existingCategory = categoryData.find(
+                        (c) => c.category === category
+                    )
+
+                    if (existingCategory) {
+                        existingCategory.amount += amount
+                    } else {
+                        // If the category doesn't exist, add it to the categoryData array
+                        categoryData.push({ category, amount, icon, color })
+                    }
+                })
+
+                setChartData(categoryData)
+                setLoading(false)
             }
         } catch (error) {
             //setting state of user feedback stores to initialize user feedback components
@@ -50,5 +74,5 @@ export default function useGetCollectionItems() {
         }
     }
 
-    return { data, loading, getCollectionItems }
+    return { data, chartData, loading, getCollectionItems }
 }
