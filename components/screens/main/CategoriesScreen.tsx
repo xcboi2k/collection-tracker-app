@@ -1,79 +1,32 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import React, { useCallback, useState } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import React, { useCallback } from 'react'
+import {
+    RefreshControl,
+    ScrollView,
+    TouchableOpacity,
+    View,
+} from 'react-native'
 
 import LoadingView from '@/components/shared/LoadingView'
 import { ICON_NAMES } from '../../../constants/constant'
-import preMadeCategories from '../../../data/preMadeCategories'
-import useCategoryStore from '../../../stores/CategoryStore'
 import ButtonIcon from '../../shared/ButtonIcon'
 import ScreenHeader from '../../shared/ScreenHeader'
 
+import useGetCategories from '@/hooks/main/categories/useGetCategories'
+import { useRefresh } from '@/hooks/useRefresh'
 import { RootStackParamList } from '@/types/navigation'
 
 const CategoriesScreen = ({ route }) => {
     const navigation =
         useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-    const [categoryData, setCategoryData] = useState([])
-    const setCategories = useCategoryStore((state) => state.setCategories)
-    const [loading, setLoading] = useState(false)
-
-    const fetchCategories = () => {
-        setLoading(true)
-        // const categoryColRef = collection(db, 'categories')
-        // const categoryQuery = query(categoryColRef)
-
-        // const unsubscribe = onSnapshot(categoryQuery, (snapshotData) => {
-        //     // console.log("FETCH CATEGORIES");
-        //     const prepCategories = preMadeCategories.map((category) => ({
-        //         ...category,
-        //         // user_id: userID
-        //     }))
-        //     const userList = []
-
-        //     snapshotData.forEach((doc) => {
-        //         // check if doc is already in the array;
-        //         if (prepCategories.some((item) => item.id === doc.id)) {
-        //             const objIndex = prepCategories.findIndex(
-        //                 (item) => item.id === doc.id
-        //             )
-        //             prepCategories.splice(objIndex, 1)
-        //         }
-        //         userList.push({
-        //             ...doc.data(),
-        //             id: doc.id,
-        //         })
-        //         // console.log("CATEGORY PUSHED", doc.id);
-        //     })
-        //     if (userList.length > 0) {
-        //         setCategories([...prepCategories, ...userList])
-        //         setCategoryData([...prepCategories, ...userList])
-        //         setLoading(false)
-        //     }
-        // })
-
-        // return unsubscribe
-
-        try {
-            const prepCategories = preMadeCategories.map((category) => ({
-                ...category,
-                // user_id: userID
-            }))
-            setCategories([...prepCategories])
-            setCategoryData([...prepCategories])
-            setLoading(false)
-        } catch (error) {
-            console.log('Error fetching categories:', error)
-            setLoading(false)
-        }
-    }
+    const { data, loading, getCategories } = useGetCategories()
 
     useFocusEffect(
         useCallback(() => {
             console.log('Mount Categories')
-            fetchCategories()
+            getCategories()
 
             return () => {
                 console.log('Unmount Categories')
@@ -86,6 +39,10 @@ const CategoriesScreen = ({ route }) => {
             categoryID: id,
         })
 
+    const { refreshing, onRefresh } = useRefresh({
+        postRefresh: () => getCategories(),
+    })
+
     return (
         <View className="flex-1 relative items-center pb-5">
             {/* Header */}
@@ -97,12 +54,20 @@ const CategoriesScreen = ({ route }) => {
             />
 
             {/* Scroll */}
-            <ScrollView className="w-[90%] flex-1">
+            <ScrollView
+                className="w-[90%] flex-1"
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 {loading ? (
                     <LoadingView />
                 ) : (
                     <View className="w-full flex-row flex-wrap justify-between p-4 mt-2.5">
-                        {categoryData.map((item, index) => (
+                        {data?.map((item, index) => (
                             <TouchableOpacity
                                 key={item.id ?? index}
                                 onPress={() => handleNavigation(item.id)}
