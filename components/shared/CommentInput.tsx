@@ -15,7 +15,7 @@ const CommentInput = ({
         <View className={width}>
             {/* Label */}
             {customLabel && (
-                <Text className="font-bold text-[20px] mb-[5px]">
+                <Text className="font-bold text-[16px] mb-[5px]">
                     {customLabel}
                 </Text>
             )}
@@ -32,7 +32,7 @@ const CommentInput = ({
                     {...inputProps}
                     multiline
                     textAlignVertical="top"
-                    className="flex-1 h-full p-2.5 text-[18px]"
+                    className="flex-1 h-full p-2.5 text-[16px]"
                 />
 
                 {/* Image Button */}
