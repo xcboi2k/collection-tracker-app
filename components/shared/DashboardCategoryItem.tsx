@@ -11,9 +11,9 @@ const DashboardCategoryItem = ({
     iconColor,
 }) => {
     return (
-        <View className="flex-row items-center justify-between w-full">
+        <View className="flex-row items-center justify-between w-full mb-1">
             {/* Icon */}
-            <Icon name={iconName} color={iconColor} size={38} />
+            <Icon name={iconName} color={iconColor} size={24} />
 
             {/* Text block */}
             <View className="ml-2.5 w-[75%]">

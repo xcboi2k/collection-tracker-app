@@ -6,7 +6,7 @@ import { formatPeso } from '@/utils/formatCurrency'
 
 const DashboardRecentPanel = ({ data }) => {
     return (
-        <View className="flex-row justify-between items-center m-2 p-4 bg-white rounded-xl shadow-sm">
+        <View className="flex-row justify-between items-center m-2 p-4 bg-white rounded-xl shadow-sm border border-gray-300">
             {/* Left: Name */}
             <Text className="text-lg font-semibold text-gray-900 flex-1">
                 {data?.collectionitem_name}
