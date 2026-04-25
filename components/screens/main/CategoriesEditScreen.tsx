@@ -209,7 +209,7 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                     }
                 />
 
-                <View className="mb-6 w-full h-[120px] justify-start">
+                <View className="mb-6 w-full justify-start">
                     <IconOnlySelector
                         iconData={Object.values(ICON_NAMES.CATEGORIES_ICONS)}
                         onPress={handleIconPress}
@@ -222,7 +222,7 @@ const CategoriesEditScreen = ({ route, navigation }) => {
                     ) : null}
                 </View>
 
-                <View className="mb-6 w-full h-[120px] justify-start">
+                <View className="mb-6 w-full justify-start">
                     <ColorPickerPanel
                         colorList={colorCollection}
                         onColorPress={handleColorPress}

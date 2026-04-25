@@ -109,7 +109,7 @@ const WishlistEditScreen = ({ route, navigation }) => {
         <>
             <Button
                 type="filled"
-                width="45%"
+                width="48%"
                 title="Save"
                 textSize={16}
                 noBorder={false}
@@ -117,7 +117,7 @@ const WishlistEditScreen = ({ route, navigation }) => {
             />
             <Button
                 type="outlined"
-                width="45%"
+                width="48%"
                 title="Delete"
                 textSize={16}
                 noBorder={false}

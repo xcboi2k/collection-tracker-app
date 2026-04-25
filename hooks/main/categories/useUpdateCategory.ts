@@ -16,9 +16,9 @@ export default function useUpdateCategory() {
             const { data, error } = await supabase
                 .from('categories')
                 .update({
-                    category_name: values.name,
-                    category_icon: values.icon,
-                    category_color: values.color,
+                    category_name: values.categoryName,
+                    category_icon: values.categoryIcon,
+                    category_color: values.categoryColor,
                 })
                 .eq('id', id)
 
