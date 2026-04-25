@@ -8,6 +8,7 @@ import ScreenHeader from '@/components/shared/ScreenHeader'
 import WishlistButton from '@/components/shared/WishlistButton'
 import { ICON_NAMES } from '@/constants/constant'
 import useGetWishlistItems from '@/hooks/main/wishlist-items/useGetWishlistItems'
+import useUpdateWishlistItem from '@/hooks/main/wishlist-items/useUpdateWishlistItem'
 import { useRefresh } from '@/hooks/useRefresh'
 import { RootStackParamList } from '@/types/navigation'
 
@@ -16,6 +17,7 @@ const WishlistScreen = ({ route }) => {
         useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
     const { data, loading, getWishlistItems } = useGetWishlistItems()
+    const { markWishlistItemAcquired } = useUpdateWishlistItem()
 
     useFocusEffect(
         useCallback(() => {
@@ -32,6 +34,10 @@ const WishlistScreen = ({ route }) => {
         navigation.navigate('WishlistEdit', {
             wishlistItemID: id,
         })
+
+    const goToNextScreen = () => {
+        navigation.navigate('WishlistMain')
+    }
 
     const { refreshing, onRefresh } = useRefresh({
         postRefresh: () => getWishlistItems(),
@@ -70,7 +76,12 @@ const WishlistScreen = ({ route }) => {
                                     amount={item.wishlist_amount}
                                     variant="wishlist"
                                     isChecked={item.status === 'acquired'}
-                                    onToggle={() => {}}
+                                    onToggle={() =>
+                                        markWishlistItemAcquired(
+                                            item.id,
+                                            goToNextScreen
+                                        )
+                                    }
                                 />
                             ))
                         ) : (
