@@ -21,7 +21,7 @@ function App() {
     return (
         <>
             <StatusBar backgroundColor={'#FFFFFF'} />
-            <SignUpScreen />
+            <MainApp />
             <Toast />
         </>
     )
