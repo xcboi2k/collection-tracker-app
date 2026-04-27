@@ -15,6 +15,7 @@ const CollectionNavigator = () => {
                 headerShown: false,
             }}
             initialRouteName="CollectionMain"
+            id=""
         >
             <CollectionStack.Screen
                 name="CollectionMain"

@@ -107,7 +107,7 @@ const MainMenuScreen = () => {
     return (
         <View className="flex-1 relative items-center pb-5 bg-white">
             {/* Header */}
-            <DashboardHeader title="Home" />
+            <DashboardHeader navigation={navigation} />
 
             {/* Scroll */}
             <ScrollView

@@ -14,6 +14,7 @@ const MainMenuNavigator = () => {
                 headerShown: false,
             }}
             initialRouteName="HomeMain"
+            id=""
         >
             <MainMenuStack.Screen
                 name="HomeMain"

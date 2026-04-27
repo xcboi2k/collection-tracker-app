@@ -16,6 +16,7 @@ const WishlistNavigator = () => {
                 headerShown: false,
             }}
             initialRouteName="WishlistMain"
+            id=""
         >
             <WishlistStack.Screen
                 name="WishlistMain"

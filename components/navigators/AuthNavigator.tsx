@@ -14,6 +14,7 @@ const AuthNavigator = () => {
                 headerShown: false,
             }}
             initialRouteName="Login"
+            id=""
         >
             <AuthStack.Screen
                 name="Login"

@@ -1,12 +1,12 @@
 import React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
 
 import imagePlaceHolder from '@/assets/icon.png'
 import UserStore from '@/stores/UserStore'
 import colors from '@/assets/themes/colors'
 
-const DashboardHeader = ({ title }) => {
+const DashboardHeader = ({ navigation }) => {
     const user = UserStore((state) => state.user)
     console.log('user', user)
     return (
@@ -27,13 +27,20 @@ const DashboardHeader = ({ title }) => {
                     </View>
                 </View>
 
-                <View className="flex-row items-center w-auto">
+                <TouchableOpacity
+                    className="flex-row items-center w-auto"
+                    onPress={() =>
+                        navigation.navigate('Settings', {
+                            screen: 'SettingsMain',
+                        })
+                    }
+                >
                     <Entypo
                         name="menu"
                         size={40}
                         color={colors.primary.white}
                     />
-                </View>
+                </TouchableOpacity>
             </View>
         </View>
     )

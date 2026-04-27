@@ -16,6 +16,7 @@ const CategoriesNavigator = () => {
                 headerShown: false,
             }}
             initialRouteName="CategoriesMain"
+            id=""
         >
             <CategoriesStack.Screen
                 name="CategoriesMain"
