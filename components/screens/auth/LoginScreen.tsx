@@ -119,6 +119,11 @@ export default function LoginScreen() {
                     </View>
                 </View>
             </ScrollView>
+
+            <View className="w-full items-center pb-2">
+                <Text className="text-xs text-black">1.0.0</Text>
+            </View>
+
             <CustomLoader visible={isLoading} />
         </View>
     )
