@@ -11,7 +11,7 @@ import { INITIAL_VALUES } from '@/constants/formvalues'
 import useSignUpUser from '@/hooks/auth/useSignUpUser'
 import LoaderStore from '@/stores/LoaderStore'
 
-export default function SignUpScreen() {
+export default function SignUpScreen({ navigation }) {
     const isLoading = LoaderStore((state) => state.isLoading)
 
     const submitRef = useRef(null)
@@ -133,7 +133,7 @@ export default function SignUpScreen() {
                             Already have an account?
                         </Text>
                         <TouchableOpacity
-                        // onPress={() => navigation.navigate('SignUp')}
+                            onPress={() => navigation.navigate('Login')}
                         >
                             <Text className="text-[12px] text-primary-100 italic">
                                 Sign In

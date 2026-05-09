@@ -1,3 +1,5 @@
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useFormik } from 'formik'
 import React, { useEffect, useRef } from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
@@ -10,10 +12,11 @@ import CustomTextInput from '@/components/shared/CustomTextInput'
 import { INITIAL_VALUES } from '@/constants/formvalues'
 import useLoginUser from '@/hooks/auth/useLoginUser'
 import LoaderStore from '@/stores/LoaderStore'
+import { RootStackParamList } from '@/types/navigation'
 
 export default function LoginScreen() {
-    // const navigation =
-    //     useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+    const navigation =
+        useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
     const isLoading = LoaderStore((state) => state.isLoading)
 
@@ -110,7 +113,7 @@ export default function LoginScreen() {
                             Don't have an account?
                         </Text>
                         <TouchableOpacity
-                        // onPress={() => navigation.navigate('SignUp')}
+                            onPress={() => navigation.navigate('SignUp')}
                         >
                             <Text className="text-[12px] text-primary-100 italic">
                                 Sign Up
@@ -121,7 +124,7 @@ export default function LoginScreen() {
             </ScrollView>
 
             <View className="w-full items-center pb-2">
-                <Text className="text-xs text-black">1.0.0</Text>
+                <Text className="text-xs text-black">v1.0.0</Text>
             </View>
 
             <CustomLoader visible={isLoading} />
